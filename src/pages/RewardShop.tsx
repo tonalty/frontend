@@ -9,6 +9,7 @@ import { ProductSlider } from "../components/ProductSlider";
 import HistoryTable from "../components/HistoryTable";
 import { ConnectWalletWithPlaceholder } from "../components/TokenWithDescription";
 import { AuthenticatedUserLogoWithCurrency } from "../components/AuthenticatedUserLogoWithCurrency";
+import { ClaimButton } from "../components/ClaimButton";
 
 export function RewardShop() {
     let { id } = useParams();
@@ -39,8 +40,8 @@ export function RewardShop() {
                 {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}
 
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '30px'}}>
-                    <Typography variant="body2" sx={{ marginRight: '15px', fontSize: '24px', fontWeight: 400}}>Points earned: {userCommunity?.points}</Typography>
-                    <Button variant="contained" disabled={!Boolean(wallet)} >Claim</Button>
+                    <Typography variant="body2" sx={{ marginRight: userCommunity?.points ? '15px' : '', fontSize: '24px', fontWeight: 400}}>Points earned: {userCommunity?.points}</Typography>
+                    <ClaimButton wallet={wallet} points={userCommunity?.points} ></ClaimButton>
                 </Box>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', opacity: Boolean(wallet) ? 1 : 0.3 }}>

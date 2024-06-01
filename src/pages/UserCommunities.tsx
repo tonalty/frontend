@@ -2,12 +2,9 @@ import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Typography } f
 import GroupsIcon from '@mui/icons-material/Groups';
 import { Link } from 'react-router-dom';
 import { UserCommunity } from "../interfaces/UserCommunity";
+import { Community } from "../interfaces/Community";
 
-export function UserCommunities(props: { communities: UserCommunity[] }) {
-
-    if (!props.communities) {
-        return null;
-    }
+export function UserCommunities(props: { userCommunities: UserCommunity[], adminCommunities: Community[] }) {
 
     return (
         <>
@@ -22,7 +19,7 @@ export function UserCommunities(props: { communities: UserCommunity[] }) {
 
                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                     {
-                        props.communities.map((community, index) => {
+                        props.userCommunities.map((community, index) => {
                             return (
                                 <Link to={`/community/${community.community.chatId}`} key={index} style={{ color: 'inherit', textDecoration: 'none'}}>
                                     <ListItem sx={{ marginTop: '10px', borderRadius: '10px', backgroundImage: 'linear-gradient(-225deg, #f6f6f67d 0%, #efefef96 100%);'}}>
@@ -36,16 +33,28 @@ export function UserCommunities(props: { communities: UserCommunity[] }) {
                         })
                     }
                 </List>
-                
-                {/* <Link to={`/connectcommunity`} style={{ color: 'inherit', textDecoration: 'none'}}>
-                    <Button>Connect your community</Button>
-                </Link> */}
-                
+         
                 <Link to={`/connectbot`} style={{ marginTop: '15px', color: 'inherit', textDecoration: 'none'}}>
                     <Button>Connect your community</Button>
                 </Link>
 
-                
+                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    {
+                        props.adminCommunities.map((community, index) => {
+                            return (
+                                <Link to={`/connectcommunity/${community.chatId}`} key={index} style={{ color: 'inherit', textDecoration: 'none'}}>
+                                    <ListItem sx={{ marginTop: '10px', borderRadius: '10px', backgroundImage: 'linear-gradient(-225deg, #f6f6f67d 0%, #efefef96 100%);'}}>
+                                        <ListItemIcon>
+                                            <GroupsIcon htmlColor="#0098EA" />
+                                        </ListItemIcon>
+                                        <ListItemText primary={community.title} />
+                                    </ListItem>
+                                </Link>
+                            )
+                        })
+                    }
+                </List>
+                                
             </Box>
         </>
     );

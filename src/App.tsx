@@ -7,6 +7,7 @@ import { UserCommunities } from "./pages/UserCommunities";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { UserCommunity } from "./interfaces/UserCommunity";
+import { Community } from "./interfaces/Community";
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -28,11 +29,16 @@ const AppContainer = styled.div`
 function App() {
   const { network } = useTonConnect();
 
-  const [communities, setCommunities] = useState<UserCommunity[]>([]);
+  const [userCommunities, setUserCommunities] = useState<UserCommunity[]>([]);
+
+  const [adminCommunities, setAdminCommunities] = useState<Community[]>([]);
 
   const fetchData = async () => {
-      let result = await axios.get('https://tonalty.localhost.direct:3000/communities/user', { headers: { tmaInitData: window.Telegram.WebApp.initData } });
-      setCommunities(result.data);
+      const userResult = await axios.get('https://tonalty.localhost.direct:3000/communities/user', { headers: { tmaInitData: window.Telegram.WebApp.initData } });
+      setUserCommunities(userResult.data);
+
+      const adminResult = await axios.get('https://tonalty.localhost.direct:3000/communities/admin', { headers: { tmaInitData: window.Telegram.WebApp.initData } });
+      setAdminCommunities(adminResult.data);
   };
 
   useEffect(() => {
@@ -44,7 +50,7 @@ function App() {
   return (
     <>
       {/* { JSON.stringify(communities)} */}
-      <UserCommunities communities={communities}></UserCommunities>
+      <UserCommunities adminCommunities={adminCommunities} userCommunities={userCommunities}></UserCommunities>
     </>
   );
 }

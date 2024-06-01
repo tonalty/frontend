@@ -12,8 +12,8 @@ export function ConnectBot() {
                 flexDirection="column"
                 gap="40px"
             >
-                <Typography variant="h1" fontSize="30px">
-                    How to invite bot
+                <Typography variant="h1" fontSize="20px">
+                    How to connect your community
                 </Typography>
 
                 <Typography variant="body2" textAlign="center" marginY={2} sx={{ fontSize: '16px', width: '300px', marginBottom: '15px'}}>
@@ -25,10 +25,6 @@ export function ConnectBot() {
                 <Box display="flex" sx={{ width: '100%', justifyContent: 'space-around' }}>
                     <Link to={`/`} style={{ color: 'inherit', textDecoration: 'none'}}>
                         <Button variant="text">Back</Button>
-                    </Link>
-
-                    <Link to={`/connectcommunity`} style={{ color: 'inherit', textDecoration: 'none'}}>
-                        <Button variant="contained">Connect Bot</Button>
                     </Link>
                 </Box>
             </Box>

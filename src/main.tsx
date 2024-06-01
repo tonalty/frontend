@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     element: <ConnectBot></ConnectBot>
   },
   {
-    path: "/connectcommunity",
+    path: "/connectcommunity/:id",
     element: <ConnectCommunity></ConnectCommunity>
   },
   {
