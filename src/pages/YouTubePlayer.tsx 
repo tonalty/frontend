@@ -1,0 +1,39 @@
+import React, { useState } from 'react';
+
+// does not autoplay the video due to recent restrictions on most modern browsers
+// disabling autoplay feature on iframe YouTube video
+// Users have to manually play the video. Autoplay on most mobile platforms is blocked to prevent unsolicited downloads.
+// However, YouTube supports few parameters for playing videos automatically.
+// So, adding '?autoplay=1' at the end of the video URL will make YouTube videos play automatically:
+
+const YouTubePlayer: React.FC<{ embedId: string }> = ({ embedId }) => {
+    const [playVideo, setPlayVideo] = useState(false);
+
+    const videoUrl = `https://www.youtube.com/embed/${embedId}`;
+    const imageUrl = `https://img.youtube.com/vi/${embedId}/0.jpg`; // this URL points to the video's thumbnail image
+
+    const handleClick = () => {
+        setPlayVideo(true);
+    };
+
+    return (
+        <div onClick={handleClick} style={{ cursor: 'pointer' }}>
+            {playVideo ? (
+                // Adding '?autoplay=1' at the end of the video URL will make YouTube videos play automatically: see below
+                <iframe
+                    width="560"
+                    height="315"
+                    src={`${videoUrl}?autoplay=1`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="YoutubeVideo"
+                />
+            ) : (
+                <img src={imageUrl} alt="Click to play video" />
+            )}
+        </div>
+    );
+};
+
+export default YouTubePlayer;
