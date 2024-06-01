@@ -51,3 +51,11 @@ export const Input = styled("input")`
     border: 1px solid #fefefe;
   }
 `;
+
+
+export const ProductImage = styled.img`
+  object-fit: contain;
+  height: 200px;
+  border-radius: 30px;
+  width: auto !important;
+`

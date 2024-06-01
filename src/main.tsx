@@ -8,8 +8,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { ConnectCommunity, Jetons } from "./pages/ConnectCommunity";
-import { Communities } from "./pages/Communities";
-import { PointShop } from "./pages/PointShop";
+import { RewardShop } from "./pages/RewardShop";
+import { ConnectBot } from "./pages/ConnectBot";
 // this manifest is used temporarily for development purposes
 const manifestUrl =
   "https://raw.githubusercontent.com/ton-community/tutorials/main/03-client/test/public/tonconnect-manifest.json";
@@ -24,12 +24,16 @@ const router = createBrowserRouter([
     element: <App></App>
   },
   {
+    path: '/connectbot',
+    element: <ConnectBot></ConnectBot>
+  },
+  {
     path: "/connectcommunity",
     element: <ConnectCommunity></ConnectCommunity>
   },
   {
     path: 'community/:id',
-    element: <PointShop></PointShop>
+    element: <RewardShop></RewardShop>
   }
 ]);
 

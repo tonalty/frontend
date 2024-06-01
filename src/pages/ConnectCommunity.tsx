@@ -31,9 +31,12 @@ export function ConnectCommunity() {
                 gap="40px"
             >
                 <Typography variant="h1" fontSize="30px">Connect your community</Typography>
+                <Typography variant="body2" textAlign="center" sx={{ fontSize: '16px', width: '200px', marginBottom: '15px'}}>
+                        To mint your community jettons connect your wallet
+                </Typography>
                 <TextField
                     id="outlined-basic"
-                    label="Jeton name"
+                    label="Jetton name"
                     value={jetonName}
                     onChange={handleJetonNameChange}
                     variant="outlined"
@@ -41,7 +44,7 @@ export function ConnectCommunity() {
                 />
                 <TextField
                     id="filled-basic"
-                    label="Jeton symbol"
+                    label="Jetton symbol"
                     value={jetonSymbol}
                     onChange={handleJetonSymbolChange}
                     variant="outlined"
@@ -64,7 +67,7 @@ export function ConnectCommunity() {
                     fullWidth
                 />
                 {/* is admin */}
-                <TextField id="standard-basic" 
+                {/* <TextField id="standard-basic" 
                     label="Reactions threshold" 
                     defaultValue="1"
                     variant="filled"
@@ -78,15 +81,15 @@ export function ConnectCommunity() {
                     variant="filled"
                     fullWidth
                     disabled
-                />
+                /> */}
                 {/* is admin */}
 
-                <Box display="flex">
+                <Box display="flex" sx={{ width: '100%', justifyContent: 'space-around' }}>
                     <Link to={`/`} style={{ color: 'inherit', textDecoration: 'none'}}>
                         <Button variant="text">Go back</Button>
                     </Link>
 
-                    <Button variant="contained">Mint Jetons</Button>
+                    <Button variant="contained">Mint Jettons</Button>
                 </Box>
             </Box>
         </>
