@@ -7,14 +7,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function createData(time: string, title: string, amount: string) {
-  return { time, title, amount };
+function createData(id: string, time: string, title: string, amount: string) {
+  return { id, time, title, amount };
 }
 
 const rows = [
-  createData('10:40, 30/05', 'Reward gained', '+15 $TREP'),
-  createData('15:40, 25/04', 'Reward redeemed', '-200 $TREP'),
-  createData('Eclair', '262', '+1 trep'),
+  createData('324324','10:40, 30/05', 'Reward gained', '+15 $TREP'),
+  createData('43673', '15:40, 25/04', 'Reward redeemed', '-200 $TREP'),
+  createData('2342341', '15:40, 22/04', 'Reward gained', '+1 $TREP'),
 ];
 
 export default function HistoryTable() {
@@ -30,7 +30,7 @@ export default function HistoryTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.title}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.time}
               </TableCell>

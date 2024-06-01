@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Link } from 'react-router-dom';
+import { ConnectWalletWithPlaceholder } from '../components/TokenWithDescription';
+import { useTonWallet } from '@tonconnect/ui-react';
 
 export function ConnectCommunity() {
-    const [jetonName, setJetonName] = useState<string>('');
-    const [jetonSymbol, setJetonSymbol] = useState<string>('');
-    const [tokensToMint, setTokensToMint] = useState<string>(0);
+    const [tokenName, setTokenName] = useState<string>('');
+    const [tokenSymbol, setTokenSymbol] = useState<string>('');
+    const [tokensToMint, setTokensToMint] = useState<number>(0);
     const [description, setDescription] = useState<string>('');
+    const wallet = useTonWallet();
 
-    const handleJetonNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setJetonName(event.target.value);
+    const handleTokenNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTokenName(event.target.value);
     };
-    const handleJetonSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setJetonSymbol(event.target.value);
+    const handleTokenSymbolChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTokenSymbol(event.target.value);
     };
     const handleTokensToMintChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTokensToMint(event.target.value);
+        setTokensToMint(Number(event.target.value));
     };
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value);
@@ -31,24 +34,30 @@ export function ConnectCommunity() {
                 gap="40px"
             >
                 <Typography variant="h1" fontSize="30px">Connect your community</Typography>
-                <Typography variant="body2" textAlign="center" sx={{ fontSize: '16px', width: '200px', marginBottom: '15px'}}>
-                        To mint your community jettons connect your wallet
-                </Typography>
+
+                 <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
+                    <Typography variant="body2" textAlign="center" sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: '600' }}>
+                            To mint your community tokens connect your wallet
+                    </Typography>
+                </ConnectWalletWithPlaceholder>
+
                 <TextField
                     id="outlined-basic"
-                    label="Jetton name"
-                    value={jetonName}
-                    onChange={handleJetonNameChange}
+                    label="Token name"
+                    value={tokenName}
+                    onChange={handleTokenNameChange}
                     variant="outlined"
                     fullWidth
+                    disabled={!Boolean(wallet)}
                 />
                 <TextField
                     id="filled-basic"
-                    label="Jetton symbol"
-                    value={jetonSymbol}
-                    onChange={handleJetonSymbolChange}
+                    label="Token symbol"
+                    value={tokenSymbol}
+                    onChange={handleTokenSymbolChange}
                     variant="outlined"
                     fullWidth
+                    disabled={!Boolean(wallet)}
                 />
                 <TextField
                     id="standard-basic"
@@ -57,6 +66,7 @@ export function ConnectCommunity() {
                     onChange={handleTokensToMintChange}
                     variant="outlined"
                     fullWidth
+                    disabled={!Boolean(wallet)}
                 />
                 <TextField
                     id="standard-basic"
@@ -65,6 +75,7 @@ export function ConnectCommunity() {
                     onChange={handleDescriptionChange}
                     variant="outlined"
                     fullWidth
+                    disabled={!Boolean(wallet)}
                 />
                 {/* is admin */}
                 {/* <TextField id="standard-basic" 
@@ -72,15 +83,15 @@ export function ConnectCommunity() {
                     defaultValue="1"
                     variant="filled"
                     fullWidth 
-                    disabled
+                    disabled={!Boolean(wallet)}
                 />
                 <TextField 
                     id="standard-basic"
-                    label="Min points per message"
+                    label="Reward points"
                     defaultValue="5"
                     variant="filled"
                     fullWidth
-                    disabled
+                    disabled={!Boolean(wallet)}
                 /> */}
                 {/* is admin */}
 
@@ -89,7 +100,7 @@ export function ConnectCommunity() {
                         <Button variant="text">Go back</Button>
                     </Link>
 
-                    <Button variant="contained">Mint Jettons</Button>
+                    <Button variant="contained" disabled={!Boolean(wallet)}>Mint Tokens</Button>
                 </Box>
             </Box>
         </>

@@ -11,7 +11,7 @@ import styled from "styled-components";
 export const YoutubeImage = styled.img`
   object-fit: contain;
   height: 350px;
-  width: 200px;
+  width: 100px;
   border-radius: 30px;
 `;
                 // <img width="300" height="450" src={imageUrl} alt="Click to play video" />

@@ -39,7 +39,7 @@ function App() {
       fetchData();
   }, []);
 
-  console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A")
+  console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A");
 
   return (
     <>
