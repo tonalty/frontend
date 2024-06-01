@@ -1,17 +1,12 @@
 import "./App.css";
-import { TonConnectButton } from "@tonconnect/ui-react";
-import { Counter } from "./components/Counter";
-import { Jetton } from "./components/Jetton";
-import { TransferTon } from "./components/TransferTon";
 import styled from "styled-components";
-import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
-import { Communities } from "./pages/Communities";
+import { UserCommunities } from "./pages/UserCommunities";
 import { useEffect, useState } from "react";
-import { Community } from "./interfaces/Community";
 import axios from "axios";
+import { UserCommunity } from "./interfaces/UserCommunity";
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -33,16 +28,10 @@ const AppContainer = styled.div`
 function App() {
   const { network } = useTonConnect();
 
-  const [communities, setCommunities] = useState<Community | null>(null);
+  const [communities, setCommunities] = useState<UserCommunity[]>([]);
 
   const fetchData = async () => {
-      // let result = await axios.get('https://tonalty.localhost.direct:3000/community', { headers: { tmaInitData: window.Telegram.WebApp.initData } });
-      // setCommunities(result);
-      // console.log('result', result);
-
-
-      const result = await axios.get('https://tonalty.localhost.direct:3000/community/all');
-
+      let result = await axios.get('https://tonalty.localhost.direct:3000/communities/user', { headers: { tmaInitData: window.Telegram.WebApp.initData } });
       setCommunities(result.data);
   };
 
@@ -50,11 +39,12 @@ function App() {
       fetchData();
   }, []);
 
-  console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A")
+  console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A");
 
   return (
     <>
-      <Communities communities={communities}></Communities>
+      {/* { JSON.stringify(communities)} */}
+      <UserCommunities communities={communities}></UserCommunities>
     </>
   );
 }
