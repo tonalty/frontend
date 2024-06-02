@@ -39,7 +39,7 @@ export function RewardShop() {
 
                 <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '30px'}}>
                     <Typography variant="body2" sx={{ marginRight: userCommunity?.points ? '15px' : '', fontSize: '24px', fontWeight: 400}}>Points earned: {userCommunity?.points}</Typography>
-                    <ClaimButton wallet={wallet} points={userCommunity?.points} ></ClaimButton>
+                    <ClaimButton points={userCommunity?.points} chatId={Number(id)} wallet={wallet} ></ClaimButton>
                 </Box>
 
                 {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}

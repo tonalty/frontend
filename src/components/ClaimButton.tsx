@@ -1,25 +1,35 @@
-import { Button } from "@mui/material"
-import { Wallet, WalletInfoWithOpenMethod } from "@tonconnect/ui-react"
+import { Button } from "@mui/material";
+import { Wallet } from "@tonconnect/ui-react";
 import axios from "axios";
 
 interface Props {
-    wallet: Wallet,
-    points: number,
+  points?: number;
+  chatId?: number;
+  wallet: Wallet | null;
 }
 
-
 export function ClaimButton(props: Props) {
-    if (!props.points) {
-        return null;
-    }
+  if (!props.points || !props.chatId) {
+    return null;
+  }
 
-    const handleClick = async () => {
-        await axios.post('https://tonalty.localhost.direct:3000/tokens/claimTokens', { toAddress: props.wallet.account.address }, { 
-            headers: { tmaInitData: window.Telegram.WebApp.initData }
-        });
-    }
+  const handleClick = async () => {
+    await axios.post(
+      "https://tonalty.localhost.direct:3000/tokens/claimTokens",
+      { chatId: props.chatId, toAddress: props.wallet!.account.address },
+      {
+        headers: { tmaInitData: window.Telegram.WebApp.initData },
+      }
+    );
+  };
 
-    return (
-        <Button variant="contained" disabled={!Boolean(props.wallet)} onClick={handleClick}>Claim</Button>
-    )
+  return (
+    <Button
+      variant="contained"
+      disabled={!Boolean(props.wallet)}
+      onClick={handleClick}
+    >
+      Claim
+    </Button>
+  );
 }
