@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <ConnectCommunity></ConnectCommunity>
   },
   {
-    path: 'community/:id',
+    path: '/community/:id',
     element: <RewardShop></RewardShop>
   },
   {

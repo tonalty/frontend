@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { UserCommunity } from "./interfaces/UserCommunity";
 import { Community } from "./interfaces/Community";
+import { Typography } from "@mui/material";
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -49,7 +50,7 @@ function App() {
 
   return (
     <>
-      {/* { JSON.stringify(communities)} */}
+      {/* <Typography>{ JSON.stringify(window.location.href) }</Typography> */}
       <UserCommunities adminCommunities={adminCommunities} userCommunities={userCommunities}></UserCommunities>
     </>
   );
