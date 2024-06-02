@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ConnectWalletWithPlaceholder } from '../components/TokenWithDescription';
 import { useTonWallet } from '@tonconnect/ui-react';
+import axios from 'axios';
 
 export function ConnectCommunity() {
     const [tokenName, setTokenName] = useState<string>('');
     const [tokenSymbol, setTokenSymbol] = useState<string>('');
     const [tokensToMint, setTokensToMint] = useState<number>(0);
     const [description, setDescription] = useState<string>('');
+
+    const { id } = useParams();
+
     const wallet = useTonWallet();
 
     const handleTokenNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +27,11 @@ export function ConnectCommunity() {
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value);
     };
+
+    const handleClick = async () => {
+        const body = { id, description, name: tokenName, symbol: tokenSymbol, tokensToMint:tokensToMint };
+        await axios.post('https://tonalty.localhost.direct:3000/tokens/mintTokens', body, { headers: { tmaInitData: window.Telegram.WebApp.initData } })
+    }
 
     return (
         <>
@@ -100,7 +109,7 @@ export function ConnectCommunity() {
                         <Button variant="text">Go back</Button>
                     </Link>
 
-                    <Button variant="contained" disabled={!Boolean(wallet)}>Mint Tokens</Button>
+                    <Button variant="contained" disabled={!Boolean(wallet)} onClick={handleClick}>Mint Tokens</Button>
                 </Box>
             </Box>
         </>
