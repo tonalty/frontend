@@ -9,11 +9,13 @@ export function UserCommunities(props: { userCommunities: UserCommunity[], admin
     if (props.userCommunities.length === 0 && props.adminCommunities.length === 0) {
         return (
             <>
-                <Typography variant="h1" fontSize="30px" textAlign="center">Communities</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', alignSelf:'center'}}>
+                    <Typography variant="h1" fontSize="30px" textAlign="center">Communities</Typography>
 
-                <Typography variant="body2" textAlign="center" marginY={2} sx={{ fontSize: '16px', width: '300px', marginBottom: '15px'}}>
-                    Here is the list of your telegram channels with points you can get
-                </Typography>
+                    <Typography variant="body2" textAlign="center" marginY={2} sx={{ fontSize: '16px', width: '300px', marginBottom: '15px'}}>
+                        Here is the list of your telegram channels with points you can get
+                    </Typography>
+                </Box>
             </>
         )
     }
