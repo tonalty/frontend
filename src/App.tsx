@@ -35,10 +35,10 @@ function App() {
   const [adminCommunities, setAdminCommunities] = useState<Community[]>([]);
 
   const fetchData = async () => {
-      const userResult = await axios.get('https://tonalty.localhost.direct:3000/communities/user', { headers: { tmaInitData: window.Telegram.WebApp.initData } });
+      const userResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/user`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
       setUserCommunities(userResult.data);
 
-      const adminResult = await axios.get('https://tonalty.localhost.direct:3000/communities/admin', { headers: { tmaInitData: window.Telegram.WebApp.initData } });
+      const adminResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/admin`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
       setAdminCommunities(adminResult.data);
   };
 

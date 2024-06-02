@@ -30,7 +30,7 @@ export function ConnectCommunity() {
 
     const handleClick = async () => {
         const body = { chatId: id, name: tokenName, description, symbol: tokenSymbol, tokensToMint:tokensToMint };
-        await axios.post('https://tonalty.localhost.direct:3000/tokens/mintTokens', body, { headers: { tmaInitData: window.Telegram.WebApp.initData } })
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/tokens/mintTokens`, body, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } })
     }
 
     return (

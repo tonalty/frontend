@@ -15,10 +15,10 @@ export function ClaimButton(props: Props) {
 
   const handleClick = async () => {
     await axios.post(
-      "https://tonalty.localhost.direct:3000/tokens/claimTokens",
+      `${import.meta.env.VITE_BACKEND_URL}/tokens/claimTokens`,
       { chatId: props.chatId, toAddress: props.wallet!.account.address },
       {
-        headers: { tmaInitData: window.Telegram.WebApp.initData },
+        headers: { tmaInitData: (window as any).Telegram.WebApp.initData },
       }
     );
   };

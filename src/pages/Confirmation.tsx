@@ -1,7 +1,7 @@
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Link } from 'react-router-dom';
 
-export function Confirmation(props: Props) {
+export function Confirmation() {
 
     return (
         <Box display={'flex'} alignItems={'center'} flexDirection={'column'}>

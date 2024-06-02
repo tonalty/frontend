@@ -16,7 +16,7 @@ export function RewardShop() {
     const [userCommunity, setUserCommunity] = useState<UserCommunity | null>(null);
 
     async function getUserCommunity() {
-        const result = await axios.get(`https://tonalty.localhost.direct:3000/communities/${id}`, { headers: { tmaInitData: window.Telegram.WebApp.initData } })
+        const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/${id}`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } })
 
         setUserCommunity(result.data);
     }
