@@ -10,6 +10,8 @@ import {
 import { ConnectCommunity } from "./pages/ConnectCommunity";
 import { RewardShop } from "./pages/RewardShop";
 import { ConnectBot } from "./pages/ConnectBot";
+import { Triggers } from "./pages/Triggers";
+import { Confirmation } from "./pages/Confirmation";
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
   {
     path: 'community/:id',
     element: <RewardShop></RewardShop>
+  },
+  {
+    path: '/triggers',
+    element: <Triggers></Triggers>
+  },
+  {
+    path: '/confirmation',
+    element: <Confirmation></Confirmation>
   }
 ]);
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from "@mui/material";
 import { Link, useParams } from 'react-router-dom';
 import { ConnectWalletWithPlaceholder } from '../components/TokenWithDescription';
 import { useTonWallet } from '@tonconnect/ui-react';
