@@ -3,15 +3,6 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import { ConnectCommunity } from "./pages/ConnectCommunity";
-import { RewardShop } from "./pages/RewardShop";
-import { ConnectBot } from "./pages/ConnectBot";
-import { Triggers } from "./pages/Triggers";
-import { Confirmation } from "./pages/Confirmation";
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
@@ -21,37 +12,10 @@ const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
 });
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App></App>
-  },
-  {
-    path: '/connectbot',
-    element: <ConnectBot></ConnectBot>
-  },
-  {
-    path: "/connectcommunity/:id",
-    element: <ConnectCommunity></ConnectCommunity>
-  },
-  {
-    path: '/community/:id',
-    element: <RewardShop></RewardShop>
-  },
-  {
-    path: '/triggers',
-    element: <Triggers></Triggers>
-  },
-  {
-    path: '/confirmation',
-    element: <Confirmation></Confirmation>
-  }
-]);
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <TonConnectUIProvider manifestUrl={manifestUrl}>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  </TonConnectUIProvider>
+    <TonConnectUIProvider manifestUrl={manifestUrl}>
+      <QueryClientProvider client={queryClient}>
+        <App></App>
+      </QueryClientProvider>
+    </TonConnectUIProvider>
 );

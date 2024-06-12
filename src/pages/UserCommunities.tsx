@@ -3,10 +3,28 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import { Link } from 'react-router-dom';
 import { UserCommunity } from "../interfaces/UserCommunity";
 import { Community } from "../interfaces/Community";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export function UserCommunities(props: { userCommunities: UserCommunity[], adminCommunities: Community[] }) {
+export function UserCommunities() {
 
-    if (props.userCommunities.length === 0 && props.adminCommunities.length === 0) {
+    const [userCommunities, setUserCommunities] = useState<UserCommunity[]>([]);
+
+    const [adminCommunities, setAdminCommunities] = useState<Community[]>([]);
+
+    const fetchData = async () => {
+        const userResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/user`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
+        setUserCommunities(userResult.data);
+
+        const adminResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/admin`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
+        setAdminCommunities(adminResult.data);
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    if (userCommunities.length === 0 && adminCommunities.length === 0) {
         return (
             <>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', alignSelf:'center'}}>
@@ -20,8 +38,9 @@ export function UserCommunities(props: { userCommunities: UserCommunity[], admin
         )
     }
 
+
     return (
-        <>
+        <>            
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', alignSelf:'center'}}>
 
                 <Typography variant="h1" fontSize="30px" textAlign="center">Communities</Typography>
@@ -35,12 +54,12 @@ export function UserCommunities(props: { userCommunities: UserCommunity[], admin
                     Your communities
                 </Typography>
 
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                <List sx={{ width: '100%', maxWidth: 360 }}>
                     {
-                        props.userCommunities.map((community, index) => {
+                        userCommunities.map((community, index) => {
                             return (
                                 <Link to={`/community/${community?.community?.chatId}`} key={index} style={{ color: 'inherit', textDecoration: 'none'}}>
-                                    <ListItem sx={{ marginTop: '10px', borderRadius: '10px', backgroundImage: 'linear-gradient(-225deg, #f6f6f67d 0%, #efefef96 100%);'}}>
+                                    <ListItem className="gbLi" sx={{ marginTop: '10px', borderRadius: '10px' }}>
                                         <ListItemIcon>
                                             <GroupsIcon htmlColor="#0098EA" />
                                         </ListItemIcon>
@@ -56,12 +75,12 @@ export function UserCommunities(props: { userCommunities: UserCommunity[], admin
                     Manage
                 </Typography>
 
-                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                <List sx={{ width: '100%', maxWidth: 360 }}>
                     {
-                        props.adminCommunities.map((community, index) => {
+                        adminCommunities.map((community, index) => {
                             return (
                                 <Link to={`/connectcommunity/${community?.chatId}`} key={index} style={{ color: 'inherit', textDecoration: 'none'}}>
-                                    <ListItem sx={{ marginTop: '10px', borderRadius: '10px', backgroundImage: 'linear-gradient(-225deg, #f6f6f67d 0%, #efefef96 100%);'}}>
+                                    <ListItem className="gbLi" sx={{ marginTop: '10px', borderRadius: '10px' }}>
                                         <ListItemIcon>
                                             <GroupsIcon htmlColor="#0098EA" />
                                         </ListItemIcon>

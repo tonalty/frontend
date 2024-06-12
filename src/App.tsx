@@ -1,57 +1,61 @@
 import "./App.css";
-import styled from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
 import { UserCommunities } from "./pages/UserCommunities";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { UserCommunity } from "./interfaces/UserCommunity";
-import { Community } from "./interfaces/Community";
-import { Typography } from "@mui/material";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Confirmation } from "./pages/Confirmation";
+import { Triggers } from "./pages/Triggers";
+import { RewardShop } from "./pages/RewardShop";
+import { ConnectCommunity } from "./pages/ConnectCommunity";
+import { ConnectBot } from "./pages/ConnectBot";
+import { GlobalStyles } from "./components/GlobalStyle";
+import { darkTheme, lightTheme, muiGlobalOverrides } from "./components/Theme";
 
-const StyledApp = styled.div`
-  background-color: #e8e8e8;
-  color: black;
-
-  @media (prefers-color-scheme: dark) {
-    background-color: #222;
-    color: white;
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <UserCommunities></UserCommunities>
+  },
+  {
+    path: '/connectbot',
+    element: <ConnectBot></ConnectBot>
+  },
+  {
+    path: "/connectcommunity/:id",
+    element: <ConnectCommunity></ConnectCommunity>
+  },
+  {
+    path: '/community/:id',
+    element: <RewardShop></RewardShop>
+  },
+  {
+    path: '/triggers',
+    element: <Triggers></Triggers>
+  },
+  {
+    path: '/confirmation',
+    element: <Confirmation></Confirmation>
   }
-  min-height: 100vh;
-  padding: 20px 20px;
-`;
-
-const AppContainer = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-`;
+]);
 
 function App() {
   const { network } = useTonConnect();
 
-  const [userCommunities, setUserCommunities] = useState<UserCommunity[]>([]);
+// https://habr.com/ru/articles/666278/
+  const isDarkMode = window.Telegram.WebApp.colorScheme === 'dark';
 
-  const [adminCommunities, setAdminCommunities] = useState<Community[]>([]);
-
-  const fetchData = async () => {
-      const userResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/user`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
-      setUserCommunities(userResult.data);
-
-      const adminResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/admin`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
-      setAdminCommunities(adminResult.data);
-  };
-
-  useEffect(() => {
-      fetchData();
-  }, []);
-
+  console.log('isDarkMode', isDarkMode);
   console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A");
 
   return (
     <>
-      {/* <Typography>{ JSON.stringify(window.location.href) }</Typography> */}
-      <UserCommunities adminCommunities={adminCommunities} userCommunities={userCommunities}></UserCommunities>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyles/>
+        <RouterProvider router={router} />
+        {/* <Typography>{ JSON.stringify(window.location.href) }</Typography> */}
+      </ThemeProvider>
     </>
   );
 }

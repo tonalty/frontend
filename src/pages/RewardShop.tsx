@@ -46,7 +46,7 @@ export function RewardShop() {
 
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', opacity: Boolean(wallet) ? 1 : 0.3 }}>
                     <Typography variant="h2" sx={{ fontSize: '30px', fontWeight: 600 }}>Reward Shop</Typography>
-                    <Typography variant="body1" sx={{ color: 'rgba(0, 0, 0, 0.6)', marginBottom: '15px' }}>Spend your $TREP</Typography>
+                    <Typography variant="body1" sx={{ marginBottom: '15px' }}>Spend your $TREP</Typography>
 
                     <Box margin={'30px'}>
                         <ProductSlider></ProductSlider>

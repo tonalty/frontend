@@ -22,20 +22,22 @@ export function ProductSlider() {
     ]
     
     return (
-        <Carousel showArrows={false} showIndicators={false} showThumbs={false} showStatus={false} infiniteLoop={true}>
-            {products.map((product, index) => (
-                <Box key={index} >
-                    <ProductImage src={product.src}></ProductImage>
+        <Box width={350}>
+            <Carousel showArrows={false} showIndicators={false} showThumbs={false} showStatus={false} infiniteLoop={true}>
+                {products.map((product, index) => (
+                    <Box key={index} >
+                        <ProductImage src={product.src}></ProductImage>
 
-                    <Typography variant="body1" textAlign="center">
-                        {product.title}
-                    </Typography>
+                        <Typography variant="body1" textAlign="center">
+                            {product.title}
+                        </Typography>
 
-                    <Typography variant="body1" sx={{ color: 'rgba(0, 0, 0, 0.6)'}} textAlign="center">
-                        {product.subtitle}
-                    </Typography>
-                </Box>
-            ))}
-        </Carousel>
+                        <Typography variant="body1" textAlign="center">
+                            {product.subtitle}
+                        </Typography>
+                    </Box>
+                ))}
+            </Carousel>
+        </Box>
     )
 }

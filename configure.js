@@ -61,7 +61,11 @@ let githubUsername, githubRepo, botUsername;
   ).catch(exitError);
 
   botUsername = getBot.data.result.username;
-  const url = `https://${githubUsername}.github.io/${githubRepo}`;
+  // const url = 'https://tonalty.localhost.direct:5173/';
+  // const url = `https://${githubUsername}.github.io/${githubRepo}`;
+
+  const url = 'https://t.me/ttonalty_bot/tonalty';
+
 
   console.log(`\n\nSetting bot ${botUsername} webapp url to ${url}`);
 
