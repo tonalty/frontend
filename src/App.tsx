@@ -11,7 +11,7 @@ import { RewardShop } from "./pages/RewardShop";
 import { ConnectCommunity } from "./pages/ConnectCommunity";
 import { ConnectBot } from "./pages/ConnectBot";
 import { GlobalStyles } from "./components/GlobalStyle";
-import { darkTheme, lightTheme, muiGlobalOverrides } from "./components/Theme";
+import { darkTheme, lightTheme } from "./components/Theme";
 
 const router = createBrowserRouter([
   {
