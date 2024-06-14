@@ -46,14 +46,14 @@ function App() {
 // https://habr.com/ru/articles/666278/
   const isDarkMode = window.Telegram.WebApp.colorScheme === 'dark';
 
-  console.log('start_param', window.Telegram.WebApp.initDataUnsafe?.start_param);
+  // console.log('start_param', window.Telegram.WebApp.initDataUnsafe?.start_param);
 
   console.log('isDarkMode', isDarkMode);
   console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A");
 
   return (
     <>
-      start_param {window.Telegram.WebApp.initDataUnsafe?.start_param}
+      {/* start_param {window.Telegram.WebApp.initDataUnsafe?.start_param} */}
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyles/>
         <RouterProvider router={router} />
