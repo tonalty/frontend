@@ -3,6 +3,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
@@ -13,9 +14,11 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <TonConnectUIProvider manifestUrl={manifestUrl}>
-      <QueryClientProvider client={queryClient}>
-        <App></App>
-      </QueryClientProvider>
-    </TonConnectUIProvider>
+      <TonConnectUIProvider manifestUrl={manifestUrl}>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <App></App>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </TonConnectUIProvider>
 );

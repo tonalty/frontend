@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export function UserCommunities() {
-
     const [userCommunities, setUserCommunities] = useState<UserCommunity[]>([]);
 
     const [adminCommunities, setAdminCommunities] = useState<Community[]>([]);
@@ -40,7 +39,7 @@ export function UserCommunities() {
 
 
     return (
-        <>            
+        <>           
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', alignSelf:'center'}}>
 
                 <Typography variant="h1" fontSize="30px" textAlign="center">Communities</Typography>

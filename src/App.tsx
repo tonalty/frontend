@@ -4,7 +4,7 @@ import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
 import { UserCommunities } from "./pages/UserCommunities";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Confirmation } from "./pages/Confirmation";
 import { Triggers } from "./pages/Triggers";
 import { RewardShop } from "./pages/RewardShop";
@@ -12,52 +12,45 @@ import { ConnectCommunity } from "./pages/ConnectCommunity";
 import { ConnectBot } from "./pages/ConnectBot";
 import { GlobalStyles } from "./components/GlobalStyle";
 import { darkTheme, lightTheme } from "./components/Theme";
+import { Join } from "./pages/Join";
+import { useEffect } from "react";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <UserCommunities></UserCommunities>
-  },
-  {
-    path: '/connectbot',
-    element: <ConnectBot></ConnectBot>
-  },
-  {
-    path: "/connectcommunity/:id",
-    element: <ConnectCommunity></ConnectCommunity>
-  },
-  {
-    path: '/community/:id',
-    element: <RewardShop></RewardShop>
-  },
-  {
-    path: '/triggers',
-    element: <Triggers></Triggers>
-  },
-  {
-    path: '/confirmation',
-    element: <Confirmation></Confirmation>
-  }
-]);
 
 function App() {
   const { network } = useTonConnect();
 
-// https://habr.com/ru/articles/666278/
-  const isDarkMode = window.Telegram.WebApp.colorScheme === 'dark';
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // console.log('start_param', window.Telegram.WebApp.initDataUnsafe?.start_param);
+  useEffect(() => {
+    if (location.search.startsWith('?tgWebAppStartParam')) {
+      return navigate('/join-community')
+    }
+  }, [location])
+
+  // https://habr.com/ru/articles/666278/
+  const isDarkMode = window.Telegram.WebApp.colorScheme === 'dark';
 
   console.log('isDarkMode', isDarkMode);
   console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A");
 
   return (
     <>
-      {/* start_param {window.Telegram.WebApp.initDataUnsafe?.start_param} */}
+      start_param {window.Telegram.WebApp.initDataUnsafe?.start_param}
+
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyles/>
-        <RouterProvider router={router} />
-        {/* <Typography>{ JSON.stringify(window.location.href) }</Typography> */}
+          location : {JSON.stringify(location)}
+          <Routes>
+            <Route path="/" element={<UserCommunities />}/>
+            <Route path="/connectbot" element={<ConnectBot/>}/>
+            <Route path="/connectcommunity/:id"  element={<ConnectCommunity/>}/>
+            <Route path="/community/:id"  element={<RewardShop/>}/>
+            <Route path="/triggers"  element={<Triggers/>}/>
+            <Route path="/confirmation"  element={<Confirmation/>}/>
+            <Route path="/join-community"  element={<Join></Join>}/>
+            <Route path="*" element={<p>Not found</p>} />
+          </Routes>
       </ThemeProvider>
     </>
   );

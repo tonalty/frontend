@@ -10,6 +10,7 @@ import HistoryTable from "../components/HistoryTable";
 import { ConnectWalletWithPlaceholder } from "../components/TokenWithDescription";
 import { AuthenticatedUserLogoWithCurrency } from "../components/AuthenticatedUserLogoWithCurrency";
 import { ClaimButton } from "../components/ClaimButton";
+import { ReferralLink } from "../components/ReferralLink";
 
 export function RewardShop() {
     let { id } = useParams();
@@ -43,6 +44,8 @@ export function RewardShop() {
                 </Box>
 
                 {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}
+
+                <ReferralLink />
 
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', opacity: Boolean(wallet) ? 1 : 0.3 }}>
                     <Typography variant="h2" sx={{ fontSize: '30px', fontWeight: 600 }}>Reward Shop</Typography>
