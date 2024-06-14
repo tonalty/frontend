@@ -12,7 +12,6 @@ import { ConnectCommunity } from "./pages/ConnectCommunity";
 import { ConnectBot } from "./pages/ConnectBot";
 import { GlobalStyles } from "./components/GlobalStyle";
 import { darkTheme, lightTheme } from "./components/Theme";
-import { Typography } from "@mui/material";
 
 const router = createBrowserRouter([
   {
@@ -47,21 +46,18 @@ function App() {
 // https://habr.com/ru/articles/666278/
   const isDarkMode = window.Telegram.WebApp.colorScheme === 'dark';
 
-  
-  console.log('window.Telegram.WebApp.initData', window.Telegram.WebApp.initData)
-  console.log('start_param', window.Telegram.WebApp.initDataUnsafe.start_param);
+  console.log('start_param', window.Telegram.WebApp.initDataUnsafe?.start_param);
 
   console.log('isDarkMode', isDarkMode);
   console.log(`Network: `, network ? network === CHAIN.MAINNET ? "mainnet" : "testnet": "N/A");
 
   return (
     <>
-      start_param {window.Telegram.WebApp.initDataUnsafe.start_param}
+      start_param {window.Telegram.WebApp.initDataUnsafe?.start_param}
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyles/>
         <RouterProvider router={router} />
         {/* <Typography>{ JSON.stringify(window.location.href) }</Typography> */}
-        <Typography>{ JSON.stringify(window.Telegram.WebApp.initData) }</Typography>
       </ThemeProvider>
     </>
   );
