@@ -3,23 +3,26 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-interface Props {}
+interface Props {
+}
 
 export const Container = styled.div`
     margin: 15px;
 `;
 
 export function ReferralLink(props: Props) {
+    let { id } = useParams();
     const [referral, setReferral] = useState('');
 
     // addChatMember
-
     const fetchReferral = async () => {
         try {
-            const link = await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
+            const link = await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals`, { chatId: Number(id) }, { 
+                headers: { tmaInitData: (window as any).Telegram.WebApp.initData,
+            }});
             setReferral(link.data);
-
         } catch(error) {
             console.log(`Failed to fetch referral ${error}`);
         }

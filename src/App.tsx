@@ -14,6 +14,7 @@ import { GlobalStyles } from "./components/GlobalStyle";
 import { darkTheme, lightTheme } from "./components/Theme";
 import { Join } from "./pages/Join";
 import { useEffect } from "react";
+import axios from "axios";
 
 
 function App() {
@@ -22,9 +23,15 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const sendTgWebAppStartParam = async () => {
+      await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals/tgWebAppStartParam`, location.hash);
+  }
+
   useEffect(() => {
     if (location.search.startsWith('?tgWebAppStartParam')) {
-      return navigate('/join-community')
+      sendTgWebAppStartParam()
+      
+      navigate('/join-community')
     }
   }, [location])
 
@@ -40,7 +47,6 @@ function App() {
 
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyles/>
-          location : {JSON.stringify(location)}
           <Routes>
             <Route path="/" element={<UserCommunities />}/>
             <Route path="/connectbot" element={<ConnectBot/>}/>
