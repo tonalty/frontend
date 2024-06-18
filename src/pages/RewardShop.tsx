@@ -45,7 +45,7 @@ export function RewardShop() {
 
                 {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}
 
-                <ReferralLink />
+                { userCommunity ? <ReferralLink userCommunity={userCommunity} /> : null }
 
                 <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', opacity: Boolean(wallet) ? 1 : 0.3 }}>
                     <Typography variant="h2" sx={{ fontSize: '30px', fontWeight: 600 }}>Reward Shop</Typography>

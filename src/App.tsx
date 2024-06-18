@@ -23,14 +23,13 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const sendTgWebAppStartParam = async () => {
-      await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals/tgWebAppStartParam`, location.hash);
-  }
+  // const sendTgWebAppStartParam = async () => {
+  //     await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals/tgWebAppStartParam`, location.hash);
+  // }
 
   useEffect(() => {
     if (location.search.startsWith('?tgWebAppStartParam')) {
-      sendTgWebAppStartParam()
-      
+      // sendTgWebAppStartParam()
       navigate('/join-community')
     }
   }, [location])
@@ -43,8 +42,6 @@ function App() {
 
   return (
     <>
-      start_param {window.Telegram.WebApp.initDataUnsafe?.start_param}
-
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyles/>
           <Routes>

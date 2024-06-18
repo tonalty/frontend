@@ -4,8 +4,10 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { UserCommunity } from "../interfaces/UserCommunity";
 
 interface Props {
+    userCommunity: UserCommunity | null;
 }
 
 export const Container = styled.div`
@@ -19,9 +21,14 @@ export function ReferralLink(props: Props) {
     // addChatMember
     const fetchReferral = async () => {
         try {
-            const link = await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals`, { chatId: Number(id) }, { 
+            const link = await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals`, { 
+                chatId: Number(id),
+                title: props.userCommunity?.community.title
+            }, 
+            { 
                 headers: { tmaInitData: (window as any).Telegram.WebApp.initData,
             }});
+
             setReferral(link.data);
         } catch(error) {
             console.log(`Failed to fetch referral ${error}`);
