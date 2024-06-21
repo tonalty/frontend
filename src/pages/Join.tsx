@@ -3,10 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { LinkOwner } from "../interfaces/LinkOwner";
 import { User } from "node-telegram-bot-api";
-import { useNavigate } from "react-router-dom";
 
 export function Join() {
-
     const [ currentUser, setCurrentUser ] = useState<null | User>(null);
     const [ linkOwner, setLinkOwner] = useState<null | LinkOwner>(null);
 
@@ -39,7 +37,7 @@ export function Join() {
     }
 
     const handleJoin = async () => {
-        window.location.href=linkOwner.telegramInviteLink
+        window.Telegram.WebApp.openTelegramLink(linkOwner.telegramInviteLink)
     }
     
     return (

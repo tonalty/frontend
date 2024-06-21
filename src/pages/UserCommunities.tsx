@@ -1,27 +1,42 @@
-import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography } from "@mui/material";
 import GroupsIcon from '@mui/icons-material/Groups';
 import { Link } from 'react-router-dom';
 import { UserCommunity } from "../interfaces/UserCommunity";
 import { Community } from "../interfaces/Community";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Menu } from "../components/Menu";
 
 export function UserCommunities() {
     const [userCommunities, setUserCommunities] = useState<UserCommunity[]>([]);
 
     const [adminCommunities, setAdminCommunities] = useState<Community[]>([]);
 
-    const fetchData = async () => {
-        const userResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/user`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
-        setUserCommunities(userResult.data);
+    const [errors, setError] = useState<unknown[]>([]);
 
-        const adminResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/admin`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
-        setAdminCommunities(adminResult.data);
+    const fetchData = async () => {
+        try {
+            const userResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/user`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
+            setUserCommunities(userResult.data);
+        } catch(error) {
+            setError([...errors, error]);
+        }
+
+        try {
+            const adminResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/admin`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } });
+            setAdminCommunities(adminResult.data);
+        } catch(error) {
+            setError([...errors, error]);
+        }
     };
 
     useEffect(() => {
         fetchData();
     }, []);
+
+    if (errors.length) {
+        return (<Box>{JSON.stringify(errors)}</Box>)
+    }
 
     if (userCommunities.length === 0 && adminCommunities.length === 0) {
         return (
@@ -39,16 +54,13 @@ export function UserCommunities() {
 
 
     return (
-        <>           
+        <>  
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', alignSelf:'center'}}>
 
                 <Typography variant="h1" fontSize="30px" textAlign="center">Communities</Typography>
+                                
+                <Menu />
                 
-
-                <Typography variant="body2" textAlign="center" marginY={2} sx={{ fontSize: '16px', width: '300px', marginBottom: '15px'}}>
-                    Here is the list of your telegram channels with points you can get
-                </Typography>
-
                 <Typography variant="body2" textAlign="center" marginTop={2} sx={{ fontSize: '16px'}}>
                     Your communities
                 </Typography>

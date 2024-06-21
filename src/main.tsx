@@ -4,6 +4,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
+import { AppRoot } from "@telegram-apps/telegram-ui";
+import '@telegram-apps/telegram-ui/dist/styles.css';
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
@@ -17,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <TonConnectUIProvider manifestUrl={manifestUrl}>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
-            <App></App>
+            <AppRoot>
+              <App></App>
+            </AppRoot>
           </BrowserRouter>
         </QueryClientProvider>
       </TonConnectUIProvider>
