@@ -1,16 +1,15 @@
 import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Tab, Tabs, Typography } from "@mui/material";
 import GroupsIcon from '@mui/icons-material/Groups';
 import { Link } from 'react-router-dom';
-import { UserCommunity } from "../interfaces/UserCommunity";
-import { Community } from "../interfaces/Community";
+import { CommunityUser } from "../interfaces/CommunityUser";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Menu } from "../components/Menu";
 
 export function UserCommunities() {
-    const [userCommunities, setUserCommunities] = useState<UserCommunity[]>([]);
+    const [userCommunities, setUserCommunities] = useState<CommunityUser[]>([]);
 
-    const [adminCommunities, setAdminCommunities] = useState<Community[]>([]);
+    const [adminCommunities, setAdminCommunities] = useState<CommunityUser[]>([]);
 
     const [errors, setError] = useState<unknown[]>([]);
 
@@ -69,12 +68,12 @@ export function UserCommunities() {
                     {
                         userCommunities.map((community, index) => {
                             return (
-                                <Link to={`/community/${community?.community?.chatId}`} key={index} style={{ color: 'inherit', textDecoration: 'none'}}>
+                                <Link to={`/community/${community.chatId}`} key={index} style={{ color: 'inherit', textDecoration: 'none'}}>
                                     <ListItem className="gbLi" sx={{ marginTop: '10px', borderRadius: '10px' }}>
                                         <ListItemIcon>
                                             <GroupsIcon htmlColor="#0098EA" />
                                         </ListItemIcon>
-                                        <ListItemText primary={community?.community?.title} secondary={`Earned points: ${community?.points}`} />
+                                        <ListItemText primary={community?.communityName} secondary={`Earned points: ${community.points}`} />
                                     </ListItem>
                                 </Link>
                             )
@@ -95,7 +94,7 @@ export function UserCommunities() {
                                         <ListItemIcon>
                                             <GroupsIcon htmlColor="#0098EA" />
                                         </ListItemIcon>
-                                        <ListItemText primary={community.title} />
+                                        <ListItemText primary={community.communityName} />
                                     </ListItem>
                                 </Link>
                             )

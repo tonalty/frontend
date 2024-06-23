@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { UserCommunity } from "../interfaces/UserCommunity";
+import { CommunityUser } from "../interfaces/CommunityUser";
 
 interface Props {
-    userCommunity: UserCommunity | null;
+    communityUser: CommunityUser | null;
 }
 
 export const Container = styled.div`
@@ -23,7 +23,7 @@ export function ReferralLink(props: Props) {
         try {
             const link = await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals`, { 
                 chatId: Number(id),
-                title: props.userCommunity?.community.title
+                title: props.communityUser?.communityName
             }, 
             { 
                 headers: { tmaInitData: (window as any).Telegram.WebApp.initData,
@@ -55,7 +55,7 @@ export function ReferralLink(props: Props) {
                 <InputBase
                     disabled
                     sx={{ ml: 1, flex: 1 }}
-                    placeholder={referral}
+                    placeholder={referral ? referral : 'Check that bot has admin rights for group!'}
                     inputProps={{ 'aria-label': 'search google maps' }}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />

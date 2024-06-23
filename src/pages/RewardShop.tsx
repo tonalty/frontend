@@ -3,7 +3,7 @@ import { useTonWallet } from "@tonconnect/ui-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { UserCommunity } from "../interfaces/UserCommunity";
+import { CommunityUser } from "../interfaces/CommunityUser";
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { ProductSlider } from "../components/ProductSlider";
 import HistoryTable from "../components/HistoryTable";
@@ -14,7 +14,7 @@ import { ReferralLink } from "../components/ReferralLink";
 
 export function RewardShop() {
     let { id } = useParams();
-    const [userCommunity, setUserCommunity] = useState<UserCommunity | null>(null);
+    const [userCommunity, setUserCommunity] = useState<CommunityUser | null>(null);
 
     async function getUserCommunity() {
         const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/${id}`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } })
@@ -30,7 +30,7 @@ export function RewardShop() {
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-                <Typography variant="h1" fontSize="30px" sx={{ marginBottom: '30px', textAlign: 'center' }}>{userCommunity?.community.title}</Typography>
+                <Typography variant="h1" fontSize="30px" sx={{ marginBottom: '30px', textAlign: 'center' }}>{userCommunity?.communityName}</Typography>
                 
                 <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
                     <Typography variant="body2" textAlign="center" sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600}}>
