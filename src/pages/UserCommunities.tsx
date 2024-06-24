@@ -1,15 +1,28 @@
-import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import GroupsIcon from '@mui/icons-material/Groups';
+import { Avatar, Box } from '@mui/material';
+
 import { Link } from 'react-router-dom';
 import { CommunityUser } from '../interfaces/CommunityUser';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Menu } from '../components/Menu';
+import { Cell, Section } from '@telegram-apps/telegram-ui';
+import { View } from '@/enums/View';
+
+const CellStyles = {
+  height: '68px',
+  marginTop: '32px',
+  background: 'inherit',
+  borderRadius: '30px'
+};
 
 export function UserCommunities() {
   const [userCommunities, setUserCommunities] = useState<CommunityUser[]>([]);
-
   const [adminCommunities, setAdminCommunities] = useState<CommunityUser[]>([]);
+
+  const [currentView, setCurrentView] = useState(View.SUBSCRIBED);
+  const onClickView = (view: View) => {
+    setCurrentView(view);
+  };
 
   const [errors, setError] = useState<unknown[]>([]);
 
@@ -44,25 +57,12 @@ export function UserCommunities() {
   if (userCommunities.length === 0 && adminCommunities.length === 0) {
     return (
       <>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            alignSelf: 'center'
-          }}>
-          <Typography variant="h1" fontSize="30px" textAlign="center">
-            Communities
-          </Typography>
-
-          <Typography
-            variant="body2"
-            textAlign="center"
-            marginY={2}
-            sx={{ fontSize: '16px', width: '300px', marginBottom: '15px' }}>
-            Here is the list of your telegram channels with points you can get
-          </Typography>
-        </Box>
+        <Menu
+          currentView={currentView}
+          subscribed={userCommunities}
+          managed={adminCommunities}
+          onClickView={onClickView}
+        />
       </>
     );
   }
@@ -76,64 +76,56 @@ export function UserCommunities() {
           flexDirection: 'column',
           alignSelf: 'center'
         }}>
-        <Typography variant="h1" fontSize="30px" textAlign="center">
-          Communities
-        </Typography>
+        <Menu
+          currentView={currentView}
+          subscribed={userCommunities}
+          managed={adminCommunities}
+          onClickView={onClickView}
+        />
 
-        <Menu />
+        {currentView === View.SUBSCRIBED ? (
+          <Section style={{ width: '100%' }}>
+            {userCommunities.map((community, index) => {
+              return (
+                <Link
+                  className="disableHover"
+                  to={`/community/${community.chatId}`}
+                  key={index}
+                  style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
+                  <Cell
+                    style={CellStyles}
+                    subtitle={`Earned points: ${community.points}`}
+                    before={<Avatar src="https://avatars.githubusercontent.com/u/84640980?v=4" />}>
+                    {community?.communityName}
+                  </Cell>
+                </Link>
+              );
+            })}
+          </Section>
+        ) : null}
 
-        <Typography variant="body2" textAlign="center" marginTop={2} sx={{ fontSize: '16px' }}>
-          Your communities
-        </Typography>
-
-        <List sx={{ width: '100%', maxWidth: 360 }}>
-          {userCommunities.map((community, index) => {
-            return (
-              <Link
-                to={`/community/${community.chatId}`}
-                key={index}
-                style={{ color: 'inherit', textDecoration: 'none' }}>
-                <ListItem className="gbLi" sx={{ marginTop: '10px', borderRadius: '10px' }}>
-                  <ListItemIcon>
-                    <GroupsIcon htmlColor="#0098EA" />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={community?.communityName}
-                    secondary={`Earned points: ${community.points}`}
-                  />
-                </ListItem>
-              </Link>
-            );
-          })}
-        </List>
-
-        <Typography variant="body2" textAlign="center" marginTop={2} sx={{ fontSize: '16px' }}>
-          Manage
-        </Typography>
-
-        <List sx={{ width: '100%', maxWidth: 360 }}>
-          {adminCommunities.map((community, index) => {
-            return (
-              <Link
-                to={`/connectcommunity/${community?.chatId}`}
-                key={index}
-                style={{ color: 'inherit', textDecoration: 'none' }}>
-                <ListItem className="gbLi" sx={{ marginTop: '10px', borderRadius: '10px' }}>
-                  <ListItemIcon>
-                    <GroupsIcon htmlColor="#0098EA" />
-                  </ListItemIcon>
-                  <ListItemText primary={community.communityName} />
-                </ListItem>
-              </Link>
-            );
-          })}
-        </List>
-
-        <Link
-          to={`/connectbot`}
-          style={{ marginTop: '15px', color: 'inherit', textDecoration: 'none' }}>
-          <Button>How to connect community</Button>
-        </Link>
+        {currentView === View.MANAGED ? (
+          <Section style={{ width: '100%' }}>
+            {adminCommunities.map((community, index) => {
+              return (
+                <Link
+                  className="disableHover"
+                  to={`/community/${community.chatId}`}
+                  key={index}
+                  style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
+                  <Cell
+                    style={CellStyles}
+                    subtitle={`Earned points: ${community.points}`}
+                    before={
+                      <Avatar src="https://cdn.theatlantic.com/thumbor/tO5tLGl38cH3MjWz3PypY1dPHX4=/0x62:2000x1187/960x540/media/img/mt/2018/03/AP_325360162607/original.jpg" />
+                    }>
+                    {community?.communityName}
+                  </Cell>
+                </Link>
+              );
+            })}
+          </Section>
+        ) : null}
       </Box>
     </>
   );

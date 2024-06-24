@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { HistoryItem } from '@/interfaces/HistoryItem';
 import axios from 'axios';
-import { Cell, IconButton, Caption } from '@telegram-apps/telegram-ui';
+import { Cell, IconButton, Caption, Section } from '@telegram-apps/telegram-ui';
 import { HistoryType } from '@/enums/HistoryType';
 import { ReactionIcon } from '@/icons/ReactionIcon';
 import { ReferralIcon } from '@/icons/ReferralIcon';
+import { HistoryTablePoint } from './HistoryTablePoint';
 
 export default function HistoryTable() {
   const [history, setHistory] = useState<HistoryItem[] | null>(null);
@@ -21,9 +22,27 @@ export default function HistoryTable() {
     fetchHistory();
   }, []);
 
+  const formatDate = (inputDate: string) => {
+    const date = new Date(inputDate);
+
+    const options = {
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    } as Intl.DateTimeFormatOptions;
+
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+  };
+
   return (
-    <>
-      <Caption level="1" weight="3">
+    <Section style={{ width: '100%', paddingTop: '15px' }}>
+      <Caption
+        level="1"
+        weight="3"
+        caps
+        style={{ height: '30px', display: 'flex', alignItems: 'center', paddingLeft: '12px' }}>
         Transaction history
       </Caption>
 
@@ -35,34 +54,25 @@ export default function HistoryTable() {
           title = 'Reaction';
           mappedIcon = <ReactionIcon />;
         } else if (item.data.type === HistoryType.refferalJoin) {
-          title = `User a joined via link`;
+          title = `User @${item.data.username} joined via link`;
           mappedIcon = <ReferralIcon />;
         }
 
-        const date = new Date(item.createdAt);
-        const options = {
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: true
-        } as Intl.DateTimeFormatOptions;
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-
         return (
           <Cell
-            style={{ width: '100%', boxSizing: 'border-box' }}
+            key={item.data.chatId}
+            style={{ width: '100%', boxSizing: 'border-box', background: 'inherit' }}
             before={
               <IconButton mode="plain" size="s">
                 {mappedIcon}
               </IconButton>
             }
-            subtitle={formattedDate}
-            after={<span>+5.00</span>}>
+            subtitle={formatDate(item.createdAt)}
+            after={<HistoryTablePoint points={item.data.points} />}>
             {title}
           </Cell>
         );
       })}
-    </>
+    </Section>
   );
 }
