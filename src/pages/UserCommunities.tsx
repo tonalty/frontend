@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { CommunityUser } from '../interfaces/CommunityUser';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Menu } from '../components/Menu';
-import { Cell, Section } from '@telegram-apps/telegram-ui';
+import { Cell, Section, Text } from '@telegram-apps/telegram-ui';
+import { Menu } from '@/components/Menu';
 import { View } from '@/enums/View';
+import { NoData } from '@/components/NoData';
 
 const CellStyles = {
   height: '68px',
@@ -54,16 +55,27 @@ export function UserCommunities() {
     return <Box>{JSON.stringify(errors)}</Box>;
   }
 
-  if (userCommunities.length === 0 && adminCommunities.length === 0) {
+  if (userCommunities.length === 0 || adminCommunities.length === 0) {
     return (
-      <>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          alignSelf: 'center'
+        }}>
         <Menu
           currentView={currentView}
           subscribed={userCommunities}
           managed={adminCommunities}
           onClickView={onClickView}
         />
-      </>
+
+        <NoData>
+          <Text weight="1">No channels yet</Text>
+          <Text weight="3">Start connecting bot to your channels</Text>
+        </NoData>
+      </Box>
     );
   }
 

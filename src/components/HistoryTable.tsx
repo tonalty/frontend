@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { HistoryItem } from '@/interfaces/HistoryItem';
 import axios from 'axios';
-import { Cell, IconButton, Caption, Section } from '@telegram-apps/telegram-ui';
+import { Cell, IconButton, Caption, Section, Text } from '@telegram-apps/telegram-ui';
 import { HistoryType } from '@/enums/HistoryType';
 import { ReactionIcon } from '@/icons/ReactionIcon';
 import { ReferralIcon } from '@/icons/ReferralIcon';
 import { HistoryTablePoint } from './HistoryTablePoint';
+import { NoData } from './NoData';
 
 export default function HistoryTable() {
-  const [history, setHistory] = useState<HistoryItem[] | null>(null);
+  const [history, setHistory] = useState<HistoryItem[] | []>([]);
 
   const fetchHistory = async () => {
     const history = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/history/user?limit=10`, {
@@ -35,6 +36,27 @@ export default function HistoryTable() {
 
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
+
+  if (history.length === 0) {
+    return (
+      <div style={{ margin: '12px' }}>
+        <Caption
+          level="1"
+          weight="3"
+          caps
+          style={{
+            height: '30px',
+            width: '100%'
+          }}>
+          Transaction history
+        </Caption>
+        <NoData>
+          <Text weight="1">No transactions yet</Text>
+          <Text weight="3">Check triggers and start earning rewards</Text>
+        </NoData>
+      </div>
+    );
+  }
 
   return (
     <Section style={{ width: '100%', paddingTop: '15px' }}>
