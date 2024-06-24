@@ -83,7 +83,11 @@ export default function HistoryTable() {
         return (
           <Cell
             key={item.data.chatId}
-            style={{ width: '100%', boxSizing: 'border-box', background: 'inherit' }}
+            style={{
+              width: '100%',
+              boxSizing: 'border-box',
+              background: 'inherit'
+            }}
             before={
               <IconButton mode="plain" size="s">
                 {mappedIcon}
@@ -91,7 +95,7 @@ export default function HistoryTable() {
             }
             subtitle={formatDate(item.createdAt)}
             after={<HistoryTablePoint points={item.data.points} />}>
-            {title}
+            <span style={{ whiteSpace: 'pre-wrap' }}>{title}</span>
           </Cell>
         );
       })}
