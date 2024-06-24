@@ -15,7 +15,7 @@ export const Container = styled.div`
 `;
 
 export function ReferralLink(props: Props) {
-  let { id } = useParams();
+  const { id } = useParams();
   const [referral, setReferral] = useState('');
 
   // addChatMember
@@ -28,7 +28,7 @@ export function ReferralLink(props: Props) {
           title: props.communityUser?.communityName
         },
         {
-          headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+          headers: { tmaInitData: window.Telegram.WebApp.initData }
         }
       );
 

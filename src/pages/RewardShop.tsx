@@ -13,12 +13,12 @@ import { ClaimButton } from '../components/ClaimButton';
 import { ReferralLink } from '../components/ReferralLink';
 
 export function RewardShop() {
-  let { id } = useParams();
+  const { id } = useParams();
   const [userCommunity, setUserCommunity] = useState<CommunityUser | null>(null);
 
   async function getUserCommunity() {
     const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/${id}`, {
-      headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+      headers: { tmaInitData: window.Telegram.WebApp.initData }
     });
 
     setUserCommunity(result.data);
@@ -40,8 +40,7 @@ export function RewardShop() {
           <Typography
             variant="body2"
             textAlign="center"
-            sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600 }}
-          >
+            sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600 }}>
             To claim your tokens and use Rewards Shop - connect your TON wallet
           </Typography>
         </ConnectWalletWithPlaceholder>
@@ -53,15 +52,13 @@ export function RewardShop() {
               marginRight: userCommunity?.points ? '15px' : '',
               fontSize: '24px',
               fontWeight: 400
-            }}
-          >
+            }}>
             Points earned: {userCommunity?.points}
           </Typography>
           <ClaimButton
             points={userCommunity?.points}
             chatId={Number(id)}
-            wallet={wallet}
-          ></ClaimButton>
+            wallet={wallet}></ClaimButton>
         </Box>
 
         {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}
@@ -73,9 +70,8 @@ export function RewardShop() {
             display: 'flex',
             alignItems: 'center',
             flexDirection: 'column',
-            opacity: Boolean(wallet) ? 1 : 0.3
-          }}
-        >
+            opacity: wallet ? 1 : 0.3
+          }}>
           <Typography variant="h2" sx={{ fontSize: '30px', fontWeight: 600 }}>
             Reward Shop
           </Typography>

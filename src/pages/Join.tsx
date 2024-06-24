@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Button, Paper, Typography } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { LinkOwner } from '../interfaces/LinkOwner';
@@ -10,7 +10,7 @@ export function Join() {
 
   const fetchCurrentUser = async () => {
     const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/referrals/currentUser`, {
-      headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+      headers: { tmaInitData: window.Telegram.WebApp.initData }
     });
 
     setCurrentUser(response.data);
@@ -48,8 +48,7 @@ export function Join() {
     <>
       linkOwner.telegramInviteLink {JSON.stringify(linkOwner.telegramInviteLink)}
       <Paper
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}
-      >
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
         <Typography textAlign={'center'}>Hello {getUserName()}!</Typography>
         <Typography textAlign={'center'}>
           User {linkOwner.name} would like to invite you to the community "{linkOwner.title}".

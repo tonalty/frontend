@@ -11,7 +11,7 @@ export default function HistoryTable() {
 
   const fetchHistory = async () => {
     const history = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/history/user?limit=10`, {
-      headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+      headers: { tmaInitData: window.Telegram.WebApp.initData }
     });
 
     setHistory(history.data);
@@ -58,8 +58,7 @@ export default function HistoryTable() {
               </IconButton>
             }
             subtitle={formattedDate}
-            after={<span>+5.00</span>}
-          >
+            after={<span>+5.00</span>}>
             {title}
           </Cell>
         );

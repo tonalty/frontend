@@ -14,7 +14,6 @@ import { GlobalStyles } from './components/GlobalStyle';
 import { darkTheme, lightTheme } from './components/Theme';
 import { Join } from './pages/Join';
 import { useEffect } from 'react';
-import axios from 'axios';
 
 function App() {
   const { network } = useTonConnect();

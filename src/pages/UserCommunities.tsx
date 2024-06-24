@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Tab,
-  Tabs,
-  Typography
-} from '@mui/material';
+import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import GroupsIcon from '@mui/icons-material/Groups';
 import { Link } from 'react-router-dom';
 import { CommunityUser } from '../interfaces/CommunityUser';
@@ -26,7 +16,7 @@ export function UserCommunities() {
   const fetchData = async () => {
     try {
       const userResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/user`, {
-        headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+        headers: { tmaInitData: window.Telegram.WebApp.initData }
       });
       setUserCommunities(userResult.data);
     } catch (error) {
@@ -35,7 +25,7 @@ export function UserCommunities() {
 
     try {
       const adminResult = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/admin`, {
-        headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+        headers: { tmaInitData: window.Telegram.WebApp.initData }
       });
       setAdminCommunities(adminResult.data);
     } catch (error) {
@@ -60,8 +50,7 @@ export function UserCommunities() {
             alignItems: 'center',
             flexDirection: 'column',
             alignSelf: 'center'
-          }}
-        >
+          }}>
           <Typography variant="h1" fontSize="30px" textAlign="center">
             Communities
           </Typography>
@@ -70,8 +59,7 @@ export function UserCommunities() {
             variant="body2"
             textAlign="center"
             marginY={2}
-            sx={{ fontSize: '16px', width: '300px', marginBottom: '15px' }}
-          >
+            sx={{ fontSize: '16px', width: '300px', marginBottom: '15px' }}>
             Here is the list of your telegram channels with points you can get
           </Typography>
         </Box>
@@ -82,8 +70,12 @@ export function UserCommunities() {
   return (
     <>
       <Box
-        sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', alignSelf: 'center' }}
-      >
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          alignSelf: 'center'
+        }}>
         <Typography variant="h1" fontSize="30px" textAlign="center">
           Communities
         </Typography>
@@ -100,8 +92,7 @@ export function UserCommunities() {
               <Link
                 to={`/community/${community.chatId}`}
                 key={index}
-                style={{ color: 'inherit', textDecoration: 'none' }}
-              >
+                style={{ color: 'inherit', textDecoration: 'none' }}>
                 <ListItem className="gbLi" sx={{ marginTop: '10px', borderRadius: '10px' }}>
                   <ListItemIcon>
                     <GroupsIcon htmlColor="#0098EA" />
@@ -126,8 +117,7 @@ export function UserCommunities() {
               <Link
                 to={`/connectcommunity/${community?.chatId}`}
                 key={index}
-                style={{ color: 'inherit', textDecoration: 'none' }}
-              >
+                style={{ color: 'inherit', textDecoration: 'none' }}>
                 <ListItem className="gbLi" sx={{ marginTop: '10px', borderRadius: '10px' }}>
                   <ListItemIcon>
                     <GroupsIcon htmlColor="#0098EA" />
@@ -141,8 +131,7 @@ export function UserCommunities() {
 
         <Link
           to={`/connectbot`}
-          style={{ marginTop: '15px', color: 'inherit', textDecoration: 'none' }}
-        >
+          style={{ marginTop: '15px', color: 'inherit', textDecoration: 'none' }}>
           <Button>How to connect community</Button>
         </Link>
       </Box>

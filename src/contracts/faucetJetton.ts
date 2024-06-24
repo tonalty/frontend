@@ -1,19 +1,9 @@
-import {
-  Contract,
-  ContractProvider,
-  Sender,
-  Address,
-  Cell,
-  contractAddress,
-  beginCell,
-  toNano
-} from 'ton-core';
+import { Contract, ContractProvider, Sender, Address, Cell, beginCell, toNano } from 'ton-core';
 
 export default class FaucetJetton implements Contract {
   async sendMintFromFaucet(provider: ContractProvider, via: Sender, receivingAddress: Address) {
     const MINT = 21;
     const INTERNAL_TRANSFER = 0x178d4519;
-    // @ts-ignore
     const mintTokensBody = beginCell()
       .storeUint(MINT, 32)
       .storeUint(0, 64) // queryid

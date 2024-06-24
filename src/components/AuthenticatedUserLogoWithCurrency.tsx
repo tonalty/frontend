@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Wallet, WalletInfoWithOpenMethod } from '@tonconnect/ui-react';
 
 interface Props {

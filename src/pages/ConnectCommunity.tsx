@@ -37,7 +37,7 @@ export function ConnectCommunity() {
       tokensToMint: tokensToMint
     };
     await axios.post(`${import.meta.env.VITE_BACKEND_URL}/tokens/mintTokens`, body, {
-      headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+      headers: { tmaInitData: window.Telegram.WebApp.initData }
     });
   };
 
@@ -48,8 +48,7 @@ export function ConnectCommunity() {
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
-        gap="40px"
-      >
+        gap="40px">
         <Typography variant="h1" fontSize="30px">
           Connect your community
         </Typography>
@@ -58,8 +57,7 @@ export function ConnectCommunity() {
           <Typography
             variant="body2"
             textAlign="center"
-            sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: '600' }}
-          >
+            sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: '600' }}>
             To mint your community tokens connect your wallet
           </Typography>
         </ConnectWalletWithPlaceholder>
@@ -71,7 +69,7 @@ export function ConnectCommunity() {
           onChange={handleTokenNameChange}
           variant="outlined"
           fullWidth
-          disabled={!Boolean(wallet)}
+          disabled={!wallet}
         />
         <TextField
           id="filled-basic"
@@ -80,7 +78,7 @@ export function ConnectCommunity() {
           onChange={handleTokenSymbolChange}
           variant="outlined"
           fullWidth
-          disabled={!Boolean(wallet)}
+          disabled={!wallet}
         />
         <TextField
           id="standard-basic"
@@ -89,7 +87,7 @@ export function ConnectCommunity() {
           onChange={handleTokensToMintChange}
           variant="outlined"
           fullWidth
-          disabled={!Boolean(wallet)}
+          disabled={!wallet}
         />
         <TextField
           id="standard-basic"
@@ -98,7 +96,7 @@ export function ConnectCommunity() {
           onChange={handleDescriptionChange}
           variant="outlined"
           fullWidth
-          disabled={!Boolean(wallet)}
+          disabled={!wallet}
         />
         {/* is admin */}
         {/* <TextField id="standard-basic" 
@@ -123,7 +121,7 @@ export function ConnectCommunity() {
             <Button variant="text">Go back</Button>
           </Link>
 
-          <Button variant="contained" disabled={!Boolean(wallet)} onClick={handleClick}>
+          <Button variant="contained" disabled={!wallet} onClick={handleClick}>
             Mint Tokens
           </Button>
         </Box>
