@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { HistoryItem } from '@/interfaces/HistoryItem';
 import axios from 'axios';
-import { Cell, IconButton, Caption, Section, Text } from '@telegram-apps/telegram-ui';
+import { Cell, IconButton, Caption, Text } from '@telegram-apps/telegram-ui';
 import { HistoryType } from '@/enums/HistoryType';
-import { ReactionIcon } from '@/icons/ReactionIcon';
-import { ReferralIcon } from '@/icons/ReferralIcon';
 import { HistoryTablePoint } from './HistoryTablePoint';
 import { NoData } from './NoData';
+import { SectionWithTitleContainer } from './SectionWithCaptionContainer';
+import { getIcon } from '@/utils/getIcon';
 
 export default function HistoryTable() {
   const [history, setHistory] = useState<HistoryItem[] | []>([]);
@@ -59,25 +59,15 @@ export default function HistoryTable() {
   }
 
   return (
-    <Section style={{ width: '100%', paddingTop: '15px' }}>
-      <Caption
-        level="1"
-        weight="3"
-        caps
-        style={{ height: '30px', display: 'flex', alignItems: 'center', paddingLeft: '12px' }}>
-        Transaction history
-      </Caption>
-
+    <SectionWithTitleContainer title="Transaction history">
       {history?.map((item) => {
         let title;
-        let mappedIcon;
+        const mappedIcon = getIcon(item.data.type);
 
         if (item.data.type === HistoryType.messageReaction) {
           title = 'Reaction';
-          mappedIcon = <ReactionIcon />;
         } else if (item.data.type === HistoryType.refferalJoin) {
           title = `User @${item.data.username} joined via link`;
-          mappedIcon = <ReferralIcon />;
         }
 
         return (
@@ -99,6 +89,6 @@ export default function HistoryTable() {
           </Cell>
         );
       })}
-    </Section>
+    </SectionWithTitleContainer>
   );
 }

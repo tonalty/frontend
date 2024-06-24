@@ -11,6 +11,7 @@ import { ConnectWalletWithPlaceholder } from '../components/TokenWithDescription
 import { AuthenticatedUserLogoWithCurrency } from '../components/AuthenticatedUserLogoWithCurrency';
 import { ClaimButton } from '../components/ClaimButton';
 import { ReferralLink } from '../components/ReferralLink';
+import { EarnPoints } from './EarnPoints';
 
 export function RewardShop() {
   const { id } = useParams();
@@ -63,7 +64,9 @@ export function RewardShop() {
 
         {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}
 
-        {userCommunity ? <ReferralLink userCommunity={userCommunity} /> : null}
+        {userCommunity ? <ReferralLink communityUser={userCommunity} /> : null}
+
+        <EarnPoints />
 
         <Box
           sx={{
