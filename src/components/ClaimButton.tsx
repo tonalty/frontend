@@ -1,6 +1,6 @@
-import { Button } from "@mui/material";
-import { Wallet } from "@tonconnect/ui-react";
-import axios from "axios";
+import { Button } from '@mui/material';
+import { Wallet } from '@tonconnect/ui-react';
+import axios from 'axios';
 
 interface Props {
   points?: number;
@@ -18,17 +18,13 @@ export function ClaimButton(props: Props) {
       `${import.meta.env.VITE_BACKEND_URL}/tokens/claimTokens`,
       { chatId: props.chatId, toAddress: props.wallet!.account.address },
       {
-        headers: { tmaInitData: (window as any).Telegram.WebApp.initData },
+        headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
       }
     );
   };
 
   return (
-    <Button
-      variant="contained"
-      disabled={!Boolean(props.wallet)}
-      onClick={handleClick}
-    >
+    <Button variant="contained" disabled={!Boolean(props.wallet)} onClick={handleClick}>
       Claim
     </Button>
   );

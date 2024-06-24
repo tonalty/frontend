@@ -1,66 +1,96 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useTonWallet } from "@tonconnect/ui-react";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { CommunityUser } from "../interfaces/CommunityUser";
+import { Box, Button, Typography } from '@mui/material';
+import { useTonWallet } from '@tonconnect/ui-react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { CommunityUser } from '../interfaces/CommunityUser';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { ProductSlider } from "../components/ProductSlider";
-import HistoryTable from "../components/HistoryTable";
-import { ConnectWalletWithPlaceholder } from "../components/TokenWithDescription";
-import { AuthenticatedUserLogoWithCurrency } from "../components/AuthenticatedUserLogoWithCurrency";
-import { ClaimButton } from "../components/ClaimButton";
-import { ReferralLink } from "../components/ReferralLink";
+import { ProductSlider } from '../components/ProductSlider';
+import HistoryTable from '../components/HistoryTable';
+import { ConnectWalletWithPlaceholder } from '../components/TokenWithDescription';
+import { AuthenticatedUserLogoWithCurrency } from '../components/AuthenticatedUserLogoWithCurrency';
+import { ClaimButton } from '../components/ClaimButton';
+import { ReferralLink } from '../components/ReferralLink';
 
 export function RewardShop() {
-    let { id } = useParams();
-    const [userCommunity, setUserCommunity] = useState<CommunityUser | null>(null);
+  let { id } = useParams();
+  const [userCommunity, setUserCommunity] = useState<CommunityUser | null>(null);
 
-    async function getUserCommunity() {
-        const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/${id}`, { headers: { tmaInitData: (window as any).Telegram.WebApp.initData } })
+  async function getUserCommunity() {
+    const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/${id}`, {
+      headers: { tmaInitData: (window as any).Telegram.WebApp.initData }
+    });
 
-        setUserCommunity(result.data);
-    }
-    const wallet = useTonWallet();
+    setUserCommunity(result.data);
+  }
+  const wallet = useTonWallet();
 
-    useEffect(() => {
-        getUserCommunity();
-    }, [])
+  useEffect(() => {
+    getUserCommunity();
+  }, []);
 
-    return (
-        <>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-                <Typography variant="h1" fontSize="30px" sx={{ marginBottom: '30px', textAlign: 'center' }}>{userCommunity?.communityName}</Typography>
-                
-                <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
-                    <Typography variant="body2" textAlign="center" sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600}}>
-                        To claim your tokens and use Rewards Shop - connect your TON wallet
-                    </Typography>
-                </ConnectWalletWithPlaceholder>
+  return (
+    <>
+      <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+        <Typography variant="h1" fontSize="30px" sx={{ marginBottom: '30px', textAlign: 'center' }}>
+          {userCommunity?.communityName}
+        </Typography>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '30px'}}>
-                    <Typography variant="body2" sx={{ marginRight: userCommunity?.points ? '15px' : '', fontSize: '24px', fontWeight: 400}}>Points earned: {userCommunity?.points}</Typography>
-                    <ClaimButton points={userCommunity?.points} chatId={Number(id)} wallet={wallet} ></ClaimButton>
-                </Box>
+        <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
+          <Typography
+            variant="body2"
+            textAlign="center"
+            sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600 }}
+          >
+            To claim your tokens and use Rewards Shop - connect your TON wallet
+          </Typography>
+        </ConnectWalletWithPlaceholder>
 
-                {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}
+        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '30px' }}>
+          <Typography
+            variant="body2"
+            sx={{
+              marginRight: userCommunity?.points ? '15px' : '',
+              fontSize: '24px',
+              fontWeight: 400
+            }}
+          >
+            Points earned: {userCommunity?.points}
+          </Typography>
+          <ClaimButton
+            points={userCommunity?.points}
+            chatId={Number(id)}
+            wallet={wallet}
+          ></ClaimButton>
+        </Box>
 
-                { userCommunity ? <ReferralLink userCommunity={userCommunity} /> : null }
+        {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null}
 
-                <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', opacity: Boolean(wallet) ? 1 : 0.3 }}>
-                    <Typography variant="h2" sx={{ fontSize: '30px', fontWeight: 600 }}>Reward Shop</Typography>
-                    <Typography variant="body1" sx={{ marginBottom: '15px' }}>Spend your $TREP</Typography>
+        {userCommunity ? <ReferralLink userCommunity={userCommunity} /> : null}
 
-                    <ProductSlider></ProductSlider>
-                    <HistoryTable />
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            opacity: Boolean(wallet) ? 1 : 0.3
+          }}
+        >
+          <Typography variant="h2" sx={{ fontSize: '30px', fontWeight: 600 }}>
+            Reward Shop
+          </Typography>
+          <Typography variant="body1" sx={{ marginBottom: '15px' }}>
+            Spend your $TREP
+          </Typography>
 
-                </Box>
-                
+          <ProductSlider></ProductSlider>
+          <HistoryTable />
+        </Box>
 
-                <Link to={`/`} style={{ color: 'inherit', textDecoration: 'none'}}>
-                    <Button>Back</Button>
-                </Link>
-            </Box>
-        </>
-    );
+        <Link to={`/`} style={{ color: 'inherit', textDecoration: 'none' }}>
+          <Button>Back</Button>
+        </Link>
+      </Box>
+    </>
+  );
 }

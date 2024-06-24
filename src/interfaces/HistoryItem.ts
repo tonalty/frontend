@@ -1,4 +1,4 @@
-import { HistoryType } from "@/enums/HistoryType";
+import { HistoryType } from '@/enums/HistoryType';
 
 export interface HistoryItem {
   communityId: number;

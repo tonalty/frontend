@@ -1,4 +1,4 @@
 export enum HistoryType {
-  messageReaction = "messageReaction",
-  refferalJoin = "refferalJoin",
+  messageReaction = 'messageReaction',
+  refferalJoin = 'refferalJoin'
 }

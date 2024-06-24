@@ -58,7 +58,8 @@ export default function HistoryTable() {
               </IconButton>
             }
             subtitle={formattedDate}
-            after={<span>+5.00</span>}>
+            after={<span>+5.00</span>}
+          >
             {title}
           </Cell>
         );

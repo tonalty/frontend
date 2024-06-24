@@ -1,12 +1,6 @@
 export const ReactionIcon = () => {
   return (
-    <svg
-      width="48"
-      height="48"
-      viewBox="0 0 48 48"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="48" height="48" rx="24" fill="#007AFF" fillOpacity="0.08" />
       <path
         d="M22.4688 21.3235C22.4688 22.1391 21.9105 22.8003 21.2218 22.8003C20.533 22.8003 19.9747 22.1391 19.9747 21.3235C19.9747 20.5079 20.533 19.8467 21.2218 19.8467C21.9105 19.8467 22.4688 20.5079 22.4688 21.3235Z"
