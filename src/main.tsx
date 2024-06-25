@@ -2,9 +2,8 @@ import './index.css';
 import '@telegram-apps/telegram-ui/dist/styles.css';
 
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AppRoot } from '@telegram-apps/telegram-ui';
+import { SDKProvider } from '@tma.js/sdk-react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 
 import App from './App';
@@ -19,12 +18,10 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <TonConnectUIProvider manifestUrl={manifestUrl}>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AppRoot>
-          <App></App>
-        </AppRoot>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <SDKProvider acceptCustomStyles debug>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </SDKProvider>
   </TonConnectUIProvider>
 );
