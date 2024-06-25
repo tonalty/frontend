@@ -54,7 +54,7 @@ export const EarnPoints = (props: Props) => {
         title="1 invited member"
         onClick={handleClick}
         type={TriggerType.refferalJoin}
-        points={5}></EarnPointsButton>
+        points={50}></EarnPointsButton>
     </SectionWithTitleContainer>
   );
 };
