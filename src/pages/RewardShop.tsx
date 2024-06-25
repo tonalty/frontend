@@ -9,7 +9,6 @@ import { ProductSlider } from '../components/ProductSlider';
 import HistoryTable from '../components/HistoryTable';
 import { EarnPoints } from './EarnPoints';
 import { Avatar, Button, LargeTitle, Text } from '@telegram-apps/telegram-ui';
-import { ConnectWalletButton } from '@/components/ConnectWalletButton';
 import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 
 interface Props {
@@ -41,7 +40,7 @@ export function RewardShop(props: Props) {
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <Avatar size={64} src={props.avatarSrc} />
+        <Avatar size={48} src={props.avatarSrc} />
 
         <LargeTitle style={{ textAlign: 'center', marginTop: '16px', margin: '0 16px' }} weight="2">
           {userCommunity?.communityName}
