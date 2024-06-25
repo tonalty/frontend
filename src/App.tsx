@@ -1,19 +1,21 @@
 import './App.css';
-import { ThemeProvider } from 'styled-components';
-import { useTonConnect } from './hooks/useTonConnect';
-import { CHAIN } from '@tonconnect/protocol';
 import '@twa-dev/sdk';
-import { UserCommunities } from './pages/UserCommunities';
+
+import { useEffect } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { Confirmation } from './pages/Confirmation';
-import { Triggers } from './pages/Triggers';
-import { RewardShop } from './pages/RewardShop';
-import { ConnectCommunity } from './pages/ConnectCommunity';
-import { ConnectBot } from './pages/ConnectBot';
+import { CHAIN } from '@tonconnect/protocol';
+import { ThemeProvider } from 'styled-components';
+
 import { GlobalStyles } from './components/GlobalStyle';
 import { darkTheme, lightTheme } from './components/Theme';
+import { useTonConnect } from './hooks/useTonConnect';
+import { Confirmation } from './pages/Confirmation';
+import { ConnectBot } from './pages/ConnectBot';
+import { ConnectCommunity } from './pages/ConnectCommunity';
 import { Join } from './pages/Join';
-import { useEffect } from 'react';
+import { RewardShop } from './pages/RewardShop';
+import { Triggers } from './pages/Triggers';
+import { UserCommunities } from './pages/UserCommunities';
 
 function App() {
   const { network } = useTonConnect();

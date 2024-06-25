@@ -1,15 +1,17 @@
-import { Box, Typography } from '@mui/material';
-import { useTonWallet } from '@tonconnect/ui-react';
-import axios from 'axios';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { CommunityUser } from '../interfaces/CommunityUser';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { ProductSlider } from '../components/ProductSlider';
-import HistoryTable from '../components/HistoryTable';
-import { EarnPoints } from './EarnPoints';
+import { Box, Typography } from '@mui/material';
 import { Avatar, Button, LargeTitle, Text } from '@telegram-apps/telegram-ui';
+import { useTonWallet } from '@tonconnect/ui-react';
+import axios from 'axios';
+
 import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
+import HistoryTable from '../components/HistoryTable';
+import { ProductSlider } from '../components/ProductSlider';
+import { CommunityUser } from '../interfaces/CommunityUser';
+import { EarnPoints } from './EarnPoints';
 
 interface Props {
   avatarSrc: string;

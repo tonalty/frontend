@@ -1,11 +1,13 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TonConnectUIProvider } from '@tonconnect/ui-react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
 import './index.css';
-import { BrowserRouter } from 'react-router-dom';
-import { AppRoot } from '@telegram-apps/telegram-ui';
 import '@telegram-apps/telegram-ui/dist/styles.css';
+
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AppRoot } from '@telegram-apps/telegram-ui';
+import { TonConnectUIProvider } from '@tonconnect/ui-react';
+
+import App from './App';
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =

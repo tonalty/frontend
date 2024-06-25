@@ -1,13 +1,13 @@
-import { Avatar, Box } from '@mui/material';
-
-import { Link } from 'react-router-dom';
-import { CommunityUser } from '../interfaces/CommunityUser';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { Avatar, Box } from '@mui/material';
 import { Cell, Section, Text } from '@telegram-apps/telegram-ui';
+import axios from 'axios';
+
 import { Menu } from '@/components/Menu';
-import { View } from '@/enums/View';
 import { NoData } from '@/components/NoData';
+import { View } from '@/enums/View';
+import { CommunityUser } from '../interfaces/CommunityUser';
 
 const CellStyles = {
   height: '68px',

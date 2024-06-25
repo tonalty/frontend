@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
 import React, { useState } from 'react';
+import { Box } from '@mui/material';
 import styled from 'styled-components';
 
 // does not autoplay the video due to recent restrictions on most modern browsers

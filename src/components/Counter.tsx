@@ -1,8 +1,8 @@
 import { TonConnectButton } from '@tonconnect/ui-react';
+
 import { useCounterContract } from '../hooks/useCounterContract';
 import { useTonConnect } from '../hooks/useTonConnect';
-
-import { Card, FlexBoxCol, FlexBoxRow, Ellipsis, Button } from './styled/styled';
+import { Button,Card, Ellipsis, FlexBoxCol, FlexBoxRow } from './styled/styled';
 
 export function Counter() {
   const { connected } = useTonConnect();

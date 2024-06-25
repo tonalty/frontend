@@ -1,7 +1,8 @@
+import { Button, Caption, IconButton } from '@telegram-apps/telegram-ui';
+
 import { TriggerType } from '@/enums/TriggerType';
 import { RightIcon } from '@/icons/RightIcon';
 import { formatPoints, getIcon } from '@/utils/common';
-import { Button, Caption, IconButton } from '@telegram-apps/telegram-ui';
 
 interface Props {
   title: string;

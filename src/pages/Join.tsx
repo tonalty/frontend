@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { LinkOwner } from '../interfaces/LinkOwner';
 import { User } from 'node-telegram-bot-api';
+
+import { LinkOwner } from '../interfaces/LinkOwner';
 
 export function Join() {
   const [currentUser, setCurrentUser] = useState<null | User>(null);

@@ -1,10 +1,11 @@
-import Counter from '../contracts/counter';
-import { useTonClient } from './useTonClient';
-import { useAsyncInitialize } from './useAsyncInitialize';
-import { useTonConnect } from './useTonConnect';
-import { Address, OpenedContract } from 'ton-core';
 import { useQuery } from '@tanstack/react-query';
 import { CHAIN } from '@tonconnect/protocol';
+import { Address, OpenedContract } from 'ton-core';
+
+import Counter from '../contracts/counter';
+import { useAsyncInitialize } from './useAsyncInitialize';
+import { useTonClient } from './useTonClient';
+import { useTonConnect } from './useTonConnect';
 
 export function useCounterContract() {
   const { client } = useTonClient();

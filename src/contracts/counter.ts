@@ -1,12 +1,11 @@
 import {
-  Contract,
-  ContractProvider,
-  Sender,
   Address,
+  beginCell,
   Cell,
+  Contract,
   contractAddress,
-  beginCell
-} from 'ton-core';
+  ContractProvider,
+  Sender} from 'ton-core';
 
 export default class Counter implements Contract {
   static createForDeploy(code: Cell, initialCounterValue: number): Counter {
