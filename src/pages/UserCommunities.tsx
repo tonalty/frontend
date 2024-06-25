@@ -128,9 +128,7 @@ export function UserCommunities() {
                   <Cell
                     style={CellStyles}
                     subtitle={`Earned points: ${community.points}`}
-                    before={
-                      <Avatar src="https://cdn.theatlantic.com/thumbor/tO5tLGl38cH3MjWz3PypY1dPHX4=/0x62:2000x1187/960x540/media/img/mt/2018/03/AP_325360162607/original.jpg" />
-                    }>
+                    before={<Avatar src="https://picsum.photos/200/300" />}>
                     {community?.communityName}
                   </Cell>
                 </Link>

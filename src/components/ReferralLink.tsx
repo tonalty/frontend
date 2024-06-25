@@ -52,7 +52,6 @@ export function ReferralLink(props: Props) {
 
   return (
     <Container>
-      <Typography variant="body2">Share the link to your shop to get more points</Typography>
       <Paper elevation={5} sx={{ display: 'flex', 'align-items': 'center' }}>
         <InputBase
           disabled

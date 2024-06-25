@@ -43,13 +43,16 @@ function App() {
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyles />
         <Routes>
-          <Route path="/" element={<UserCommunities />} />
           <Route path="/connectbot" element={<ConnectBot />} />
           <Route path="/connectcommunity/:id" element={<ConnectCommunity />} />
-          <Route path="/community/:id" element={<RewardShop />} />
+          <Route
+            path="/community/:id"
+            element={<RewardShop avatarSrc="https://picsum.photos/200/300" />}
+          />
           <Route path="/triggers" element={<Triggers />} />
           <Route path="/confirmation" element={<Confirmation />} />
           <Route path="/join-community" element={<Join></Join>} />
+          <Route path="/" element={<UserCommunities />} />
           <Route path="*" element={<p>Not found</p>} />
         </Routes>
       </ThemeProvider>
