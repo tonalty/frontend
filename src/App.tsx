@@ -73,7 +73,7 @@ function App() {
             />
             <Route path="/triggers" element={<Triggers />} />
             <Route path="/confirmation" element={<Confirmation />} />
-            <Route path="/join-community" element={<Join></Join>} />
+            <Route path="/join-community" element={<Join />} />
             <Route path="/" element={<UserCommunities />} />
             <Route path="*" element={<p>Not found</p>} />
           </Routes>
