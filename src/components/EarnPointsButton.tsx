@@ -23,7 +23,10 @@ export const EarnPointsButton = (props: Props) => {
         height: '60px',
         boxSizing: 'border-box',
         borderRadius: '16px',
-        marginTop: '12px'
+        marginTop: '12px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
       }}
       before={
         <IconButton mode="plain" size="s">
@@ -38,8 +41,6 @@ export const EarnPointsButton = (props: Props) => {
       }>
       <div
         style={{
-          marginLeft: '30px',
-          marginRight: '30px',
           whiteSpace: 'pre-wrap'
         }}>
         {props.title}
