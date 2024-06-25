@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { CommunityUser } from '../interfaces/CommunityUser';
+import { Caption } from '@telegram-apps/telegram-ui';
 
 interface Props {
   communityUser: CommunityUser | null;
@@ -50,15 +51,25 @@ export function ReferralLink(props: Props) {
     }
   };
 
+  if (!referral) {
+    return (
+      <Caption style={{ color: 'red' }}>
+        Please, make sure that bot has admin rights inside group! Without it link could not be
+        generated.
+      </Caption>
+    );
+  }
+
   return (
     <Container>
       <Paper elevation={5} sx={{ display: 'flex', 'align-items': 'center' }}>
         <InputBase
           disabled
           sx={{ ml: 1, flex: 1 }}
-          placeholder={referral ? referral : 'Check that bot has admin rights for group!'}
+          placeholder={referral}
           inputProps={{ 'aria-label': 'search google maps' }}
         />
+
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={handleCopy}>
           <ContentCopyIcon />
