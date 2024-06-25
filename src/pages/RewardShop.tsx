@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTonWallet } from '@tonconnect/ui-react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import HistoryTable from '../components/HistoryTable';
 import { EarnPoints } from './EarnPoints';
 import { Avatar, Button, LargeTitle, Text } from '@telegram-apps/telegram-ui';
 import { ConnectWalletButton } from '@/components/ConnectWalletButton';
+import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 
 interface Props {
   avatarSrc: string;
@@ -26,6 +27,7 @@ export function RewardShop(props: Props) {
 
     setUserCommunity(result.data);
   }
+
   const wallet = useTonWallet();
 
   useEffect(() => {
@@ -50,23 +52,28 @@ export function RewardShop(props: Props) {
 
           <Text
             weight="1"
-            style={{ marginTop: '16px', fontSize: '56px', lineHeight: '66px', color: '#B3B3B3' }}>
+            style={{
+              marginTop: '16px',
+              fontSize: '56px',
+              lineHeight: '66px',
+              color: wallet ? 'black' : '#B3B3B3'
+            }}>
             {Number(userCommunity?.points).toFixed(2)}
           </Text>
         </div>
 
-        <ConnectWalletButton />
+        {/* <ConnectWalletButton wallet={wallet} /> */}
 
-        {/* {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null} */}
-
-        {/* <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
+        <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
           <Typography
             variant="body2"
             textAlign="center"
             sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600 }}>
             To claim your tokens and use Rewards Shop - connect your TON wallet
           </Typography>
-        </ConnectWalletWithPlaceholder> */}
+        </ConnectWalletWithPlaceholder>
+
+        {/* {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null} */}
 
         <EarnPoints communityUser={userCommunity} />
 
@@ -77,10 +84,6 @@ export function RewardShop(props: Props) {
             flexDirection: 'column',
             opacity: wallet ? 1 : 0.3
           }}>
-          {/* <Typography variant="h2" sx={{ fontSize: '30px', fontWeight: 600 }}>
-            Reward Shop
-          </Typography> */}
-
           <ProductSlider></ProductSlider>
           <HistoryTable />
         </Box>
