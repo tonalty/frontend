@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { HistoryItem } from '@/interfaces/HistoryItem';
 import axios from 'axios';
 import { Cell, IconButton, Caption, Text } from '@telegram-apps/telegram-ui';
-import { HistoryType } from '@/enums/HistoryType';
+import { TriggerType } from '@/enums/TriggerType';
 import { HistoryTablePoint } from './HistoryTablePoint';
 import { NoData } from './NoData';
 import { SectionWithTitleContainer } from './SectionWithCaptionContainer';
-import { getIcon } from '@/utils/getIcon';
+import { getIcon } from '@/utils/common';
 
 export default function HistoryTable() {
   const [history, setHistory] = useState<HistoryItem[] | []>([]);
@@ -46,7 +46,8 @@ export default function HistoryTable() {
           caps
           style={{
             height: '30px',
-            width: '100%'
+            width: '100%',
+            textAlign: 'left'
           }}>
           Transaction history
         </Caption>
@@ -64,9 +65,9 @@ export default function HistoryTable() {
         let title;
         const mappedIcon = getIcon(item.data.type);
 
-        if (item.data.type === HistoryType.messageReaction) {
+        if (item.data.type === TriggerType.messageReaction) {
           title = 'Reaction';
-        } else if (item.data.type === HistoryType.refferalJoin) {
+        } else if (item.data.type === TriggerType.refferalJoin) {
           title = `User @${item.data.username} joined via link`;
         }
 

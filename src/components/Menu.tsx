@@ -13,7 +13,7 @@ interface Props {
 
 export function Menu(props: Props) {
   return (
-    <Box sx={{ width: '100%', maxWidth: 360 }}>
+    <Box sx={{ width: '100%' }}>
       <TabsList>
         <TabsItem
           selected={props.currentView === View.SUBSCRIBED}

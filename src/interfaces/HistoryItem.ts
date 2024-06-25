@@ -1,11 +1,11 @@
-import { HistoryType } from '@/enums/HistoryType';
+import { TriggerType } from '@/enums/TriggerType';
 
 export interface HistoryItem {
   communityId: number;
   data: {
     messageId: string;
     chatId: number;
-    type: HistoryType;
+    type: TriggerType;
     points: number;
     username?: string;
   };
