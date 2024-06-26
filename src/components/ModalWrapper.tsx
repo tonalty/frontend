@@ -1,22 +1,19 @@
-import { Modal } from '@telegram-apps/telegram-ui';
-import { ModalHeader } from '@telegram-apps/telegram-ui/dist/components/Overlays/Modal/components/ModalHeader/ModalHeader';
+import { FC, PropsWithChildren } from 'react';
+import { Modal, ModalProps } from '@telegram-apps/telegram-ui';
 
-interface Props {
+interface Props extends ModalProps {
   headerTitle: string;
-  isTriggered: boolean;
-  handleModalOpen: (value: boolean) => void;
-  children: string | JSX.Element | JSX.Element[];
 }
 
-export const ModalWrapper = (props: Props) => {
+// TODO: overlayComponent
+export const ModalWrapper: FC<PropsWithChildren<Props>> = ({ headerTitle, children, ...rest }) => {
   return (
     <Modal
       preventScrollRestoration={false}
-      overlayComponent={<>hello</>}
-      header={<ModalHeader>{props.headerTitle}</ModalHeader>}
-      open={props.isTriggered}
-      onOpenChange={props.handleModalOpen}>
-      {props.children}
+      overlayComponent={undefined}
+      header={<Modal.Header>{headerTitle}</Modal.Header>}
+      {...rest}>
+      {children}
     </Modal>
   );
 };

@@ -5,7 +5,7 @@ import { ReferralIcon } from '@/icons/ReferralIcon';
 export const getIcon = (type: string, isInvertedColor: boolean = false) => {
   if (type === TriggerType.messageReaction) {
     return <ReactionIcon isInvertedColor={isInvertedColor} />;
-  } else if (type === TriggerType.refferalJoin) {
+  } else if (type === TriggerType.referralJoin) {
     return <ReferralIcon isInvertedColor={isInvertedColor} />;
   }
 };
