@@ -2,7 +2,7 @@ import './App.css';
 import '@twa-dev/sdk';
 
 import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 import {
   bindViewportCSSVars,
@@ -47,12 +47,13 @@ function App() {
     viewport && bindViewportCSSVars(viewport);
   }, [viewport]);
 
-  // useEffect(() => {
-  //   if (lp?.startParam) {
-  //     // sendTgWebAppStartParam()
-  //     navigate('/join-community')
-  //   }
-  // }, [lp])
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (lp?.startParam) {
+      navigate('/join-community');
+    }
+  }, [lp?.startParam]);
 
   console.log('isDarkMode', miniApp?.isDark);
   console.log(`Network: `, network ? (network === CHAIN.MAINNET ? 'mainnet' : 'testnet') : 'N/A');
@@ -62,22 +63,21 @@ function App() {
       appearance={miniApp?.isDark ? 'dark' : 'light'}
       platform={lp && (['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base')}>
       <ThemeProvider theme={miniApp?.isDark ? darkTheme : lightTheme}>
+        {/* {JSON.stringify(lp?.startParam)} */}
         <GlobalStyles />
-        <AdaptiveRouter>
-          <Routes>
-            <Route path="/connectbot" element={<ConnectBot />} />
-            <Route path="/connectcommunity/:id" element={<ConnectCommunity />} />
-            <Route
-              path="/community/:id"
-              element={<RewardShop avatarSrc="https://picsum.photos/200/300" />}
-            />
-            <Route path="/triggers" element={<Triggers />} />
-            <Route path="/confirmation" element={<Confirmation />} />
-            <Route path="/join-community" element={<Join />} />
-            <Route path="/" element={<UserCommunities />} />
-            <Route path="*" element={<p>Not found</p>} />
-          </Routes>
-        </AdaptiveRouter>
+        <Routes>
+          <Route path="/connectbot" element={<ConnectBot />} />
+          <Route path="/connectcommunity/:id" element={<ConnectCommunity />} />
+          <Route
+            path="/community/:id"
+            element={<RewardShop avatarSrc="https://picsum.photos/200/300" />}
+          />
+          <Route path="/triggers" element={<Triggers />} />
+          <Route path="/confirmation" element={<Confirmation />} />
+          <Route path="/join-community" element={<Join />} />
+          <Route path="/" element={<UserCommunities />} />
+          <Route path="*" element={<p>Not found</p>} />
+        </Routes>
       </ThemeProvider>
     </AppRoot>
   );

@@ -7,6 +7,7 @@ import { SDKProvider } from '@tma.js/sdk-react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 
 import App from './App';
+import { AdaptiveRouter } from './components/AdaptiveRouter';
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
@@ -20,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <TonConnectUIProvider manifestUrl={manifestUrl}>
     <SDKProvider acceptCustomStyles debug>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <AdaptiveRouter>
+          <App />
+        </AdaptiveRouter>
       </QueryClientProvider>
     </SDKProvider>
   </TonConnectUIProvider>

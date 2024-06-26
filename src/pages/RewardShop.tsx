@@ -17,12 +17,17 @@ interface Props {
 
 export function RewardShop(props: Props) {
   const { id } = useParams();
+
   const { data: userCommunity } = useUserCommunity(id);
 
   const wallet = useTonWallet();
 
   if (!userCommunity) {
-    return <span>No user commmunity</span>;
+    return (
+      <span>
+        {id} {userCommunity} No user commmunity
+      </span>
+    );
   }
 
   return (
@@ -74,9 +79,6 @@ export function RewardShop(props: Props) {
           <ProductSlider></ProductSlider>
           <HistoryTable />
         </Box>
-        <Link to={`/`} style={{ color: 'inherit', textDecoration: 'none' }}>
-          <Button>Back</Button>
-        </Link>
       </div>
     </>
   );

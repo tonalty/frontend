@@ -1,20 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Avatar, Box } from '@mui/material';
-import { Cell, Section, Text } from '@telegram-apps/telegram-ui';
+import { Box } from '@mui/material';
 import axios from 'axios';
-
 import { Menu } from '@/components/Menu';
-import { NoData } from '@/components/NoData';
 import { View } from '@/enums/View';
 import { CommunityUser } from '../interfaces/CommunityUser';
-
-const CellStyles = {
-  height: '68px',
-  marginTop: '32px',
-  background: 'inherit',
-  borderRadius: '30px'
-};
+import { SubscribedCommunity } from '@/components/SubscribedCommunity';
+import { ManagedCommunity } from '@/components/ManagedCommunity';
 
 export function UserCommunities() {
   const [userCommunities, setUserCommunities] = useState<CommunityUser[]>([]);
@@ -55,30 +46,6 @@ export function UserCommunities() {
     return <Box>{JSON.stringify(errors)}</Box>;
   }
 
-  if (userCommunities.length === 0 || adminCommunities.length === 0) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          alignSelf: 'center'
-        }}>
-        <Menu
-          currentView={currentView}
-          subscribed={userCommunities}
-          managed={adminCommunities}
-          onClickView={onClickView}
-        />
-
-        <NoData>
-          <Text weight="1">No channels yet</Text>
-          <Text weight="3">Start connecting bot to your channels</Text>
-        </NoData>
-      </Box>
-    );
-  }
-
   return (
     <>
       <Box
@@ -96,46 +63,10 @@ export function UserCommunities() {
         />
 
         {currentView === View.SUBSCRIBED ? (
-          <Section style={{ width: '100%' }}>
-            {userCommunities.map((community, index) => {
-              return (
-                <Link
-                  className="disableHover"
-                  to={`/community/${community.chatId}`}
-                  key={index}
-                  style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
-                  <Cell
-                    style={CellStyles}
-                    subtitle={`Earned points: ${community.points}`}
-                    before={<Avatar src="https://avatars.githubusercontent.com/u/84640980?v=4" />}>
-                    {community?.communityName}
-                  </Cell>
-                </Link>
-              );
-            })}
-          </Section>
+          <SubscribedCommunity community={userCommunities} />
         ) : null}
 
-        {currentView === View.MANAGED ? (
-          <Section style={{ width: '100%' }}>
-            {adminCommunities.map((community, index) => {
-              return (
-                <Link
-                  className="disableHover"
-                  to={`/community/${community.chatId}`}
-                  key={index}
-                  style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
-                  <Cell
-                    style={CellStyles}
-                    subtitle={`Earned points: ${community.points}`}
-                    before={<Avatar src="https://picsum.photos/200/300" />}>
-                    {community?.communityName}
-                  </Cell>
-                </Link>
-              );
-            })}
-          </Section>
-        ) : null}
+        {currentView === View.MANAGED ? <ManagedCommunity community={adminCommunities} /> : null}
       </Box>
     </>
   );
