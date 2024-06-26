@@ -23,7 +23,8 @@ export const ModalNewReward: FC<Props> = (props) => {
           }}>
           <UploadImage />
           <Input header="Title" placeholder="Come up with a reward name" />
-          <Input header="Value" placeholder="Come up with a reward name" />
+          <Input header="Value" placeholder="0.00" />
+          {/* TODO: slider sync with value */}
           <Slider
             style={{
               marginTop: 13
