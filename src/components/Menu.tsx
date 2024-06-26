@@ -13,23 +13,21 @@ interface Props {
 
 export function Menu(props: Props) {
   return (
-    <Box sx={{ width: '100%' }}>
-      <TabsList>
-        <TabsList.Item
-          selected={props.currentView === View.SUBSCRIBED}
-          onClick={() => {
-            props.onClickView(View.SUBSCRIBED);
-          }}>
-          Subscribed
-          <Badge type="number">{props.subscribed.length}</Badge>
-        </TabsList.Item>
-        <TabsList.Item
-          selected={props.currentView === View.MANAGED}
-          onClick={() => props.onClickView(View.MANAGED)}>
-          Managing
-          <Badge type="number">{props.managed.length}</Badge>
-        </TabsList.Item>
-      </TabsList>
-    </Box>
+    <TabsList>
+      <TabsList.Item
+        selected={props.currentView === View.SUBSCRIBED}
+        onClick={() => {
+          props.onClickView(View.SUBSCRIBED);
+        }}>
+        Subscribed
+        <Badge type="number">{props.subscribed.length}</Badge>
+      </TabsList.Item>
+      <TabsList.Item
+        selected={props.currentView === View.MANAGED}
+        onClick={() => props.onClickView(View.MANAGED)}>
+        Managing
+        <Badge type="number">{props.managed.length}</Badge>
+      </TabsList.Item>
+    </TabsList>
   );
 }

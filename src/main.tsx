@@ -6,8 +6,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SDKProvider } from '@tma.js/sdk-react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 
-import App from './App';
 import { AdaptiveRouter } from './components/AdaptiveRouter';
+import { Root } from './Root';
 
 // this manifest is used temporarily for development purposes
 const manifestUrl =
@@ -18,11 +18,15 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <TonConnectUIProvider manifestUrl={manifestUrl}>
+  <TonConnectUIProvider
+    manifestUrl={manifestUrl}
+    uiPreferences={{
+      borderRadius: 's'
+    }}>
     <SDKProvider acceptCustomStyles debug>
       <QueryClientProvider client={queryClient}>
         <AdaptiveRouter>
-          <App />
+          <Root />
         </AdaptiveRouter>
       </QueryClientProvider>
     </SDKProvider>

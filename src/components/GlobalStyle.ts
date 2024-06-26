@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 interface Theme {
-  body: string
-  text: string
+  body: string;
+  text: string;
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -17,10 +17,11 @@ export const GlobalStyles = createGlobalStyle`
     transition: all 0.50s linear;
     max-width: 480px;
     display: flex;
-    margin: auto;
+    margin: 0 auto;
   }
 
   #root {
     margin: 0 auto;
+    width: 100%;
   }
-`
+`;
