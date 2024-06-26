@@ -16,7 +16,6 @@ import {
 import { CHAIN } from '@tonconnect/protocol';
 import { ThemeProvider } from 'styled-components';
 
-import { AdaptiveRouter } from './components/AdaptiveRouter';
 import { GlobalStyles } from './components/GlobalStyle';
 import { darkTheme, lightTheme } from './components/Theme';
 import { useTonConnect } from './hooks/useTonConnect';
