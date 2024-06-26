@@ -1,10 +1,11 @@
+import { useQuery } from '@tanstack/react-query';
+import { Address, OpenedContract } from 'ton-core';
+
+import FaucetJetton from '../contracts/faucetJetton';
+import FaucetJettonWallet from '../contracts/faucetJettonWallet';
 import { useAsyncInitialize } from './useAsyncInitialize';
 import { useTonClient } from './useTonClient';
 import { useTonConnect } from './useTonConnect';
-import FaucetJetton from '../contracts/faucetJetton';
-import { Address, OpenedContract } from 'ton-core';
-import FaucetJettonWallet from '../contracts/faucetJettonWallet';
-import { useQuery } from '@tanstack/react-query';
 
 export function useFaucetJettonContract() {
   const { wallet, sender } = useTonConnect();

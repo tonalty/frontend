@@ -1,6 +1,7 @@
-import { Caption, Placeholder } from '@telegram-apps/telegram-ui';
-import { ReferralLink } from './ReferralLink';
+import { Placeholder } from '@telegram-apps/telegram-ui';
+
 import { CommunityUser } from '@/interfaces/CommunityUser';
+import { ReferralLink } from './ReferralLink';
 
 interface Props {
   communityUser: CommunityUser;

@@ -1,6 +1,6 @@
-import { useTonConnect } from '../hooks/useTonConnect';
 import { useFaucetJettonContract } from '../hooks/useFaucetJettonContract';
-import { Card, FlexBoxCol, FlexBoxRow, Button, Ellipsis } from './styled/styled';
+import { useTonConnect } from '../hooks/useTonConnect';
+import { Button, Card, Ellipsis,FlexBoxCol, FlexBoxRow } from './styled/styled';
 
 export function Jetton() {
   const { connected } = useTonConnect();

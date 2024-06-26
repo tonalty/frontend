@@ -1,5 +1,6 @@
-import { WalletIcon } from '@/icons/WalletIcon';
 import { Button, Text } from '@telegram-apps/telegram-ui';
+
+import { WalletIcon } from '@/icons/WalletIcon';
 
 export const ConnectWalletButton = () => {
   return (

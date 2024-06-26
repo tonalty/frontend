@@ -1,9 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 interface Theme {
-  body: string;
-  text: string;
-  bgCommunityListItem: string;
+  body: string
+  text: string
 }
 
 export const GlobalStyles = createGlobalStyle`
@@ -24,8 +23,4 @@ export const GlobalStyles = createGlobalStyle`
   #root {
     margin: 0 auto;
   }
-
-  .gbLi {
-    background-image: ${({ theme }) => theme.bgCommunityListItem};
-  }
-`;
+`

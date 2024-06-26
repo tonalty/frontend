@@ -1,11 +1,12 @@
-import { Divider, IconButton, InputBase, Paper, Typography } from '@mui/material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { CommunityUser } from '../interfaces/CommunityUser';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { Divider, IconButton, InputBase, Paper } from '@mui/material';
 import { Caption } from '@telegram-apps/telegram-ui';
+import axios from 'axios';
+import styled from 'styled-components';
+
+import { CommunityUser } from '../interfaces/CommunityUser';
 
 interface Props {
   communityUser: CommunityUser | null;

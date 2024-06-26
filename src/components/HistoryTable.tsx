@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { HistoryItem } from '@/interfaces/HistoryItem';
+import { Caption, Cell, IconButton, Text } from '@telegram-apps/telegram-ui';
 import axios from 'axios';
-import { Cell, IconButton, Caption, Text } from '@telegram-apps/telegram-ui';
+
 import { TriggerType } from '@/enums/TriggerType';
+import { HistoryItem } from '@/interfaces/HistoryItem';
+import { getIcon } from '@/utils/common';
 import { HistoryTablePoint } from './HistoryTablePoint';
 import { NoData } from './NoData';
 import { SectionWithTitleContainer } from './SectionWithCaptionContainer';
-import { getIcon } from '@/utils/common';
 
 export default function HistoryTable() {
   const [history, setHistory] = useState<HistoryItem[] | []>([]);

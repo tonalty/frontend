@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
-import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useTonWallet } from '@tonconnect/ui-react';
 import axios from 'axios';
+
+import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 
 export function ConnectCommunity() {
   const [tokenName, setTokenName] = useState<string>('');

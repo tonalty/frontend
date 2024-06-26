@@ -1,5 +1,6 @@
-import { Box, Typography } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
+import { Box, Typography } from '@mui/material';
+
 import { ProductImage } from './styled/styled';
 
 export function ProductSlider() {

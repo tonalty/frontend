@@ -1,11 +1,12 @@
+import { useState } from 'react';
+import { Placeholder } from '@telegram-apps/telegram-ui';
+
 import { EarnPointsButton } from '@/components/EarnPointsButton';
 import { ModalBodyReferral } from '@/components/ModalBodyReferral';
 import { ModalWrapper } from '@/components/ModalWrapper';
 import { SectionWithTitleContainer } from '@/components/SectionWithCaptionContainer';
 import { TriggerType } from '@/enums/TriggerType';
 import { CommunityUser } from '@/interfaces/CommunityUser';
-import { Placeholder } from '@telegram-apps/telegram-ui';
-import { useState } from 'react';
 
 enum Titles {
   messageReaction = '1 emoji reaction',

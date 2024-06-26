@@ -1,5 +1,5 @@
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Typography } from '@mui/material';
 
 export function Triggers() {
   return (

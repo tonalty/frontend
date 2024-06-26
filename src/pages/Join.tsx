@@ -1,34 +1,18 @@
 import { Button, Paper, Typography } from '@mui/material';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { LinkOwner } from '../interfaces/LinkOwner';
-import { User } from 'node-telegram-bot-api';
+import { LaunchParams, useLaunchParams } from '@tma.js/sdk-react';
+
+import { useCurrentUser, useStartParam } from '@/api/queries';
 
 export function Join() {
-  const [currentUser, setCurrentUser] = useState<null | User>(null);
-  const [linkOwner, setLinkOwner] = useState<null | LinkOwner>(null);
+  let lp: LaunchParams | undefined;
+  try {
+    lp = useLaunchParams();
+  } catch {
+    /* ignore */
+  }
 
-  const fetchCurrentUser = async () => {
-    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/referrals/currentUser`, {
-      headers: { tmaInitData: window.Telegram.WebApp.initData }
-    });
-
-    setCurrentUser(response.data);
-  };
-
-  const fetchLinkOwner = async () => {
-    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/referrals/startParam`, {
-      // userData
-      headers: { startParam: window.Telegram.WebApp.initDataUnsafe?.start_param }
-    });
-
-    setLinkOwner(response.data);
-  };
-
-  useEffect(() => {
-    fetchCurrentUser();
-    fetchLinkOwner();
-  }, []);
+  const { data: currentUser } = useCurrentUser();
+  const { data: linkOwner } = useStartParam(lp?.startParam);
 
   if (!currentUser || !linkOwner) {
     return <Typography>No data about current user or link owner</Typography>;
