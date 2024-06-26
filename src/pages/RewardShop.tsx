@@ -1,16 +1,14 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
-import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import { Avatar, Button, LargeTitle, Text } from '@telegram-apps/telegram-ui';
 import { useTonWallet } from '@tonconnect/ui-react';
-import axios from 'axios';
 
+import { useUserCommunity } from '@/api/queries';
 import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 import HistoryTable from '../components/HistoryTable';
 import { ProductSlider } from '../components/ProductSlider';
-import { CommunityUser } from '../interfaces/CommunityUser';
 import { EarnPoints } from './EarnPoints';
 
 interface Props {
@@ -19,21 +17,9 @@ interface Props {
 
 export function RewardShop(props: Props) {
   const { id } = useParams();
-  const [userCommunity, setUserCommunity] = useState<CommunityUser | null>(null);
-
-  async function getUserCommunity() {
-    const result = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/communities/${id}`, {
-      headers: { tmaInitData: window.Telegram.WebApp.initData }
-    });
-
-    setUserCommunity(result.data);
-  }
+  const { data: userCommunity } = useUserCommunity(id);
 
   const wallet = useTonWallet();
-
-  useEffect(() => {
-    getUserCommunity();
-  }, []);
 
   if (!userCommunity) {
     return <span>No user commmunity</span>;
