@@ -55,3 +55,35 @@ export function useUserCommunity(id?: string) {
     enabled: !!id
   });
 }
+
+export function useUserCommunities() {
+  return useQuery({
+    queryKey: ['userCommunities'],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/communities/user', {
+          signal,
+          params: {
+            header: { tmaInitData: '' }
+          }
+        })
+      ).data as unknown as CommunityUser[],
+    initialData: []
+  });
+}
+
+export function useAdminCommunities() {
+  return useQuery({
+    queryKey: ['adminCommunities'],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/communities/admin', {
+          signal,
+          params: {
+            header: { tmaInitData: '' }
+          }
+        })
+      ).data as unknown as CommunityUser[],
+    initialData: []
+  });
+}
