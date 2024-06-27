@@ -26,7 +26,6 @@ interface Props {
 export const SetupTasksForm = ({ id, trigger }: Props) => {
   const [referralSwitchValue, setReferralSwitchValue] = useState(trigger?.referral.isEnabled);
   const onChangeReferralSwitch = (e) => {
-    console.log(e.target.checked);
     setReferralSwitchValue(e.target.checked);
   };
 
@@ -74,6 +73,7 @@ export const SetupTasksForm = ({ id, trigger }: Props) => {
     };
 
     try {
+      // TODO: rewrite with mutations hook
       await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/triggers/community`, payload, {
         headers: { tmaInitData: window.Telegram.WebApp.initData }
       });

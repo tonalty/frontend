@@ -58,9 +58,9 @@ export function useUserCommunity(id?: string) {
   });
 }
 
-export function useUserCommunities() {
+export function useAllCommunities() {
   return useQuery({
-    queryKey: ['userCommunities'],
+    queryKey: ['allCommunities'],
     queryFn: async ({ signal }) =>
       (
         await apiClient.GET('/communities/all', {
