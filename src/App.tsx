@@ -10,6 +10,7 @@ import { ConnectCommunity } from './pages/ConnectCommunity';
 import { Join } from './pages/Join';
 import { Triggers } from './pages/Triggers';
 import { UserCommunities } from './pages/UserCommunities';
+import { Manage } from './pages/Manage';
 
 function App() {
   let lp: LaunchParams | undefined;
@@ -39,6 +40,7 @@ function App() {
         path="/community/:id"
         element={<ChannelUser avatarSrc="https://picsum.photos/200/300" />}
       />
+      <Route path="/manage/:id" element={<Manage />} />
       <Route path="/triggers" element={<Triggers />} />
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/" element={<UserCommunities />} />
