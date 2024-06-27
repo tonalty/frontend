@@ -1,30 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Caption, Cell, IconButton, Text } from '@telegram-apps/telegram-ui';
-import axios from 'axios';
+import { FC } from 'react';
+import { Cell, IconButton, Text } from '@telegram-apps/telegram-ui';
 
+import { useUserHistory } from '@/api/queries';
 import { TriggerType } from '@/enums/TriggerType';
-import { HistoryItem } from '@/interfaces/HistoryItem';
 import { getIcon } from '@/utils/common';
-import { HistoryTablePoint } from './HistoryTablePoint';
-import { NoData } from './NoData';
-import { SectionWithTitleContainer } from './SectionWithCaptionContainer';
+import { HistoryTablePoint } from '../HistoryTablePoint';
+import { NoData } from '../NoData';
+import { SectionWithTitleContainer } from '../SectionWithCaptionContainer';
 
-export default function HistoryTable() {
-  const [history, setHistory] = useState<HistoryItem[] | []>([]);
-
-  const fetchHistory = async () => {
-    const history = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/history/user?limit=10`, {
-      headers: {
-        tmaInitData: window.Telegram.WebApp.initData
-      }
-    });
-
-    setHistory(history.data);
-  };
-
-  useEffect(() => {
-    fetchHistory();
-  }, []);
+export const HistorySection: FC = () => {
+  const { data: history } = useUserHistory();
 
   const formatDate = (inputDate: string) => {
     const date = new Date(inputDate);
@@ -40,28 +25,6 @@ export default function HistoryTable() {
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  if (history.length === 0) {
-    return (
-      <div style={{ margin: '12px' }}>
-        <Caption
-          level="1"
-          weight="3"
-          caps
-          style={{
-            height: '30px',
-            width: '100%',
-            textAlign: 'left'
-          }}>
-          Transaction history
-        </Caption>
-        <NoData>
-          <Text weight="1">No transactions yet</Text>
-          <Text weight="3">Check triggers and start earning rewards</Text>
-        </NoData>
-      </div>
-    );
-  }
-
   return (
     <SectionWithTitleContainer title="Transaction history">
       {history?.map((item) => {
@@ -70,7 +33,7 @@ export default function HistoryTable() {
 
         if (item.data.type === TriggerType.messageReaction) {
           title = 'Reaction';
-        } else if (item.data.type === TriggerType.refferalJoin) {
+        } else if (item.data.type === TriggerType.referralJoin) {
           title = `User @${item.data.username} joined via link`;
         }
 
@@ -93,6 +56,13 @@ export default function HistoryTable() {
           </Cell>
         );
       })}
+
+      {history?.length === 0 ? (
+        <NoData>
+          <Text weight="1">No transactions yet</Text>
+          <Text weight="3">Check triggers and start earning rewards</Text>
+        </NoData>
+      ) : null}
     </SectionWithTitleContainer>
   );
-}
+};

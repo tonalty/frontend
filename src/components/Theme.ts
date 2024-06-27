@@ -1,14 +1,14 @@
 // import { createTheme } from '@mui/materiali'
 
 export const lightTheme = {
-  body: '#FFF',
-  text: '#363537',
-}
+  body: '#F5F5F5',
+  text: '#363537'
+};
 
 export const darkTheme = {
   body: '#363537',
-  text: '#FAFAFA',
-}
+  text: '#FAFAFA'
+};
 
 // // TODO Rewrite default inputs styles
 // export const muiGlobalOverrides = createTheme({

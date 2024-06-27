@@ -1,0 +1,8 @@
+.wrapper {
+  border-radius: 12px;
+  background: var(--tgui--bg_color);
+}
+
+.wrapper .body {
+  padding: 16px;
+}

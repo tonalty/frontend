@@ -1,0 +1,9 @@
+.wrapper {
+  padding: 20px 16px 4px 16px;
+  color: var(--tgui--section_header_text_color);
+}
+
+.wrapper.wrapper--large {
+  padding: 0 0 12px;
+  color: var(--tgui--text_color);
+}
