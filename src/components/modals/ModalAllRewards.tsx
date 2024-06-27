@@ -12,6 +12,7 @@ interface Props {
   trigger: ReactNode;
 }
 
+// TODO: pagination
 export const ModalAllRewards: FC<Props> = ({ communityUser, mode, trigger }) => {
   const { data: rewards } = useRewardsByChatId(communityUser?.chatId);
 

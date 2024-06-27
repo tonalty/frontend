@@ -91,6 +91,7 @@ export function useAdminCommunities() {
   });
 }
 
+// TODO: pagination
 export function useUserHistory() {
   return useQuery({
     queryKey: ['userHistory'],
@@ -123,7 +124,8 @@ export function useTriggersByChatId(chatId?: number | string) {
   });
 }
 
-export function useRewardsByChatId(chatId?: number | string) {
+// TODO: pagination
+export function useRewardsByChatId(chatId?: number | string, page: number = 0, size: number = 10) {
   return useQuery({
     queryKey: ['rewardsByChatId', chatId],
     queryFn: async ({ signal }) =>
@@ -134,9 +136,8 @@ export function useRewardsByChatId(chatId?: number | string) {
             header: { tmaInitData: '' },
             path: { chatId: Number(chatId) },
             query: {
-              // TODO: pagination
-              page: 0,
-              size: 10
+              page,
+              size
             }
           }
         })

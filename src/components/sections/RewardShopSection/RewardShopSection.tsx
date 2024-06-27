@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const RewardShopSection: FC<Props> = ({ communityUser, mode }) => {
-  const { data: rewards } = useRewardsByChatId(communityUser?.chatId);
+  const { data: rewards } = useRewardsByChatId(communityUser?.chatId, 0, 3);
 
   return (
     <SectionWithTitleContainer
