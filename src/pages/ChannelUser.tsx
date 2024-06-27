@@ -76,7 +76,8 @@ export const ChannelUser: FC<Props> = (props: Props) => {
         style={{
           display: 'grid',
           gap: 16,
-          opacity: wallet ? 1 : 0.3
+          opacity: wallet ? 1 : 0.3,
+          pointerEvents: wallet ? 'unset' : 'none'
         }}>
         <RewardShopSection />
         <HistorySection />
