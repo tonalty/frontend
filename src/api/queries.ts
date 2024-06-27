@@ -5,6 +5,7 @@ import { CommunityUser } from '@/interfaces/CommunityUser';
 import { HistoryItem } from '@/interfaces/HistoryItem';
 import { LinkOwner } from '@/interfaces/LinkOwner';
 import { apiClient } from './apiClient';
+import { Triggers } from '@/interfaces/Triggers';
 
 export function useCurrentUser() {
   return useQuery({
@@ -62,7 +63,7 @@ export function useUserCommunities() {
     queryKey: ['userCommunities'],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/communities/user', {
+        await apiClient.GET('/communities/all', {
           signal,
           params: {
             header: { tmaInitData: '' }
@@ -103,5 +104,19 @@ export function useUserHistory() {
         })
       ).data as unknown as HistoryItem[],
     initialData: []
+  });
+}
+
+export function useTriggers(chatId: number) {
+  return useQuery({
+    queryKey: ['triggers'],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/triggers/community/{chatId}', {
+          signal,
+          params: { header: { tmaInitData: '' }, path: { chatId } }
+        })
+      ).data as unknown as Triggers,
+    initialData: null
   });
 }

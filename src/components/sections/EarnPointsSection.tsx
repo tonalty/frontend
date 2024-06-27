@@ -1,19 +1,18 @@
 import { FC, useState } from 'react';
-import { Placeholder } from '@telegram-apps/telegram-ui';
 
 import { EarnPointsButton } from '@/components/EarnPointsButton';
-import { ModalBodyReferral } from '@/components/ModalBodyReferral';
-import { ModalWrapper } from '@/components/ModalWrapper';
 import { SectionWithTitleContainer } from '@/components/SectionWithCaptionContainer';
 import { TriggerType } from '@/enums/TriggerType';
 import { CommunityUser } from '@/interfaces/CommunityUser';
 import { ModalEarnPoints } from '../modals/ModalEarnPoints';
+import { Triggers } from '@/interfaces/Triggers';
 
 interface Props {
   communityUser: CommunityUser;
+  triggers: Triggers;
 }
 
-export const EarnPointsSection: FC<Props> = (props) => {
+export const EarnPointsSection: FC<Props> = ({ communityUser, triggers }: Props) => {
   const [currentTriggerType, setCurrentTriggerType] = useState<TriggerType>();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,29 +24,33 @@ export const EarnPointsSection: FC<Props> = (props) => {
     setIsModalOpen(true);
     setCurrentTriggerType(type);
   };
+
   return (
     <>
       <SectionWithTitleContainer title="Earn points">
-        <EarnPointsButton
-          title="1 emoji reaction"
-          onClick={handleClick}
-          type={TriggerType.messageReaction}
-          points={5}
-        />
-
-        <EarnPointsButton
-          title="1 invited member"
-          onClick={handleClick}
-          type={TriggerType.referralJoin}
-          points={50}
-        />
+        {triggers.reaction.isEnabled && (
+          <EarnPointsButton
+            title="1 emoji reaction"
+            onClick={handleClick}
+            type={TriggerType.messageReaction}
+            points={triggers.reaction.points}
+          />
+        )}
+        {triggers.referral.isEnabled && (
+          <EarnPointsButton
+            title="1 invited member"
+            onClick={handleClick}
+            type={TriggerType.referralJoin}
+            points={triggers.referral.inviterPoints}
+          />
+        )}
       </SectionWithTitleContainer>
 
       <ModalEarnPoints
         open={isModalOpen}
         onOpenChange={handleModalOpen}
         currentTriggerType={currentTriggerType}
-        communityUser={props.communityUser}
+        communityUser={communityUser}
       />
     </>
   );

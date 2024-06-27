@@ -4,7 +4,7 @@ import { Typography } from '@mui/material';
 import { Avatar, LargeTitle, Text } from '@telegram-apps/telegram-ui';
 import { useTonWallet } from '@tonconnect/ui-react';
 
-import { useUserCommunity } from '@/api/queries';
+import { useTriggers, useUserCommunity } from '@/api/queries';
 import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 import { HistorySection } from '@/components/sections/HistorySection';
 import { RewardShopSection } from '@/components/sections/RewardShopSection';
@@ -18,14 +18,12 @@ interface Props {
 export const ChannelUser: FC<Props> = (props: Props) => {
   const { id } = useParams();
   const { data: userCommunity } = useUserCommunity(id);
+  const { data: triggers } = useTriggers(Number(id));
+
   const wallet = useTonWallet();
 
   if (!userCommunity) {
-    return (
-      <span>
-        {id} {userCommunity} No user commmunity
-      </span>
-    );
+    return <span> No user commmunity</span>;
   }
 
   return (
@@ -70,7 +68,9 @@ export const ChannelUser: FC<Props> = (props: Props) => {
         </div>
       </Section>
 
-      <EarnPointsSection communityUser={userCommunity} />
+      {triggers?.reaction?.isEnabled || triggers?.referral?.isEnabled ? (
+        <EarnPointsSection triggers={triggers} communityUser={userCommunity} />
+      ) : null}
 
       <div
         style={{

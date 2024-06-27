@@ -22,7 +22,7 @@ export const ManagedCommunity = ({ community }: Props) => {
           return (
             <Link
               className="disableHover"
-              to={`/community/${community.chatId}`}
+              to={`/manage/${community.chatId}`}
               key={index}
               style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
               <Cell
