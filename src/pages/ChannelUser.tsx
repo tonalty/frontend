@@ -4,11 +4,12 @@ import { Typography } from '@mui/material';
 import { Avatar, LargeTitle, Text } from '@telegram-apps/telegram-ui';
 import { useTonWallet } from '@tonconnect/ui-react';
 
-import { useTriggers, useUserCommunity } from '@/api/queries';
+import { useTriggersByChatId, useUserCommunity } from '@/api/queries';
 import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 import { HistorySection } from '@/components/sections/HistorySection';
 import { RewardShopSection } from '@/components/sections/RewardShopSection';
 import { Section } from '@/components/telegram-ui/Blocks';
+import { Mode } from '@/enums/Mode';
 import { EarnPointsSection } from '../components/sections/EarnPointsSection';
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
 export const ChannelUser: FC<Props> = (props: Props) => {
   const { id } = useParams();
   const { data: userCommunity } = useUserCommunity(id);
-  const { data: triggers } = useTriggers(Number(id));
+  const { data: triggers } = useTriggersByChatId(id);
 
   const wallet = useTonWallet();
 
@@ -79,7 +80,7 @@ export const ChannelUser: FC<Props> = (props: Props) => {
           opacity: wallet ? 1 : 0.3,
           pointerEvents: wallet ? 'unset' : 'none'
         }}>
-        <RewardShopSection />
+        <RewardShopSection communityUser={userCommunity} mode={Mode.User} />
         <HistorySection />
       </div>
     </div>

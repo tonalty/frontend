@@ -180,7 +180,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/history/user": {
+    "/history/chat/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -228,10 +228,145 @@ export interface paths {
         patch: operations["TriggersController_updateTriggers"];
         trace?: never;
     };
+    "/reward": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["RewardController_updateReward"];
+        post: operations["RewardController_createReward"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reward/admin/{rewardId}/chat/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RewardController_getAdminRewardById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reward/user/{rewardId}/chat/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RewardController_getUserRewardById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reward/chat/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RewardController_getRewardsByChatId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reward/{rewardId}/chat/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["RewardController_deleteReward"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/reward/{rewardId}/chat/{chatId}/buy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RewardController_buyReward"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TempImageController_createImage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
+    schemas: {
+        CreateRewardDto: {
+            chatId: number;
+            imageId: string;
+            title: string;
+            value: number;
+            description: string;
+            rewardMessage: string;
+        };
+        UpdateRewardDto: {
+            id: string;
+            chatId: number;
+            imageUrl?: string;
+            imageId?: string;
+            title: string;
+            value: number;
+            description: string;
+            rewardMessage: string;
+        };
+        CreateTempImageDto: {
+            /** Format: binary */
+            file: string;
+        };
+    };
     responses: never;
     parameters: never;
     requestBodies: never;
@@ -462,7 +597,9 @@ export interface operations {
             header: {
                 tmaInitData: string;
             };
-            path?: never;
+            path: {
+                chatId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -508,6 +645,188 @@ export interface operations {
         requestBody?: never;
         responses: {
             200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RewardController_updateReward: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateRewardDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RewardController_createReward: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRewardDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RewardController_getAdminRewardById: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path: {
+                rewardId: string;
+                chatId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RewardController_getUserRewardById: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path: {
+                rewardId: string;
+                chatId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RewardController_getRewardsByChatId: {
+        parameters: {
+            query: {
+                page: number;
+                size: number;
+            };
+            header: {
+                tmaInitData: string;
+            };
+            path: {
+                chatId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RewardController_deleteReward: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path: {
+                rewardId: string;
+                chatId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RewardController_buyReward: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path: {
+                rewardId: string;
+                chatId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TempImageController_createImage: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        /** @description List of cats */
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["CreateTempImageDto"];
+            };
+        };
+        responses: {
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };

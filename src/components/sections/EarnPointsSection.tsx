@@ -4,8 +4,8 @@ import { EarnPointsButton } from '@/components/EarnPointsButton';
 import { SectionWithTitleContainer } from '@/components/SectionWithCaptionContainer';
 import { TriggerType } from '@/enums/TriggerType';
 import { CommunityUser } from '@/interfaces/CommunityUser';
-import { ModalEarnPoints } from '../modals/ModalEarnPoints';
 import { Triggers } from '@/interfaces/Triggers';
+import { ModalEarnPoints } from '../modals/ModalEarnPoints';
 
 interface Props {
   communityUser: CommunityUser;
