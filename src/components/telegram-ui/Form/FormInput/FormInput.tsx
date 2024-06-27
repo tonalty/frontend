@@ -23,10 +23,6 @@ export interface FormPublicProps {
 
 export interface FormInputProps extends FormPublicProps, HTMLAttributes<HTMLLabelElement> {}
 
-const platformStyles = {
-  base: styles['wrapper--base']
-};
-
 const formStatusStyles = {
   default: styles['wrapper--default'],
   error: styles['wrapper--error'],
@@ -71,7 +67,7 @@ export const FormInput = forwardRef<HTMLDivElement, FormInputProps>(
         ref={ref}
         className={classNames(
           styles.wrapper,
-          platformStyles['base'],
+          styles['wrapper'],
           formStatusStyles[formStatus],
           disabled && styles['wrapper--disabled']
         )}

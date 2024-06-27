@@ -1,12 +1,13 @@
 import { Button, Paper, Typography } from '@mui/material';
-import { LaunchParams, useLaunchParams } from '@tma.js/sdk-react';
+import { LaunchParams, useLaunchParams, useUtils, Utils } from '@tma.js/sdk-react';
 
 import { useCurrentUser, useStartParam } from '@/api/queries';
 
 export function Join() {
-  let lp: LaunchParams | undefined;
+  let lp: LaunchParams | undefined, utils: Utils | undefined;
   try {
     lp = useLaunchParams();
+    utils = useUtils();
   } catch {
     /* ignore */
   }
@@ -25,7 +26,11 @@ export function Join() {
   };
 
   const handleJoin = async () => {
-    window.Telegram.WebApp.openTelegramLink(linkOwner.telegramInviteLink);
+    if (utils) {
+      utils.openTelegramLink(linkOwner.telegramInviteLink);
+    } else {
+      window.open(linkOwner.telegramInviteLink, "_blank");
+    }
   };
 
   return (

@@ -1,10 +1,10 @@
-.wrapper--base {
+.wrapper {
   position: relative;
   padding: 20px 2px 2px 2px;
   background: var(--tgui--bg_color);
 }
 
-.wrapper--base .title {
+.wrapper .title {
   position: absolute;
 
   overflow: hidden;
@@ -12,9 +12,9 @@
   text-overflow: ellipsis;
 
   top: 6px;
-  left: 32px;
+  left: 16px;
   /* We can't use the right option because it will be stretched, and we need the container to be small if the text is short */
-  max-width: calc(100% - 32px * 2 - 22px);
+  max-width: calc(100% - 16px * 2 - 22px);
 
   border-radius: 5px;
   padding: 0 6px;
@@ -27,7 +27,7 @@
   pointer-events: none;
 }
 
-.wrapper--base.wrapper--disabled::after {
+.wrapper.wrapper--disabled::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -46,24 +46,24 @@
   display: flex;
 }
 
-.wrapper--base .body {
+.wrapper .body {
   border-radius: 14px;
   box-shadow: 0 0 0 2px var(--tgui--outline);
 }
 
-.wrapper--base.wrapper--error .title {
+.wrapper.wrapper--error .title {
   color: var(--tgui--destructive_text_color);
 }
 
-.wrapper--base.wrapper--error .body {
+.wrapper.wrapper--error .body {
   box-shadow: 0 0 0 2px var(--tgui--destructive_text_color);
 }
 
-.wrapper--base.wrapper--focused .title {
+.wrapper.wrapper--focused .title {
   color: var(--tgui--link_color);
 }
 
-.wrapper--base.wrapper--focused .body {
+.wrapper.wrapper--focused .body {
   box-shadow: 0 0 0 2px var(--tgui--link_color);
 }
 
