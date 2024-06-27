@@ -14,7 +14,6 @@ export const GlobalStyles = createGlobalStyle`
     background: ${({ theme }: { theme: Theme }) => theme.body};
     color: ${({ theme }) => theme.text};
     font-family: Tahoma, Helvetica, Arial, Roboto, sans-serif;
-    transition: all 0.50s linear;
     max-width: 480px;
     display: flex;
     margin: 0 auto;

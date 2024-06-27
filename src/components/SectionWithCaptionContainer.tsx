@@ -1,14 +1,11 @@
-import { Section } from '@telegram-apps/telegram-ui';
+import { FC, PropsWithChildren, ReactNode } from 'react';
+
+import { Section } from './telegram-ui/Blocks';
 
 interface Props {
-  children: string | JSX.Element | JSX.Element[];
-  title: string;
+  title: ReactNode;
 }
 
-export const SectionWithTitleContainer = (props: Props) => {
-  return (
-    <Section style={{ width: '100%', paddingTop: '15px' }} header={props.title}>
-      {props.children}
-    </Section>
-  );
+export const SectionWithTitleContainer: FC<PropsWithChildren<Props>> = (props) => {
+  return <Section header={props.title}>{props.children}</Section>;
 };

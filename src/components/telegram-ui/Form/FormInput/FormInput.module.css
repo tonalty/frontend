@@ -1,0 +1,69 @@
+.wrapper {
+  position: relative;
+  padding: 20px 2px 2px 2px;
+  background: var(--tgui--bg_color);
+}
+
+.wrapper .title {
+  position: absolute;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  top: 6px;
+  left: 16px;
+  /* We can't use the right option because it will be stretched, and we need the container to be small if the text is short */
+  max-width: calc(100% - 16px * 2 - 22px);
+
+  border-radius: 5px;
+  padding: 0 6px;
+  color: var(--tgui--secondary_hint_color);
+  background: var(--tgui--bg_color);
+}
+
+.wrapper--disabled {
+  position: relative;
+  pointer-events: none;
+}
+
+.wrapper.wrapper--disabled::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .5;
+  background: var(--tgui--bg_color);
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.before,
+.after {
+  display: flex;
+}
+
+.wrapper .body {
+  border-radius: 14px;
+  box-shadow: 0 0 0 2px var(--tgui--outline);
+}
+
+.wrapper.wrapper--error .title {
+  color: var(--tgui--destructive_text_color);
+}
+
+.wrapper.wrapper--error .body {
+  box-shadow: 0 0 0 2px var(--tgui--destructive_text_color);
+}
+
+.wrapper.wrapper--focused .title {
+  color: var(--tgui--link_color);
+}
+
+.wrapper.wrapper--focused .body {
+  box-shadow: 0 0 0 2px var(--tgui--link_color);
+}
+

@@ -1,0 +1,18 @@
+.step {
+  position: absolute;
+
+  width: 2px;
+  height: 2px;
+
+  border-radius: 50%;
+  background: var(--tgui--secondary_hint_color);
+}
+
+.step--passed {
+  opacity: .35;
+  background: var(--tgui--secondary_hint_color);
+}
+
+.step:last-child {
+  transform: translateX(-150%);
+}

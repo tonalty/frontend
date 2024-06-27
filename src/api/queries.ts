@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { User } from 'node-telegram-bot-api';
 
 import { CommunityUser } from '@/interfaces/CommunityUser';
+import { HistoryItem } from '@/interfaces/HistoryItem';
 import { LinkOwner } from '@/interfaces/LinkOwner';
 import { apiClient } from './apiClient';
 
@@ -84,6 +85,23 @@ export function useAdminCommunities() {
           }
         })
       ).data as unknown as CommunityUser[],
+    initialData: []
+  });
+}
+
+export function useUserHistory() {
+  return useQuery({
+    queryKey: ['userHistory'],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/history/user', {
+          signal,
+          params: {
+            header: { tmaInitData: '' },
+            query: { limit: 10 }
+          }
+        })
+      ).data as unknown as HistoryItem[],
     initialData: []
   });
 }
