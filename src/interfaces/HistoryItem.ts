@@ -8,6 +8,7 @@ export interface HistoryItem {
     type: TriggerType;
     points: number;
     username?: string;
+    isOwner: boolean;
   };
   createdAt: string;
 }
