@@ -1,21 +1,25 @@
-import { useTriggers, useUserCommunity } from '@/api/queries';
+import { useParams } from 'react-router-dom';
+
+import { useTriggersByChatId, useUserCommunity } from '@/api/queries';
+import { RewardShopSection } from '@/components/sections/RewardShopSection';
 import { SectionWithTitleContainer } from '@/components/SectionWithCaptionContainer';
 import { SetupTasksForm } from '@/components/SetupTasksForm';
-import { PlusCircleIcon } from '@/icons/PlusCircleIcon';
-import { RefreshIcon } from '@/icons/RefreshIcon';
-import { Button, Caption, Input, List, Switch, Tappable } from '@telegram-apps/telegram-ui';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { Mode } from '@/enums/Mode';
 
 export const Manage = () => {
   const { id } = useParams();
   const { data: userCommunity } = useUserCommunity(id);
-  const { data: trigger } = useTriggers(Number(id));
+  const { data: triggers } = useTriggersByChatId(id);
+
+  console.log(triggers);
 
   return (
-    <SectionWithTitleContainer title="Set up tasks">
-      {id && trigger && <SetupTasksForm id={Number(id)} trigger={trigger} />}
-    </SectionWithTitleContainer>
+    <div style={{ display: 'grid', gap: 16 }}>
+      <SectionWithTitleContainer title="Set up tasks">
+        {id && triggers && <SetupTasksForm id={Number(id)} triggers={triggers} />}
+      </SectionWithTitleContainer>
+
+      <RewardShopSection communityUser={userCommunity} mode={Mode.Admin} />
+    </div>
   );
 };

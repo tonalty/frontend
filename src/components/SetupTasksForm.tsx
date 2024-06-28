@@ -1,9 +1,10 @@
-import { RefreshIcon } from '@/icons/RefreshIcon';
-import { Triggers } from '@/interfaces/Triggers';
+import { useState } from 'react';
 import { Button, Caption, Switch } from '@telegram-apps/telegram-ui';
 import axios from 'axios';
-import { useState } from 'react';
 import styled from 'styled-components';
+
+import { RefreshIcon } from '@/icons/RefreshIcon';
+import { Triggers } from '@/interfaces/Triggers';
 import { Input } from './telegram-ui/Form/Input/Input';
 
 const InputSwitchContainer = styled.div`
@@ -20,35 +21,35 @@ const ReactionSwitcherContainer = styled.div`
 
 interface Props {
   id: number;
-  trigger: Triggers;
+  triggers: Triggers;
 }
 
-export const SetupTasksForm = ({ id, trigger }: Props) => {
-  const [referralSwitchValue, setReferralSwitchValue] = useState(trigger?.referral.isEnabled);
+export const SetupTasksForm = ({ id, triggers }: Props) => {
+  const [referralSwitchValue, setReferralSwitchValue] = useState(triggers?.referral.isEnabled);
   const onChangeReferralSwitch = (e) => {
     setReferralSwitchValue(e.target.checked);
   };
 
-  const [inviterInputValue, setInviterInputValue] = useState(trigger?.referral.inviterPoints);
+  const [inviterInputValue, setInviterInputValue] = useState(triggers?.referral.inviterPoints);
   const onChangeReferralInput = (e) => {
     if (Number(e.target.value) || e.target.value === '') {
       setInviterInputValue(e.target.value);
     }
   };
 
-  const [reactionSwitchValue, setReactionSwitchValue] = useState(trigger?.reaction.isEnabled);
+  const [reactionSwitchValue, setReactionSwitchValue] = useState(triggers?.reaction.isEnabled);
   const onChangeReactionSwitch = (e) => {
     setReactionSwitchValue(e.target.checked);
   };
 
-  const [reactionInputQtyValue, setReactionInputQtyValue] = useState(trigger?.reaction.threshold);
+  const [reactionInputQtyValue, setReactionInputQtyValue] = useState(triggers?.reaction.threshold);
   const onChangeInputQty = (e) => {
     if (Number(e.target.value) || e.target.value === '') {
       setReactionInputQtyValue(e.target.value);
     }
   };
 
-  const [reactionPointsValue, setReactionPointsValue] = useState(trigger?.reaction.points);
+  const [reactionPointsValue, setReactionPointsValue] = useState(triggers?.reaction.points);
   const onChangeInputPoints = (e) => {
     if (Number(e.target.value) || e.target.value === '') {
       setReactionPointsValue(e.target.value);
@@ -84,7 +85,7 @@ export const SetupTasksForm = ({ id, trigger }: Props) => {
 
   return (
     <>
-      {trigger?.referral && (
+      {triggers?.referral && (
         <InputSwitchContainer>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Switch checked={referralSwitchValue} onChange={onChangeReferralSwitch} />
@@ -101,7 +102,7 @@ export const SetupTasksForm = ({ id, trigger }: Props) => {
         </InputSwitchContainer>
       )}
 
-      {trigger?.reaction && (
+      {triggers?.reaction && (
         <InputSwitchContainer>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Switch checked={reactionSwitchValue} onChange={onChangeReactionSwitch} />

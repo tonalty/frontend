@@ -1,75 +1,52 @@
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-
-import { Carousel } from 'react-responsive-carousel';
+import { FC } from 'react';
 import { Box } from '@mui/material';
-import { Button, Image, Link, Subheadline, Text } from '@telegram-apps/telegram-ui';
+import { Button, Link } from '@telegram-apps/telegram-ui';
 
+import { useRewardsByChatId } from '@/api/queries';
+import { RewardsGrid } from '@/components/common/RewardsGrid';
+import { Mode } from '@/enums/Mode';
 import { PlusCircleIcon } from '@/icons/PlusCircleIcon';
+import { CommunityUser } from '@/interfaces/CommunityUser';
 import { ModalAllRewards } from '../../modals/ModalAllRewards';
-import { ModalNewReward } from '../../modals/ModalNewReward';
+import { ModalCreateOrUpdateReward } from '../../modals/ModalCreateOrUpdateReward';
 import { SectionWithTitleContainer } from '../../SectionWithCaptionContainer';
 import { Section } from '../../telegram-ui/Blocks';
 
-const products = [
-  {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq__sgD-quFzFtu4Qa2H_JeRW3sDwGI5Q4uA&s',
-    title: 'Welcome 10% Discount',
-    subtitle: '2,500.00'
-  },
-  {
-    src: 'https://cdn11.bigcommerce.com/s-g5m7dxaevg/images/stencil/1280x1280/products/307/1549/56__64108.1666686998.jpg?c=1',
-    title: 'x322',
-    subtitle: '2,500.00'
-  },
-  {
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq__sgD-quFzFtu4Qa2H_JeRW3sDwGI5Q4uA&s',
-    title: 'x324',
-    subtitle: '2,500.00'
-  }
-];
+interface Props {
+  communityUser?: CommunityUser;
+  mode: Mode;
+}
 
-export const RewardShopSection = () => {
+export const RewardShopSection: FC<Props> = ({ communityUser, mode }) => {
+  const { data: rewards } = useRewardsByChatId(communityUser?.chatId, 0, 3);
+
   return (
     <SectionWithTitleContainer
       title={
         <Section.Header>
           <Box display="flex" justifyContent="space-between">
             REWARD SHOP{' '}
-            <ModalAllRewards trigger={<Link style={{ cursor: 'pointer' }}>SEE ALL</Link>} />
+            <ModalAllRewards
+              communityUser={communityUser}
+              mode={mode}
+              trigger={<Link style={{ cursor: 'pointer' }}>SEE ALL</Link>}
+            />
           </Box>
         </Section.Header>
       }>
-      <div>
-        <div style={{ display: 'flex' }}>
-          {/* <Carousel
-            swipeable={true}
-            autoPlay={true}
-            showArrows={false}
-            showIndicators={false}
-            showThumbs={false}
-            showStatus={false}
-            infiniteLoop={true}> */}
-          {/* {products.map((product, index) => (
-            <div key={index} style={{ flex: 1 }}>
-              <Image src={product.src} size={96} />
+      <div style={{ gap: 20 }}>
+        {rewards ? <RewardsGrid mode={mode} rewards={rewards} /> : null}
 
-              <Text weight="2">{product.title}</Text>
-              <Subheadline level="2" weight="3">
-                {product.subtitle}
-              </Subheadline>
-            </div>
-          ))} */}
-          {/* </Carousel> */}
-        </div>
-
-        {/* TODO: show onlye for admin */}
-        <ModalNewReward
-          trigger={
-            <Button size="l" stretched before={<PlusCircleIcon />}>
-              Add new
-            </Button>
-          }
-        />
+        {mode === Mode.Admin ? (
+          <ModalCreateOrUpdateReward
+            communityUser={communityUser}
+            trigger={
+              <Button size="l" stretched before={<PlusCircleIcon />}>
+                Add new
+              </Button>
+            }
+          />
+        ) : null}
       </div>
     </SectionWithTitleContainer>
   );

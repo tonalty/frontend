@@ -8,9 +8,9 @@ import { Confirmation } from './pages/Confirmation';
 import { ConnectBot } from './pages/ConnectBot';
 import { ConnectCommunity } from './pages/ConnectCommunity';
 import { Join } from './pages/Join';
+import { Manage } from './pages/Manage';
 import { Triggers } from './pages/Triggers';
 import { UserCommunities } from './pages/UserCommunities';
-import { Manage } from './pages/Manage';
 
 function App() {
   let lp: LaunchParams | undefined;

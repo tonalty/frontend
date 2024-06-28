@@ -4,8 +4,9 @@ import { User } from 'node-telegram-bot-api';
 import { CommunityUser } from '@/interfaces/CommunityUser';
 import { HistoryItem } from '@/interfaces/HistoryItem';
 import { LinkOwner } from '@/interfaces/LinkOwner';
-import { apiClient } from './apiClient';
+import { Reward } from '@/interfaces/Reward';
 import { Triggers } from '@/interfaces/Triggers';
+import { apiClient } from './apiClient';
 
 export function useCurrentUser() {
   return useQuery({
@@ -90,6 +91,7 @@ export function useAdminCommunities() {
   });
 }
 
+// TODO: pagination
 export function useUserHistory() {
   return useQuery({
     queryKey: ['userHistory'],
@@ -107,16 +109,39 @@ export function useUserHistory() {
   });
 }
 
-export function useTriggers(chatId: number) {
+export function useTriggersByChatId(chatId?: number | string) {
   return useQuery({
-    queryKey: ['triggers'],
+    queryKey: ['TriggersByChatId', chatId],
     queryFn: async ({ signal }) =>
       (
         await apiClient.GET('/triggers/community/{chatId}', {
           signal,
-          params: { header: { tmaInitData: '' }, path: { chatId } }
+          params: { header: { tmaInitData: '' }, path: { chatId: Number(chatId) } }
         })
       ).data as unknown as Triggers,
+    enabled: !!chatId,
     initialData: null
+  });
+}
+
+// TODO: pagination
+export function useRewardsByChatId(chatId?: number | string, page: number = 0, size: number = 10) {
+  return useQuery({
+    queryKey: ['rewardsByChatId', chatId],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/reward/chat/{chatId}', {
+          signal,
+          params: {
+            header: { tmaInitData: '' },
+            path: { chatId: Number(chatId) },
+            query: {
+              page,
+              size
+            }
+          }
+        })
+      ).data as unknown as Reward[],
+    enabled: !!chatId
   });
 }
