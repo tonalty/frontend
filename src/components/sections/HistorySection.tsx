@@ -7,9 +7,14 @@ import { getIcon } from '@/utils/common';
 import { HistoryTablePoint } from '../HistoryTablePoint';
 import { NoData } from '../NoData';
 import { SectionWithTitleContainer } from '../SectionWithCaptionContainer';
+import { HistoryItem } from '@/interfaces/HistoryItem';
 
-export const HistorySection: FC = () => {
-  const { data: history } = useUserHistory();
+interface Props {
+  id: number;
+}
+
+export const HistorySection: FC<Props> = ({ id }: Props) => {
+  const { data: history } = useUserHistory(id);
 
   const formatDate = (inputDate: string) => {
     const date = new Date(inputDate);
@@ -25,17 +30,19 @@ export const HistorySection: FC = () => {
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
+  const getTitleForReferral = (history: HistoryItem) => {
+    if (history.data.isOwner) {
+      return `User @${history.data.username} joined via link`;
+    }
+
+    return `You joined the link and recieved ${history.data.points}`;
+  };
+
   return (
     <SectionWithTitleContainer title="Transaction history">
       {history?.map((item) => {
-        let title;
+        const title = getTitleForReferral(item);
         const mappedIcon = getIcon(item.data.type);
-
-        if (item.data.type === TriggerType.messageReaction) {
-          title = 'Reaction';
-        } else if (item.data.type === TriggerType.referralJoin) {
-          title = `User @${item.data.username} joined via link`;
-        }
 
         return (
           <Cell

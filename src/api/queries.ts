@@ -92,16 +92,17 @@ export function useAdminCommunities() {
 }
 
 // TODO: pagination
-export function useUserHistory() {
+export function useUserHistory(chatId: number) {
   return useQuery({
     queryKey: ['userHistory'],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/history/user', {
+        await apiClient.GET('/history/chat/{chatId}', {
           signal,
           params: {
             header: { tmaInitData: '' },
-            query: { limit: 10 }
+            query: { limit: 10 },
+            path: { chatId }
           }
         })
       ).data as unknown as HistoryItem[],

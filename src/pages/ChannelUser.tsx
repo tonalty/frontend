@@ -81,7 +81,7 @@ export const ChannelUser: FC<Props> = (props: Props) => {
           pointerEvents: wallet ? 'unset' : 'none'
         }}>
         <RewardShopSection communityUser={userCommunity} mode={Mode.User} />
-        <HistorySection />
+        <HistorySection id={Number(id)} />
       </div>
     </div>
   );

@@ -31,9 +31,16 @@ export const SetupTasksForm = ({ id, triggers }: Props) => {
   };
 
   const [inviterInputValue, setInviterInputValue] = useState(triggers?.referral.inviterPoints);
-  const onChangeReferralInput = (e) => {
+  const onChangeReferralInviterInput = (e) => {
     if (Number(e.target.value) || e.target.value === '') {
       setInviterInputValue(e.target.value);
+    }
+  };
+
+  const [inviteeInputValue, setInviteeInputValue] = useState(triggers?.referral.inviteePoints);
+  const onChangeReferralInviteeInput = (e) => {
+    if (Number(e.target.value) || e.target.value === '') {
+      setInviteeInputValue(e.target.value);
     }
   };
 
@@ -62,7 +69,7 @@ export const SetupTasksForm = ({ id, triggers }: Props) => {
       triggers: {
         referral: {
           inviterPoints: Number(inviterInputValue),
-          inviteePoints: -1,
+          inviteePoints: Number(inviteeInputValue),
           isEnabled: referralSwitchValue
         },
         reaction: {
@@ -92,13 +99,23 @@ export const SetupTasksForm = ({ id, triggers }: Props) => {
             <Caption>Referral invited</Caption>
           </div>
 
-          <Input
-            disabled={!referralSwitchValue}
-            placeholder="Points"
-            value={inviterInputValue}
-            onChange={onChangeReferralInput}
-            header="Points"
-          />
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <Input
+              disabled={!referralSwitchValue}
+              placeholder="Points for inviter"
+              value={inviterInputValue}
+              onChange={onChangeReferralInviterInput}
+              header="Inviter points"
+            />
+
+            <Input
+              disabled={!referralSwitchValue}
+              placeholder="Points for invitee"
+              value={inviteeInputValue}
+              onChange={onChangeReferralInviteeInput}
+              header="Invitee points"
+            />
+          </div>
         </InputSwitchContainer>
       )}
 
