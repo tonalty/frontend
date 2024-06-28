@@ -5,6 +5,7 @@ import { RewardShopSection } from '@/components/sections/RewardShopSection';
 import { SectionWithTitleContainer } from '@/components/SectionWithCaptionContainer';
 import { SetupTasksForm } from '@/components/SetupTasksForm';
 import { Mode } from '@/enums/Mode';
+import { HistorySection } from '@/components/sections/HistorySection';
 
 export const Manage = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ export const Manage = () => {
       </SectionWithTitleContainer>
 
       <RewardShopSection communityUser={userCommunity} mode={Mode.Admin} />
+      <HistorySection id={Number(id)} />
     </div>
   );
 };
