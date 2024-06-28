@@ -86,7 +86,8 @@ export function Join() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: '10px'
+              borderRadius: '10px',
+              marginTop: '36px'
             }}>
             You will get points
           </div>
