@@ -7,6 +7,7 @@ import { LinkOwner } from '@/interfaces/LinkOwner';
 import { Reward } from '@/interfaces/Reward';
 import { Triggers } from '@/interfaces/Triggers';
 import { apiClient } from './apiClient';
+import { CommunityInfo } from '@/interfaces/CommunityInfo';
 
 export function useCurrentUser() {
   return useQuery({
@@ -36,7 +37,7 @@ export function useStartParam(startParam?: string) {
             }
           }
         })
-      ).data as unknown as LinkOwner,
+      ).data as unknown as LinkOwner | CommunityInfo,
     enabled: !!startParam
   });
 }

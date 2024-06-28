@@ -3,4 +3,5 @@ export interface LinkOwner {
   title: string;
   name: string;
   telegramInviteLink: string;
+  chatId: number;
 }

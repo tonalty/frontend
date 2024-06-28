@@ -29,7 +29,7 @@ export function Root() {
   console.log(`Network: `, network ? (network === CHAIN.MAINNET ? 'mainnet' : 'testnet') : 'N/A');
 
   return (
-    <AppRoot appearance={miniApp?.isDark ? 'dark' : 'light'} platform="ios">
+    <AppRoot id="approot" appearance={miniApp?.isDark ? 'dark' : 'light'} platform="ios">
       <ThemeProvider theme={miniApp?.isDark ? darkTheme : lightTheme}>
         <GlobalStyles />
         <App />

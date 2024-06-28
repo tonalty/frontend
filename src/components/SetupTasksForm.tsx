@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import { Button, Caption, Switch } from '@telegram-apps/telegram-ui';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -26,38 +26,38 @@ interface Props {
 
 export const SetupTasksForm = ({ id, triggers }: Props) => {
   const [referralSwitchValue, setReferralSwitchValue] = useState(triggers?.referral.isEnabled);
-  const onChangeReferralSwitch = (e) => {
+  const onChangeReferralSwitch = (e: BaseSyntheticEvent) => {
     setReferralSwitchValue(e.target.checked);
   };
 
   const [inviterInputValue, setInviterInputValue] = useState(triggers?.referral.inviterPoints);
-  const onChangeReferralInviterInput = (e) => {
+  const onChangeReferralInviterInput = (e: BaseSyntheticEvent) => {
     if (Number(e.target.value) || e.target.value === '') {
       setInviterInputValue(e.target.value);
     }
   };
 
   const [inviteeInputValue, setInviteeInputValue] = useState(triggers?.referral.inviteePoints);
-  const onChangeReferralInviteeInput = (e) => {
+  const onChangeReferralInviteeInput = (e: BaseSyntheticEvent) => {
     if (Number(e.target.value) || e.target.value === '') {
       setInviteeInputValue(e.target.value);
     }
   };
 
   const [reactionSwitchValue, setReactionSwitchValue] = useState(triggers?.reaction.isEnabled);
-  const onChangeReactionSwitch = (e) => {
+  const onChangeReactionSwitch = (e: BaseSyntheticEvent) => {
     setReactionSwitchValue(e.target.checked);
   };
 
   const [reactionInputQtyValue, setReactionInputQtyValue] = useState(triggers?.reaction.threshold);
-  const onChangeInputQty = (e) => {
+  const onChangeInputQty = (e: BaseSyntheticEvent) => {
     if (Number(e.target.value) || e.target.value === '') {
       setReactionInputQtyValue(e.target.value);
     }
   };
 
   const [reactionPointsValue, setReactionPointsValue] = useState(triggers?.reaction.points);
-  const onChangeInputPoints = (e) => {
+  const onChangeInputPoints = (e: BaseSyntheticEvent) => {
     if (Number(e.target.value) || e.target.value === '') {
       setReactionPointsValue(e.target.value);
     }

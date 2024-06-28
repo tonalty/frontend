@@ -1,16 +1,19 @@
 import './App.css';
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { LaunchParams, useLaunchParams } from '@tma.js/sdk-react';
 
 import { ChannelUser } from './pages/ChannelUser';
 import { Confirmation } from './pages/Confirmation';
 import { ConnectBot } from './pages/ConnectBot';
 import { ConnectCommunity } from './pages/ConnectCommunity';
-import { Join } from './pages/Join';
 import { Manage } from './pages/Manage';
 import { Triggers } from './pages/Triggers';
 import { UserCommunities } from './pages/UserCommunities';
+import { useStartParam } from './api/queries';
+import { useEffect } from 'react';
+import { Spinner } from '@telegram-apps/telegram-ui';
+import { Join } from './pages/Join';
 
 function App() {
   let lp: LaunchParams | undefined;
@@ -24,12 +27,35 @@ function App() {
   //     await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals/tgWebAppStartParam`, location.hash);
   // }
 
-  if (lp?.startParam) {
+  const { data: payload, isLoading, isError, error } = useStartParam(lp?.startParam);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (lp?.startParam && payload) {
+      if ('ownerId' in payload) {
+        return navigate('/join', { state: { linkOwner: payload } });
+      } else if ('chatId' in payload) {
+        return navigate(`/community/${payload.chatId}`);
+      }
+    }
+  }, [lp?.startParam, payload]);
+
+  if (lp?.startParam && isLoading) {
     return (
-      <Routes>
-        <Route path="*" element={<Join />} />
-      </Routes>
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}>
+        <Spinner size={'l'} />
+      </div>
     );
+  }
+
+  if (isError) {
+    return <span>Error: {JSON.stringify(error)}</span>;
   }
 
   return (
@@ -42,6 +68,7 @@ function App() {
       />
       <Route path="/manage/:id" element={<Manage />} />
       <Route path="/triggers" element={<Triggers />} />
+      <Route path="/join" element={<Join />} />
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/" element={<UserCommunities />} />
       <Route path="*" element={<p>Not found</p>} />
