@@ -7,10 +7,12 @@ interface Theme {
 
 export const GlobalStyles = createGlobalStyle`
   html {
+    height: 100%;
     padding: 0 !important;
   }
 
   body {
+    height: 100%;
     background: ${({ theme }: { theme: Theme }) => theme.body};
     color: ${({ theme }) => theme.text};
     font-family: Tahoma, Helvetica, Arial, Roboto, sans-serif;
