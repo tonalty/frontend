@@ -86,7 +86,7 @@ export const SetupTasksSection: FC<Props> = ({ chatId, triggers }) => {
 
   const onClickUpdate = async () => {
     try {
-      if (!chatId || !referralSwitchValue || !reactionSwitchValue) {
+      if (!chatId) {
         // TODO: validation
         return;
       }
@@ -97,12 +97,12 @@ export const SetupTasksSection: FC<Props> = ({ chatId, triggers }) => {
           referral: {
             inviterPoints: Number(inviterInputValue),
             inviteePoints: Number(inviteeInputValue),
-            isEnabled: referralSwitchValue
+            isEnabled: referralSwitchValue ?? false
           },
           reaction: {
             points: Number(reactionPointsValue),
             threshold: Number(reactionInputQtyValue),
-            isEnabled: reactionSwitchValue
+            isEnabled: reactionSwitchValue ?? false
           }
         }
       });
