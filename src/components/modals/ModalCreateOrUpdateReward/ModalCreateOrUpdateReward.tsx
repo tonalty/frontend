@@ -2,7 +2,6 @@ import { FC, ReactNode, useState } from 'react';
 import { Button } from '@telegram-apps/telegram-ui';
 
 import { useCreateReward, useUpdateReward } from '@/api/mutations';
-import { CommunityUser } from '@/interfaces/CommunityUser';
 import { CreatedTempImage } from '@/interfaces/CreatedTempImage';
 import { Reward } from '@/interfaces/Reward';
 import { setNumberInputValue } from '@/utils/setNumberInputValue';
@@ -11,14 +10,14 @@ import { Input, Textarea } from '../../telegram-ui';
 import { UploadImage } from './UploadImage';
 
 interface Props {
-  communityUser?: CommunityUser;
+  chatId?: string | number;
   reward?: Reward;
   trigger: ReactNode;
 }
 
 // TODO: need refactor of this form, cause we have a lot of rewards and want to have ability to
 // update any of them, so we must hav only one instance of this Modal to avoid performance issues
-export const ModalCreateOrUpdateReward: FC<Props> = ({ communityUser, reward, trigger }) => {
+export const ModalCreateOrUpdateReward: FC<Props> = ({ chatId, reward, trigger }) => {
   const [isOpen, setIsOpen] = useState<boolean>();
 
   const handleOpenChange = (open: boolean) => {
@@ -55,21 +54,14 @@ export const ModalCreateOrUpdateReward: FC<Props> = ({ communityUser, reward, tr
   };
 
   const handleCreateOrUpdateRewardClick = async () => {
-    if (
-      !communityUser ||
-      !uploadedTempImage ||
-      !title ||
-      !value ||
-      !description ||
-      !rewardMessage
-    ) {
+    if (!chatId || !uploadedTempImage || !title || !value || !description || !rewardMessage) {
       // TODO: validation
       return;
     }
 
     if (!reward) {
       await createReward({
-        chatId: communityUser.chatId,
+        chatId: Number(chatId),
         imageId: uploadedTempImage.id,
         title,
         value: Number(value),
@@ -79,7 +71,7 @@ export const ModalCreateOrUpdateReward: FC<Props> = ({ communityUser, reward, tr
     } else {
       await updateReward({
         id: reward.id,
-        chatId: communityUser.chatId,
+        chatId: Number(chatId),
         imageId: uploadedTempImage.id,
         title,
         value: Number(value),

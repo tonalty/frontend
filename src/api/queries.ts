@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { User } from 'node-telegram-bot-api';
 
+import { Community } from '@/interfaces/Community';
 import { CommunityInfo } from '@/interfaces/CommunityInfo';
 import { CommunityUser } from '@/interfaces/CommunityUser';
 import { HistoryItem } from '@/interfaces/HistoryItem';
@@ -54,7 +55,7 @@ export function useCommunity(id?: string) {
             header: { tmaInitData: '' }
           }
         })
-      ).data as unknown as CommunityUser,
+      ).data as unknown as Community,
     enabled: !!id
   });
 }
@@ -110,7 +111,7 @@ export function useAdminCommunities() {
 }
 
 // TODO: pagination
-export function useUserHistory(chatId: number) {
+export function useUserHistory(chatId?: number | string) {
   return useQuery({
     queryKey: ['userHistory'],
     queryFn: async ({ signal }) =>
@@ -120,10 +121,11 @@ export function useUserHistory(chatId: number) {
           params: {
             header: { tmaInitData: '' },
             query: { limit: 10 },
-            path: { chatId }
+            path: { chatId: Number(chatId) }
           }
         })
       ).data as unknown as HistoryItem[],
+    enabled: !!chatId,
     initialData: []
   });
 }
@@ -138,8 +140,7 @@ export function useTriggersByChatId(chatId?: number | string) {
           params: { header: { tmaInitData: '' }, path: { chatId: Number(chatId) } }
         })
       ).data as unknown as Triggers,
-    enabled: !!chatId,
-    initialData: null
+    enabled: !!chatId
   });
 }
 

@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { Avatar, LargeTitle, Text } from '@telegram-apps/telegram-ui';
+import { Avatar, Text } from '@telegram-apps/telegram-ui';
 import { useTonWallet } from '@tonconnect/ui-react';
 
 import { useTriggersByChatId, useUserCommunity } from '@/api/queries';
+import { CommunityName } from '@/components/common/CommunityName';
 import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 import { HistorySection } from '@/components/sections/HistorySection';
 import { RewardShopSection } from '@/components/sections/RewardShopSection';
@@ -12,14 +13,10 @@ import { Section } from '@/components/telegram-ui/Blocks';
 import { Mode } from '@/enums/Mode';
 import { EarnPointsSection } from '../components/sections/EarnPointsSection';
 
-interface Props {
-  avatarSrc: string;
-}
-
-export const ChannelUser: FC<Props> = (props: Props) => {
-  const { id } = useParams();
-  const { data: userCommunity } = useUserCommunity(id);
-  const { data: triggers } = useTriggersByChatId(id);
+export const CommunityUser: FC = () => {
+  const { id: chatId } = useParams();
+  const { data: userCommunity } = useUserCommunity(chatId);
+  const { data: triggers } = useTriggersByChatId(chatId);
 
   const wallet = useTonWallet();
 
@@ -31,13 +28,9 @@ export const ChannelUser: FC<Props> = (props: Props) => {
     <div style={{ display: 'grid', gap: 16 }}>
       <Section style={{ borderRadius: '0 0 12px 12px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Avatar size={48} src={props.avatarSrc} />
+          <Avatar size={48} src="https://picsum.photos/200/300" />
 
-          <LargeTitle
-            style={{ textAlign: 'center', marginTop: '16px', margin: '0 16px' }}
-            weight="2">
-            {userCommunity?.communityName}
-          </LargeTitle>
+          <CommunityName>{userCommunity?.communityName}</CommunityName>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Text style={{ marginTop: '32px' }}>Earned</Text>
@@ -80,8 +73,8 @@ export const ChannelUser: FC<Props> = (props: Props) => {
           opacity: wallet ? 1 : 0.3,
           pointerEvents: wallet ? 'unset' : 'none'
         }}>
-        <RewardShopSection communityUser={userCommunity} mode={Mode.User} />
-        <HistorySection id={Number(id)} />
+        <RewardShopSection chatId={chatId} mode={Mode.User} />
+        <HistorySection chatId={chatId} />
       </div>
     </div>
   );
