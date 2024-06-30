@@ -5,7 +5,7 @@ import { Avatar, Text } from '@telegram-apps/telegram-ui';
 import { useTonWallet } from '@tonconnect/ui-react';
 
 import { useTriggersByChatId, useUserCommunity } from '@/api/queries';
-import { CommunityName } from '@/components/common/CommunityName';
+import { Title } from '@/components/common/Title';
 import { ConnectWalletWithPlaceholder } from '@/components/ConnectWalletWithPlaceholder';
 import { HistorySection } from '@/components/sections/HistorySection';
 import { RewardShopSection } from '@/components/sections/RewardShopSection';
@@ -30,7 +30,7 @@ export const CommunityUser: FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Avatar size={48} src="https://picsum.photos/200/300" />
 
-          <CommunityName>{userCommunity?.communityName}</CommunityName>
+          <Title>{userCommunity?.communityName}</Title>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Text style={{ marginTop: '32px' }}>Earned</Text>

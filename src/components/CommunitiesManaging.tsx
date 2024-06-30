@@ -1,11 +1,11 @@
-import { CommunityUser } from '@/interfaces/CommunityUser';
-import { Avatar, Cell, Text } from '@telegram-apps/telegram-ui';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { NoData } from './NoData';
+import { Avatar, Button, Cell, FixedLayout, Text } from '@telegram-apps/telegram-ui';
 
-interface Props {
-  community: CommunityUser[];
-}
+import { PlusCircleIcon } from '@/icons/PlusCircleIcon';
+import { CommunityUser } from '@/interfaces/CommunityUser';
+import { ModalNewCommunity } from './modals/ModalNewCommunity/ModalNewCommunity';
+import { NoData } from './NoData';
 
 const CellStyles = {
   height: '68px',
@@ -14,7 +14,11 @@ const CellStyles = {
   borderRadius: '30px'
 };
 
-export const SubscribedCommunity = ({ community }: Props) => {
+interface Props {
+  community: CommunityUser[];
+}
+
+export const CommunitiesManaging: FC<Props> = ({ community }) => {
   return (
     <div style={{ width: '100%' }}>
       {community.length ? (
@@ -22,7 +26,7 @@ export const SubscribedCommunity = ({ community }: Props) => {
           return (
             <Link
               className="disableHover"
-              to={`/community/${community.chatId}`}
+              to={`/manage/${community.chatId}`}
               key={index}
               style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
               <Cell
@@ -40,6 +44,16 @@ export const SubscribedCommunity = ({ community }: Props) => {
           <Text weight="3">Start connecting bot to your channels</Text>
         </NoData>
       )}
+
+      <FixedLayout style={{ padding: 16 }}>
+        <ModalNewCommunity
+          trigger={
+            <Button size="l" stretched before={<PlusCircleIcon />}>
+              Add new
+            </Button>
+          }
+        />
+      </FixedLayout>
     </div>
   );
 };

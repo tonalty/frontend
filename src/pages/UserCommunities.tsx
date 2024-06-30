@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 
 import { useAdminCommunities, useUserCommunities } from '@/api/queries';
-import { ManagedCommunity } from '@/components/ManagedCommunity';
+import { CommunitiesManaging } from '@/components/CommunitiesManaging';
+import { CommunitiesSubscribed } from '@/components/CommunitiesSubscribed';
 import { Menu } from '@/components/Menu';
-import { SubscribedCommunity } from '@/components/SubscribedCommunity';
 import { View } from '@/enums/View';
 
 export function UserCommunities() {
@@ -36,10 +36,10 @@ export function UserCommunities() {
           alignSelf: 'center'
         }}>
         {currentView === View.SUBSCRIBED ? (
-          <SubscribedCommunity community={userCommunities} />
+          <CommunitiesSubscribed community={userCommunities} />
         ) : null}
 
-        {currentView === View.MANAGED ? <ManagedCommunity community={adminCommunities} /> : null}
+        {currentView === View.MANAGED ? <CommunitiesManaging community={adminCommunities} /> : null}
       </Box>
     </>
   );

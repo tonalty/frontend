@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Avatar, Caption, Skeleton, Title } from '@telegram-apps/telegram-ui';
+import { Avatar, Caption, Skeleton, Title as TitleTg } from '@telegram-apps/telegram-ui';
 
-import { CommunityName } from '@/components/common/CommunityName';
+import { Title } from '@/components/common/Title';
 import { Community } from '@/interfaces/Community';
 
 interface Props {
@@ -24,19 +24,29 @@ export const ManagedCommunityInfo: FC<Props> = ({ community }) => {
           <Avatar size={48} src="https://picsum.photos/200/300" />
         </Skeleton>
 
-        <CommunityName>
-          <Skeleton visible={!community}>{community?.title}</Skeleton>
-        </CommunityName>
+        <Skeleton visible={!community}>
+          <Title>{community ? community.title : 'skeleton'}</Title>
+        </Skeleton>
 
         <div style={{ display: 'flex', gap: 24, marginTop: 10 }}>
           {STATS_KEYS.map((key) => (
             <div style={{ textAlign: 'center' }}>
-              <Caption level="1" weight="3" style={{ textTransform: 'capitalize' }}>
-                <Skeleton visible={!community}>{key}</Skeleton>
-              </Caption>
-              <Title level="3" weight="2" style={{ marginTop: 16 }} plain>
-                <Skeleton visible={!community}>{community?.members}</Skeleton>
-              </Title>
+              <Skeleton visible={!community}>
+                <Caption
+                  level="1"
+                  weight="3"
+                  style={{
+                    color: 'var(--tgui--section_header_text_color)',
+                    textTransform: 'capitalize'
+                  }}>
+                  {key}
+                </Caption>
+              </Skeleton>
+              <Skeleton visible={!community}>
+                <TitleTg level="3" weight="2" style={{ marginTop: 10 }} plain>
+                  {community ? community?.members : 'skeleton'}
+                </TitleTg>
+              </Skeleton>
             </div>
           ))}
         </div>

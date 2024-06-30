@@ -1,11 +1,9 @@
-import { CommunityUser } from '@/interfaces/CommunityUser';
-import { Avatar, Cell, Text } from '@telegram-apps/telegram-ui';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { NoData } from './NoData';
+import { Avatar, Cell, Text } from '@telegram-apps/telegram-ui';
 
-interface Props {
-  community: CommunityUser[];
-}
+import { CommunityUser } from '@/interfaces/CommunityUser';
+import { NoData } from './NoData';
 
 const CellStyles = {
   height: '68px',
@@ -14,7 +12,11 @@ const CellStyles = {
   borderRadius: '30px'
 };
 
-export const ManagedCommunity = ({ community }: Props) => {
+interface Props {
+  community: CommunityUser[];
+}
+
+export const CommunitiesSubscribed: FC<Props> = ({ community }) => {
   return (
     <div style={{ width: '100%' }}>
       {community.length ? (
@@ -22,7 +24,7 @@ export const ManagedCommunity = ({ community }: Props) => {
           return (
             <Link
               className="disableHover"
-              to={`/manage/${community.chatId}`}
+              to={`/community/${community.chatId}`}
               key={index}
               style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
               <Cell
