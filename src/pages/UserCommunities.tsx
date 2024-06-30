@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
 
-import { useAdminCommunities, useAllCommunities } from '@/api/queries';
+import { useAdminCommunities, useUserCommunities } from '@/api/queries';
 import { ManagedCommunity } from '@/components/ManagedCommunity';
 import { Menu } from '@/components/Menu';
 import { SubscribedCommunity } from '@/components/SubscribedCommunity';
 import { View } from '@/enums/View';
 
 export function UserCommunities() {
-  const { data: userCommunities, error: userCommunitiesError } = useAllCommunities();
+  const { data: userCommunities, error: userCommunitiesError } = useUserCommunities();
   const { data: adminCommunities, error: adminCommunitiesError } = useAdminCommunities();
 
   const [currentView, setCurrentView] = useState(View.SUBSCRIBED);

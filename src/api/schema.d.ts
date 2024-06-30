@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/": {
+    "/backend": {
         parameters: {
             query?: never;
             header?: never;
@@ -20,7 +20,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/user": {
+    "/backend/user": {
         parameters: {
             query?: never;
             header?: never;
@@ -36,14 +36,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/communities/admin": {
+    "/backend/community/admin-user": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["CommunitiesController_getAdminCommunities"];
+        get: operations["CommunityController_getAdminCommunities"];
         put?: never;
         post?: never;
         delete?: never;
@@ -52,14 +52,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/communities/all": {
+    "/backend/community/user": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["CommunitiesController_getAllCommunities"];
+        get: operations["CommunityController_getAllCommunities"];
         put?: never;
         post?: never;
         delete?: never;
@@ -68,14 +68,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/communities/{id}": {
+    "/backend/community/{chatId}/user": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["CommunitiesController_getUserCommunity"];
+        get: operations["CommunityController_getUserCommunity"];
         put?: never;
         post?: never;
         delete?: never;
@@ -84,7 +84,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tokens/metadata/{chatId}": {
+    "/backend/community/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CommunityController_getCommunity"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/backend/tokens/metadata/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -100,7 +116,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tokens/mintTokens": {
+    "/backend/tokens/mintTokens": {
         parameters: {
             query?: never;
             header?: never;
@@ -116,7 +132,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tokens/claimTokens": {
+    "/backend/tokens/claimTokens": {
         parameters: {
             query?: never;
             header?: never;
@@ -132,7 +148,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/referrals": {
+    "/backend/referrals": {
         parameters: {
             query?: never;
             header?: never;
@@ -148,7 +164,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/referrals/currentUser": {
+    "/backend/referrals/currentUser": {
         parameters: {
             query?: never;
             header?: never;
@@ -164,7 +180,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/referrals/startParam": {
+    "/backend/referrals/startParam": {
         parameters: {
             query?: never;
             header?: never;
@@ -180,7 +196,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/history/chat/{chatId}": {
+    "/backend/history/chat/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -196,7 +212,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/triggers/community/{chatId}": {
+    "/backend/triggers/community/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -212,7 +228,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/triggers/community": {
+    "/backend/triggers/community": {
         parameters: {
             query?: never;
             header?: never;
@@ -228,7 +244,7 @@ export interface paths {
         patch: operations["TriggersController_updateTriggers"];
         trace?: never;
     };
-    "/reward": {
+    "/backend/reward": {
         parameters: {
             query?: never;
             header?: never;
@@ -244,7 +260,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reward/admin/{rewardId}/chat/{chatId}": {
+    "/backend/reward/admin/{rewardId}/chat/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -260,7 +276,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reward/user/{rewardId}/chat/{chatId}": {
+    "/backend/reward/user/{rewardId}/chat/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -276,7 +292,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reward/chat/{chatId}": {
+    "/backend/reward/chat/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -292,7 +308,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reward/{rewardId}/chat/{chatId}": {
+    "/backend/reward/{rewardId}/chat/{chatId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -308,7 +324,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/reward/{rewardId}/chat/{chatId}/buy": {
+    "/backend/reward/{rewardId}/chat/{chatId}/buy": {
         parameters: {
             query?: never;
             header?: never;
@@ -324,7 +340,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/image": {
+    "/backend/image": {
         parameters: {
             query?: never;
             header?: never;
@@ -344,6 +360,24 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        ReferralTrigger: {
+            inviterPoints: number;
+            inviteePoints: number;
+            isEnabled: boolean;
+        };
+        ReactionTrigger: {
+            points: number;
+            threshold: number;
+            isEnabled: boolean;
+        };
+        Triggers: {
+            referral: components["schemas"]["ReferralTrigger"];
+            reaction: components["schemas"]["ReactionTrigger"];
+        };
+        UpdateTriggersDto: {
+            chatId: number;
+            triggers: components["schemas"]["Triggers"];
+        };
         CreateRewardDto: {
             chatId: number;
             imageId: string;
@@ -409,7 +443,7 @@ export interface operations {
             };
         };
     };
-    CommunitiesController_getAdminCommunities: {
+    CommunityController_getAdminCommunities: {
         parameters: {
             query?: never;
             header: {
@@ -428,7 +462,7 @@ export interface operations {
             };
         };
     };
-    CommunitiesController_getAllCommunities: {
+    CommunityController_getAllCommunities: {
         parameters: {
             query?: never;
             header: {
@@ -447,14 +481,35 @@ export interface operations {
             };
         };
     };
-    CommunitiesController_getUserCommunity: {
+    CommunityController_getUserCommunity: {
         parameters: {
             query?: never;
             header: {
                 tmaInitData: string;
             };
             path: {
-                id: number;
+                chatId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CommunityController_getCommunity: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path: {
+                chatId: number;
             };
             cookie?: never;
         };
@@ -642,7 +697,11 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTriggersDto"];
+            };
+        };
         responses: {
             200: {
                 headers: {
