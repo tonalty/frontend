@@ -82,7 +82,7 @@ export const SetupTasksForm = ({ id, triggers }: Props) => {
 
     try {
       // TODO: rewrite with mutations hook
-      await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/triggers/community`, payload, {
+      await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/backend/triggers/community`, payload, {
         headers: { tmaInitData: window.Telegram.WebApp.initData }
       });
     } catch (error) {
