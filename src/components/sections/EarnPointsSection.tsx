@@ -25,12 +25,14 @@ export const EarnPointsSection: FC<Props> = ({ communityUser, triggers }: Props)
     setCurrentTriggerType(type);
   };
 
+  const reactionWord = triggers.reaction.threshold === 1 ? 'reaction' : 'reactions';
+
   return (
     <>
       <SectionWithTitleContainer title="Earn points">
         {triggers.reaction.isEnabled && (
           <EarnPointsButton
-            title="1 emoji reaction"
+            title={`${triggers.reaction.threshold} emoji ${reactionWord}`}
             onClick={handleClick}
             type={TriggerType.messageReaction}
             points={triggers.reaction.points}
@@ -44,9 +46,11 @@ export const EarnPointsSection: FC<Props> = ({ communityUser, triggers }: Props)
             points={triggers.referral.inviterPoints}
           />
         )}
+        {/* communityUser.isAdmin ? triggers.referral.inviterPoints : triggers.referral.inviteePoints */}
       </SectionWithTitleContainer>
-
       <ModalEarnPoints
+        reactionWord={reactionWord}
+        threshold={triggers.reaction.threshold}
         open={isModalOpen}
         onOpenChange={handleModalOpen}
         currentTriggerType={currentTriggerType}
