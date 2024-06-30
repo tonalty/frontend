@@ -1,20 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 import { User } from 'node-telegram-bot-api';
 
+import { CommunityInfo } from '@/interfaces/CommunityInfo';
 import { CommunityUser } from '@/interfaces/CommunityUser';
 import { HistoryItem } from '@/interfaces/HistoryItem';
 import { LinkOwner } from '@/interfaces/LinkOwner';
 import { Reward } from '@/interfaces/Reward';
 import { Triggers } from '@/interfaces/Triggers';
 import { apiClient } from './apiClient';
-import { CommunityInfo } from '@/interfaces/CommunityInfo';
 
 export function useCurrentUser() {
   return useQuery({
     queryKey: [],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/referrals/currentUser', {
+        await apiClient.GET('/backend/referrals/currentUser', {
           signal,
           params: {
             header: { tmaInitData: '' }
@@ -29,7 +29,7 @@ export function useStartParam(startParam?: string) {
     queryKey: [startParam],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/referrals/startParam', {
+        await apiClient.GET('/backend/referrals/startParam', {
           signal,
           params: {
             header: {
@@ -42,15 +42,32 @@ export function useStartParam(startParam?: string) {
   });
 }
 
+export function useCommunity(id?: string) {
+  return useQuery({
+    queryKey: ['community', id],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/backend/community/{chatId}', {
+          signal,
+          params: {
+            path: { chatId: Number(id) },
+            header: { tmaInitData: '' }
+          }
+        })
+      ).data as unknown as CommunityUser,
+    enabled: !!id
+  });
+}
+
 export function useUserCommunity(id?: string) {
   return useQuery({
     queryKey: ['communities', id],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/communities/{id}', {
+        await apiClient.GET('/backend/community/{chatId}/user', {
           signal,
           params: {
-            path: { id: Number(id) },
+            path: { chatId: Number(id) },
             header: { tmaInitData: '' }
           }
         })
@@ -60,12 +77,12 @@ export function useUserCommunity(id?: string) {
   });
 }
 
-export function useAllCommunities() {
+export function useUserCommunities() {
   return useQuery({
-    queryKey: ['allCommunities'],
+    queryKey: ['userCommunities'],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/communities/all', {
+        await apiClient.GET('/backend/community/user', {
           signal,
           params: {
             header: { tmaInitData: '' }
@@ -81,7 +98,7 @@ export function useAdminCommunities() {
     queryKey: ['adminCommunities'],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/communities/admin', {
+        await apiClient.GET('/backend/community/admin-user', {
           signal,
           params: {
             header: { tmaInitData: '' }
@@ -98,7 +115,7 @@ export function useUserHistory(chatId: number) {
     queryKey: ['userHistory'],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/history/chat/{chatId}', {
+        await apiClient.GET('/backend/history/chat/{chatId}', {
           signal,
           params: {
             header: { tmaInitData: '' },
@@ -116,7 +133,7 @@ export function useTriggersByChatId(chatId?: number | string) {
     queryKey: ['TriggersByChatId', chatId],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/triggers/community/{chatId}', {
+        await apiClient.GET('/backend/triggers/community/{chatId}', {
           signal,
           params: { header: { tmaInitData: '' }, path: { chatId: Number(chatId) } }
         })
@@ -132,7 +149,7 @@ export function useRewardsByChatId(chatId?: number | string, page: number = 0, s
     queryKey: ['rewardsByChatId', chatId],
     queryFn: async ({ signal }) =>
       (
-        await apiClient.GET('/reward/chat/{chatId}', {
+        await apiClient.GET('/backend/reward/chat/{chatId}', {
           signal,
           params: {
             header: { tmaInitData: '' },

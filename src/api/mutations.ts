@@ -8,10 +8,10 @@ export function useCreateImage() {
   return useMutation({
     mutationKey: [],
     mutationFn: async (
-      body: paths['/image']['post']['requestBody']['content']['multipart/form-data']
+      body: paths['/backend/image']['post']['requestBody']['content']['multipart/form-data']
     ) =>
       (
-        await apiClient.POST('/image', {
+        await apiClient.POST('/backend/image', {
           params: { header: { tmaInitData: '' } },
           body,
           bodySerializer: (body) => {
@@ -28,10 +28,10 @@ export function useCreateReward() {
   return useMutation({
     mutationKey: [],
     mutationFn: async (
-      body: paths['/reward']['post']['requestBody']['content']['application/json']
+      body: paths['/backend/reward']['post']['requestBody']['content']['application/json']
     ) =>
       (
-        await apiClient.POST('/reward', {
+        await apiClient.POST('/backend/reward', {
           params: { header: { tmaInitData: '' } },
           body
         })
@@ -43,10 +43,26 @@ export function useUpdateReward() {
   return useMutation({
     mutationKey: [],
     mutationFn: async (
-      body: paths['/reward']['put']['requestBody']['content']['application/json']
+      body: paths['/backend/reward']['put']['requestBody']['content']['application/json']
     ) =>
       (
-        await apiClient.PUT('/reward', {
+        await apiClient.PUT('/backend/reward', {
+          params: { header: { tmaInitData: '' } },
+          body
+        })
+      ).data
+  });
+}
+
+
+export function useUpdateTriggers() {
+  return useMutation({
+    mutationKey: [],
+    mutationFn: async (
+      body: paths['/backend/triggers/community']['patch']['requestBody']['content']['application/json']
+    ) =>
+      (
+        await apiClient.PATCH('/backend/triggers/community', {
           params: { header: { tmaInitData: '' } },
           body
         })
