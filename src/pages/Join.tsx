@@ -1,17 +1,16 @@
+import { useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
+import { Button, Title } from '@telegram-apps/telegram-ui';
 import { LaunchParams, useLaunchParams, useUtils, Utils } from '@tma.js/sdk-react';
+import styled from 'styled-components';
 
 import { useCurrentUser } from '@/api/queries';
-import { LinkOwner } from '@/interfaces/LinkOwner';
-import { useLocation } from 'react-router-dom';
-import { Button, Title } from '@telegram-apps/telegram-ui';
 import { AvatarJoinIcon } from '@/icons/AvatarJoinIcon';
 import { GroupIcon } from '@/icons/GroupIcon';
-import styled from 'styled-components';
+import { LinkOwner } from '@/interfaces/LinkOwner';
 
 export const Container = styled.div`
   padding: 12px;
-  background: white;
 `;
 
 export const ContentWrapper = styled.div`
@@ -87,6 +86,7 @@ export function Join() {
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: '10px',
+              color: 'black',
               marginTop: '36px'
             }}>
             You will get points
