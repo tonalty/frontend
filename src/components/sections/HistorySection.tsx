@@ -10,11 +10,11 @@ import { NoData } from '../NoData';
 import { SectionWithTitleContainer } from '../SectionWithCaptionContainer';
 
 interface Props {
-  id: number;
+  chatId?: string | number;
 }
 
-export const HistorySection: FC<Props> = ({ id }: Props) => {
-  const { data: history } = useUserHistory(id);
+export const HistorySection: FC<Props> = ({ chatId }: Props) => {
+  const { data: history } = useUserHistory(chatId);
 
   const formatDate = (inputDate: string) => {
     const date = new Date(inputDate);

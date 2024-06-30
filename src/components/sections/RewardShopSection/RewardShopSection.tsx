@@ -6,19 +6,18 @@ import { useRewardsByChatId } from '@/api/queries';
 import { RewardsGrid } from '@/components/common/RewardsGrid';
 import { Mode } from '@/enums/Mode';
 import { PlusCircleIcon } from '@/icons/PlusCircleIcon';
-import { CommunityUser } from '@/interfaces/CommunityUser';
 import { ModalAllRewards } from '../../modals/ModalAllRewards';
 import { ModalCreateOrUpdateReward } from '../../modals/ModalCreateOrUpdateReward';
 import { SectionWithTitleContainer } from '../../SectionWithCaptionContainer';
 import { Section } from '../../telegram-ui/Blocks';
 
 interface Props {
-  communityUser?: CommunityUser;
+  chatId?: string | number;
   mode: Mode;
 }
 
-export const RewardShopSection: FC<Props> = ({ communityUser, mode }) => {
-  const { data: rewards } = useRewardsByChatId(communityUser?.chatId, 0, 3);
+export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
+  const { data: rewards } = useRewardsByChatId(chatId, 0, 3);
 
   return (
     <SectionWithTitleContainer
@@ -27,7 +26,7 @@ export const RewardShopSection: FC<Props> = ({ communityUser, mode }) => {
           <Box display="flex" justifyContent="space-between">
             REWARD SHOP{' '}
             <ModalAllRewards
-              communityUser={communityUser}
+              chatId={chatId}
               mode={mode}
               trigger={<Link style={{ cursor: 'pointer' }}>SEE ALL</Link>}
             />
@@ -39,7 +38,7 @@ export const RewardShopSection: FC<Props> = ({ communityUser, mode }) => {
 
         {mode === Mode.Admin ? (
           <ModalCreateOrUpdateReward
-            communityUser={communityUser}
+            chatId={chatId}
             trigger={
               <Button size="l" stretched before={<PlusCircleIcon />}>
                 Add new

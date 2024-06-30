@@ -6,12 +6,12 @@ import { Spinner } from '@telegram-apps/telegram-ui';
 import { LaunchParams, useLaunchParams } from '@tma.js/sdk-react';
 
 import { useStartParam } from './api/queries';
-import { ChannelUser } from './pages/ChannelUser';
+import { CommunityManage } from './pages/CommunityManage';
+import { CommunityUser } from './pages/CommunityUser';
 import { Confirmation } from './pages/Confirmation';
 import { ConnectBot } from './pages/ConnectBot';
 import { ConnectCommunity } from './pages/ConnectCommunity';
 import { Join } from './pages/Join';
-import { Manage } from './pages/Manage';
 import { Triggers } from './pages/Triggers';
 import { UserCommunities } from './pages/UserCommunities';
 
@@ -63,11 +63,8 @@ function App() {
     <Routes>
       <Route path="/connectbot" element={<ConnectBot />} />
       <Route path="/connectcommunity/:id" element={<ConnectCommunity />} />
-      <Route
-        path="/community/:id"
-        element={<ChannelUser avatarSrc="https://picsum.photos/200/300" />}
-      />
-      <Route path="/manage/:id" element={<Manage />} />
+      <Route path="/community/:id" element={<CommunityUser />} />
+      <Route path="/manage/:id" element={<CommunityManage />} />
       <Route path="/triggers" element={<Triggers />} />
       <Route path="/join" element={<Join />} />
       <Route path="/confirmation" element={<Confirmation />} />
