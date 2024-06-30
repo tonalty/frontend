@@ -1,19 +1,19 @@
 import './App.css';
 
+import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Spinner } from '@telegram-apps/telegram-ui';
 import { LaunchParams, useLaunchParams } from '@tma.js/sdk-react';
 
+import { useStartParam } from './api/queries';
 import { ChannelUser } from './pages/ChannelUser';
 import { Confirmation } from './pages/Confirmation';
 import { ConnectBot } from './pages/ConnectBot';
 import { ConnectCommunity } from './pages/ConnectCommunity';
+import { Join } from './pages/Join';
 import { Manage } from './pages/Manage';
 import { Triggers } from './pages/Triggers';
 import { UserCommunities } from './pages/UserCommunities';
-import { useStartParam } from './api/queries';
-import { useEffect } from 'react';
-import { Spinner } from '@telegram-apps/telegram-ui';
-import { Join } from './pages/Join';
 
 function App() {
   let lp: LaunchParams | undefined;
@@ -55,6 +55,7 @@ function App() {
   }
 
   if (isError) {
+    console.log('error', error);
     return <span>Error: {JSON.stringify(error)}</span>;
   }
 

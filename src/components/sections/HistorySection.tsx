@@ -3,11 +3,11 @@ import { Cell, IconButton, Text } from '@telegram-apps/telegram-ui';
 
 import { useUserHistory } from '@/api/queries';
 import { TriggerType } from '@/enums/TriggerType';
+import { HistoryItem } from '@/interfaces/HistoryItem';
 import { getIcon } from '@/utils/common';
 import { HistoryTablePoint } from '../HistoryTablePoint';
 import { NoData } from '../NoData';
 import { SectionWithTitleContainer } from '../SectionWithCaptionContainer';
-import { HistoryItem } from '@/interfaces/HistoryItem';
 
 interface Props {
   id: number;
@@ -30,18 +30,20 @@ export const HistorySection: FC<Props> = ({ id }: Props) => {
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  const getTitleForReferral = (history: HistoryItem) => {
-    if (history.data.isOwner) {
+  const getTitle = (history: HistoryItem) => {
+    if (history.data.type === TriggerType.messageReaction) {
+      return 'Reaction';
+    } else if (history.data.type === TriggerType.referralJoin && history.data.isOwner) {
       return `User @${history.data.username} joined via link`;
+    } else {
+      return `You joined the link and recieved ${history.data.points}`;
     }
-
-    return `You joined the link and recieved ${history.data.points}`;
   };
 
   return (
     <SectionWithTitleContainer title="Transaction history">
       {history?.map((item) => {
-        const title = getTitleForReferral(item);
+        const title = getTitle(item);
         const mappedIcon = getIcon(item.data.type);
 
         return (
