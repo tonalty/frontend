@@ -1,4 +1,5 @@
 import { BaseSyntheticEvent, FC, useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import { Button, Caption, Switch } from '@telegram-apps/telegram-ui';
 import styled from 'styled-components';
 
@@ -6,10 +7,13 @@ import { useUpdateTriggers } from '@/api/mutations';
 import { RefreshIcon } from '@/icons/RefreshIcon';
 import { Triggers } from '@/interfaces/Triggers';
 import { setNumberInputValue } from '@/utils/setNumberInputValue';
+import { QuestionTooltip } from '../QuestionTooltip';
 import { SectionWithTitleContainer } from '../SectionWithCaptionContainer';
+import { Section } from '../telegram-ui/Blocks';
 import { Input } from '../telegram-ui/Form/Input/Input';
 
 const InputSwitchContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -112,13 +116,21 @@ export const SetupTasksSection: FC<Props> = ({ chatId, triggers }) => {
   };
 
   return (
-    <SectionWithTitleContainer title="Set up tasks">
+    <SectionWithTitleContainer
+      title={
+        <Section.Header>
+          <Box display="flex" justifyContent="space-between">
+            Set up tasks <QuestionTooltip />
+          </Box>
+        </Section.Header>
+      }>
       {triggers?.referral ? (
         <InputSwitchContainer>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Switch checked={referralSwitchValue} onChange={onChangeReferralSwitch} />
             <Caption>Referral invited</Caption>
           </div>
+
           <div style={{ display: 'flex', gap: '12px' }}>
             <Input
               disabled={!referralSwitchValue}
