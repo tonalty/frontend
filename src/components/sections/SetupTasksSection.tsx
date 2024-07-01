@@ -6,10 +6,12 @@ import { useUpdateTriggers } from '@/api/mutations';
 import { RefreshIcon } from '@/icons/RefreshIcon';
 import { Triggers } from '@/interfaces/Triggers';
 import { setNumberInputValue } from '@/utils/setNumberInputValue';
+import { QuestionTooltip } from '../QuestionTooltip';
 import { SectionWithTitleContainer } from '../SectionWithCaptionContainer';
 import { Input } from '../telegram-ui/Form/Input/Input';
 
 const InputSwitchContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -119,6 +121,7 @@ export const SetupTasksSection: FC<Props> = ({ chatId, triggers }) => {
             <Switch checked={referralSwitchValue} onChange={onChangeReferralSwitch} />
             <Caption>Referral invited</Caption>
           </div>
+          <QuestionTooltip />
           <div style={{ display: 'flex', gap: '12px' }}>
             <Input
               disabled={!referralSwitchValue}
