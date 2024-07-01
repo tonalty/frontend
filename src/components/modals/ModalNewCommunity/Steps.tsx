@@ -53,14 +53,18 @@ const StepRow = styled.div`
   }
 `;
 
-export const Steps = () => {
+interface Props {
+  botName: string;
+}
+
+export const Steps = ({ botName }: Props) => {
   return (
     <Wrapper>
       <StepRow>
         <StepNumber>1</StepNumber>
         <StepTextWrapper>
           <div>
-            Add <Link>@tonaltybot</Link> as admin
+            Add <Link>@{botName}</Link> as admin
           </div>
         </StepTextWrapper>
       </StepRow>

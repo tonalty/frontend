@@ -20,14 +20,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/backend/user": {
+    "/backend/telegram/botInfo": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["TelegramController_getAllMessages"];
+        get: operations["TelegramController_getBotName"];
         put?: never;
         post?: never;
         delete?: never;
@@ -426,7 +426,7 @@ export interface operations {
             };
         };
     };
-    TelegramController_getAllMessages: {
+    TelegramController_getBotName: {
         parameters: {
             query?: never;
             header?: never;

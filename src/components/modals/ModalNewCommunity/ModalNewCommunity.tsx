@@ -1,7 +1,7 @@
 import { FC, ReactNode, useState } from 'react';
 import { Button } from '@telegram-apps/telegram-ui';
 
-import { useAdminCommunities } from '@/api/queries';
+import { useAdminCommunities, useBotInfo } from '@/api/queries';
 import { Title } from '@/components/common/Title';
 import { RefreshIcon } from '@/icons/RefreshIcon';
 import { ModalWrapper } from '../../ModalWrapper';
@@ -15,6 +15,7 @@ interface Props {
 export const ModalNewCommunity: FC<Props> = ({ trigger }) => {
   const { refetch } = useAdminCommunities();
   const [isModalOpen, setIsModalOpen] = useState<boolean>();
+  const { data: botInfo } = useBotInfo();
 
   const handleModalOpenChange = (open: boolean) => {
     setIsModalOpen(open);
@@ -47,7 +48,9 @@ export const ModalNewCommunity: FC<Props> = ({ trigger }) => {
 
         <img src={tonalty} />
 
-        <Steps />
+        <Steps
+          botName={(botInfo && botInfo.userName) || botInfo?.firstName || botInfo?.lastName || ''}
+        />
 
         <Button
           mode="gray"

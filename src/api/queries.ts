@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { User } from 'node-telegram-bot-api';
 
+import { BotInfo } from '@/interfaces/BotInfo';
 import { Community } from '@/interfaces/Community';
 import { CommunityInfo } from '@/interfaces/CommunityInfo';
 import { CommunityUser } from '@/interfaces/CommunityUser';
@@ -163,5 +164,16 @@ export function useRewardsByChatId(chatId?: number | string, page: number = 0, s
         })
       ).data as unknown as Reward[],
     enabled: !!chatId
+  });
+}
+
+export function useBotInfo() {
+  return useQuery({
+    queryKey: ['botInfo'],
+    queryFn: async ({ signal }) => {
+      const result = await apiClient.GET('/backend/telegram/botInfo', { signal });
+
+      return result.data as unknown as BotInfo;
+    }
   });
 }
