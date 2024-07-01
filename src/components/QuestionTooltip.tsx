@@ -4,8 +4,9 @@ import { Tooltip } from '@telegram-apps/telegram-ui';
 import { QuestionIcon } from '@/icons/QuestionIcon';
 
 export const QuestionTooltip = () => {
-  const toolTipRef = useRef<SVGSVGElement>(null);
+  const toolTipRef = useRef<HTMLDivElement>(null);
   const [tooltipVisible, setTooltipVisible] = useState(false);
+
   const onClickTooltip = (e: BaseSyntheticEvent) => {
     console.log(e);
     setTooltipVisible(!tooltipVisible);
@@ -28,17 +29,20 @@ export const QuestionTooltip = () => {
   }, []);
 
   return (
-    <div style={{ position: 'absolute', top: -36, right: 0 }}>
-      <QuestionIcon ref={toolTipRef} onClick={onClickTooltip}></QuestionIcon>
+    <>
+      <div ref={toolTipRef} onClick={onClickTooltip} style={{ cursor: 'pointer' }}>
+        <QuestionIcon />
+      </div>
       {tooltipVisible && (
         <Tooltip
           mode="dark"
           placement="bottom-end"
-          targetRef={toolTipRef as unknown as HTMLElement}>
+          targetRef={toolTipRef}
+          style={{ maxWidth: 320 }}>
           Set up triggers for rewarding actions within a Telegram channel, enable comments and
           reactions, then monitor your events and reward users accordingly.
         </Tooltip>
       )}
-    </div>
+    </>
   );
 };
