@@ -8,7 +8,8 @@ interface Props {
   community?: Community;
 }
 
-const STATS_KEYS = ['members', 'comments', 'reactions'];
+type Stats = (keyof Pick<Community, 'members' | 'comments' | 'reactions'>)[];
+const STATS_KEYS: Stats = ['members', 'comments', 'reactions'];
 
 export const ManagedCommunityInfo: FC<Props> = ({ community }) => {
   return (
@@ -30,7 +31,7 @@ export const ManagedCommunityInfo: FC<Props> = ({ community }) => {
 
         <div style={{ display: 'flex', gap: 24, marginTop: 10 }}>
           {STATS_KEYS.map((key) => (
-            <div style={{ textAlign: 'center' }}>
+            <div key={key} style={{ textAlign: 'center' }}>
               <Skeleton visible={!community}>
                 <Caption
                   level="1"
@@ -44,7 +45,7 @@ export const ManagedCommunityInfo: FC<Props> = ({ community }) => {
               </Skeleton>
               <Skeleton visible={!community}>
                 <TitleTg level="3" weight="2" style={{ marginTop: 10 }} plain>
-                  {community && (community[key] as string)}
+                  {community ? community[key] : 'skeleton'}
                 </TitleTg>
               </Skeleton>
             </div>
