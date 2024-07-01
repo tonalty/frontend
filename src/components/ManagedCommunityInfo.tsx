@@ -44,7 +44,7 @@ export const ManagedCommunityInfo: FC<Props> = ({ community }) => {
               </Skeleton>
               <Skeleton visible={!community}>
                 <TitleTg level="3" weight="2" style={{ marginTop: 10 }} plain>
-                  {community ? community?.members : 'skeleton'}
+                  {community && (community[key] as string)}
                 </TitleTg>
               </Skeleton>
             </div>
