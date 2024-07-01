@@ -114,7 +114,7 @@ export function useAdminCommunities() {
 // TODO: pagination
 export function useUserHistory(chatId?: number | string) {
   return useQuery({
-    queryKey: ['userHistory'],
+    queryKey: ['userHistory', chatId],
     queryFn: async ({ signal }) =>
       (
         await apiClient.GET('/backend/history/chat/{chatId}', {

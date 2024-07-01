@@ -42,13 +42,13 @@ export const HistorySection: FC<Props> = ({ chatId }: Props) => {
 
   return (
     <SectionWithTitleContainer title="Transaction history">
-      {history?.map((item) => {
+      {history?.map((item, index) => {
         const title = getTitle(item);
         const mappedIcon = getIcon(item.data.type);
 
         return (
           <Cell
-            key={item.data.chatId}
+            key={item.data.chatId + index}
             style={{
               width: '100%',
               boxSizing: 'border-box',
@@ -65,7 +65,6 @@ export const HistorySection: FC<Props> = ({ chatId }: Props) => {
           </Cell>
         );
       })}
-
       {history?.length === 0 ? (
         <NoData>
           <Text weight="1">No transactions yet</Text>
