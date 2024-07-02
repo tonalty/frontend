@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Avatar, Skeleton, Text } from '@telegram-apps/telegram-ui';
+import { useMiniApp } from '@tma.js/sdk-react';
 import { useTonWallet } from '@tonconnect/ui-react';
 
 import { useTriggersByChatId, useUserCommunity } from '@/api/queries';
@@ -21,10 +22,19 @@ export const CommunityUser: FC = () => {
   const { data: triggers } = useTriggersByChatId(chatId);
 
   const wallet = useTonWallet();
+  const miniApp = useMiniApp();
 
   // TODO: better no user community design
   if ((!userCommunity && !isInitialLoading) || failureCount) {
     return <span> No user commmunity</span>;
+  }
+
+  let textColor;
+
+  if (miniApp.isDark) {
+    textColor = wallet ? 'white' : '#B3B3B3';
+  } else {
+    textColor = wallet ? 'black' : '#B3B3B3';
   }
 
   return (
@@ -51,7 +61,7 @@ export const CommunityUser: FC = () => {
                   marginTop: '16px',
                   fontSize: '56px',
                   lineHeight: '66px',
-                  color: wallet ? 'black' : '#B3B3B3' // TODO: bad in dark theme
+                  color: textColor
                 }}>
                 {Number(userCommunity?.points).toFixed(2)}
               </Text>
