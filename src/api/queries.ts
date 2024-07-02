@@ -74,7 +74,6 @@ export function useUserCommunity(id?: string) {
           }
         })
       ).data as unknown as CommunityUser,
-
     enabled: !!id
   });
 }

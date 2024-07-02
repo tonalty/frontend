@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SDKProvider } from '@tma.js/sdk-react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 
-import { AdaptiveRouter } from './components/AdaptiveRouter';
 import { Root } from './Root';
 
 // this manifest is used temporarily for development purposes
@@ -34,9 +33,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     }}>
     <SDKProvider acceptCustomStyles debug>
       <QueryClientProvider client={queryClient}>
-        <AdaptiveRouter>
-          <Root />
-        </AdaptiveRouter>
+        <Root />
       </QueryClientProvider>
     </SDKProvider>
   </TonConnectUIProvider>

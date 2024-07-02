@@ -17,7 +17,7 @@ export const Container = styled.div`
 `;
 
 export function ReferralLink(props: Props) {
-  const { id } = useParams();
+  const { id: chatId } = useParams();
   const [referral, setReferral] = useState('');
 
   // addChatMember
@@ -26,7 +26,7 @@ export function ReferralLink(props: Props) {
       const link = await axios.post<unknown, { data: string }>(
         `${import.meta.env.VITE_BACKEND_URL}/backend/referrals`,
         {
-          chatId: Number(id),
+          chatId: Number(chatId),
           title: props.communityUser?.communityName
         },
         {

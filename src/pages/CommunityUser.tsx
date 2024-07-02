@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { Avatar, Text } from '@telegram-apps/telegram-ui';
+import { Avatar, Skeleton, Text } from '@telegram-apps/telegram-ui';
 import { useTonWallet } from '@tonconnect/ui-react';
 
 import { useTriggersByChatId, useUserCommunity } from '@/api/queries';
@@ -15,12 +15,13 @@ import { EarnPointsSection } from '../components/sections/EarnPointsSection';
 
 export const CommunityUser: FC = () => {
   const { id: chatId } = useParams();
-  const { data: userCommunity } = useUserCommunity(chatId);
+  const { data: userCommunity, isInitialLoading, failureCount } = useUserCommunity(chatId);
   const { data: triggers } = useTriggersByChatId(chatId);
 
   const wallet = useTonWallet();
 
-  if (!userCommunity) {
+  // TODO: better no user community design
+  if ((!userCommunity && !isInitialLoading) || failureCount) {
     return <span> No user commmunity</span>;
   }
 
@@ -30,21 +31,25 @@ export const CommunityUser: FC = () => {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Avatar size={48} src="https://picsum.photos/200/300" />
 
-          <Title>{userCommunity?.communityName}</Title>
+          <Skeleton visible={!userCommunity}>
+            <Title>{userCommunity?.communityName}</Title>
+          </Skeleton>
 
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Text style={{ marginTop: '32px' }}>Earned</Text>
 
-            <Text
-              weight="1"
-              style={{
-                marginTop: '16px',
-                fontSize: '56px',
-                lineHeight: '66px',
-                color: wallet ? 'black' : '#B3B3B3' // TODO: bad in dark theme
-              }}>
-              {Number(userCommunity?.points).toFixed(2)}
-            </Text>
+            <Skeleton visible={!userCommunity}>
+              <Text
+                weight="1"
+                style={{
+                  marginTop: '16px',
+                  fontSize: '56px',
+                  lineHeight: '66px',
+                  color: wallet ? 'black' : '#B3B3B3' // TODO: bad in dark theme
+                }}>
+                {Number(userCommunity?.points).toFixed(2)}
+              </Text>
+            </Skeleton>
           </div>
 
           <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
@@ -62,7 +67,7 @@ export const CommunityUser: FC = () => {
         </div>
       </Section>
 
-      {triggers?.reaction?.isEnabled || triggers?.referral?.isEnabled ? (
+      {userCommunity && (triggers?.reaction?.isEnabled || triggers?.referral?.isEnabled) ? (
         <EarnPointsSection triggers={triggers} communityUser={userCommunity} />
       ) : null}
 

@@ -48,6 +48,7 @@ export const EarnPointsSection: FC<Props> = ({ communityUser, triggers }: Props)
         )}
         {/* communityUser.isAdmin ? triggers.referral.inviterPoints : triggers.referral.inviteePoints */}
       </SectionWithTitleContainer>
+
       <ModalEarnPoints
         reactionWord={reactionWord}
         threshold={triggers.reaction.threshold}

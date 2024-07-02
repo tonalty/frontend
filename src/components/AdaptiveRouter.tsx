@@ -2,6 +2,7 @@ import { FC, PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { useIntegration } from '@tma.js/react-router-integration';
 import { initNavigator, retrieveLaunchParams } from '@tma.js/sdk';
+
 const TgRouter: FC<PropsWithChildren> = ({ children }) => {
   // Create new application navigator and attach it to the browser history, so it could modify
   // it and listen to its changes.
@@ -31,7 +32,7 @@ const TgRouter: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const AdaptiveRouter: FC<PropsWithChildren> = ({ children }) => {
-  const [isTg, setIsTg] = useState(false);
+  const [isTg, setIsTg] = useState(true);
 
   useEffect(() => {
     try {

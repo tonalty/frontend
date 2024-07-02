@@ -8,6 +8,7 @@ import { CHAIN } from '@tonconnect/ui-react';
 import { ThemeProvider } from 'styled-components';
 
 import App from './App';
+import { AdaptiveRouter } from './components/AdaptiveRouter';
 import { GlobalStyles } from './components/GlobalStyle';
 import { Modals } from './components/modals/Modals';
 import { darkTheme, lightTheme } from './components/Theme';
@@ -34,10 +35,12 @@ export function Root() {
     <AppRoot id="approot" appearance={miniApp?.isDark ? 'dark' : 'light'} platform="ios">
       <ThemeProvider theme={miniApp?.isDark ? darkTheme : lightTheme}>
         <GlobalStyles />
-        <ModalProvider>
-          <App />
-          <Modals />
-        </ModalProvider>
+        <AdaptiveRouter>
+          <ModalProvider>
+            <App />
+            <Modals />
+          </ModalProvider>
+        </AdaptiveRouter>
       </ThemeProvider>
     </AppRoot>
   );

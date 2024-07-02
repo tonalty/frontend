@@ -1,7 +1,7 @@
 import './App.css';
 
-import { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect, useLayoutEffect } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Spinner } from '@telegram-apps/telegram-ui';
 import { LaunchParams, useLaunchParams } from '@tma.js/sdk-react';
 
@@ -32,31 +32,35 @@ function App() {
 
   useEffect(() => {
     if (lp?.startParam && payload) {
-      if ('ownerId' in payload) {
-        return navigate('/join', { state: { linkOwner: payload } });
-      } else if ('chatId' in payload) {
-        return navigate(`/community/${payload.chatId}`);
+      if ('chatId' in payload) {
+        navigate(`/community/${payload.chatId}`);
       }
     }
   }, [lp?.startParam, payload]);
 
   if (lp?.startParam && isLoading) {
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}>
-        <Spinner size={'l'} />
-      </div>
-    );
+    // return (
+    //   <div
+    //     style={{
+    //       position: 'absolute',
+    //       top: '50%',
+    //       left: '50%',
+    //       transform: 'translate(-50%, -50%)'
+    //     }}>
+    //     <Spinner size={'l'} />
+    //   </div>
+    // );
+    // Looks better without spinner
+    return null;
   }
 
   if (isError) {
     console.log('error', error);
     return <span>Error: {JSON.stringify(error)}</span>;
+  }
+
+  if (payload && 'ownerId' in payload) {
+    return <Join linkOwner={payload} />;
   }
 
   return (
@@ -66,7 +70,6 @@ function App() {
       <Route path="/community/:id" element={<CommunityUser />} />
       <Route path="/manage/:id" element={<CommunityManage />} />
       <Route path="/triggers" element={<Triggers />} />
-      <Route path="/join" element={<Join />} />
       <Route path="/confirmation" element={<Confirmation />} />
       <Route path="/" element={<UserCommunities />} />
       <Route path="*" element={<p>Not found</p>} />

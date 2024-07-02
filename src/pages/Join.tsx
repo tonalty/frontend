@@ -1,7 +1,7 @@
-import { useLocation } from 'react-router-dom';
+import { FC } from 'react';
 import { Typography } from '@mui/material';
 import { Button, Title } from '@telegram-apps/telegram-ui';
-import { LaunchParams, useLaunchParams, useUtils, Utils } from '@tma.js/sdk-react';
+import { MiniApp, useMiniApp, useUtils, Utils } from '@tma.js/sdk-react';
 import styled from 'styled-components';
 
 import { useCurrentUser } from '@/api/queries';
@@ -23,20 +23,26 @@ export const ContentWrapper = styled.div`
   text-align: center;
 `;
 
-export function Join() {
-  let lp: LaunchParams | undefined, utils: Utils | undefined;
+export const Join: FC<{ linkOwner: LinkOwner }> = ({ linkOwner }) => {
+  let miniApp: MiniApp | undefined, utils: Utils | undefined;
   try {
-    lp = useLaunchParams();
+    miniApp = useMiniApp();
     utils = useUtils();
   } catch {
     /* ignore */
   }
 
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, isLoading } = useCurrentUser();
 
-  const {
-    state: { linkOwner }
-  } = useLocation() as { state: { linkOwner: LinkOwner } };
+  const handleJoin = () => {
+    if (utils) {
+      utils.openTelegramLink(linkOwner.telegramInviteLink);
+    } else {
+      window.open(linkOwner.telegramInviteLink, '_blank');
+    }
+    // try to close it manual if something goes wrong
+    miniApp?.close();
+  };
 
   // const linkOwner = {
   //   ownerId: 307294448,
@@ -46,6 +52,10 @@ export function Join() {
   //   chatId: -4212114872
   // };
 
+  if (isLoading) {
+    return null;
+  }
+
   if (!currentUser || !linkOwner) {
     return <Typography>No data about current user or link owner</Typography>;
   }
@@ -54,14 +64,6 @@ export function Join() {
     return String(
       currentUser.username || currentUser.first_name || currentUser.last_name || currentUser.id
     );
-  };
-
-  const handleJoin = async () => {
-    if (utils) {
-      utils.openTelegramLink(linkOwner.telegramInviteLink);
-    } else {
-      window.open(linkOwner.telegramInviteLink, '_blank');
-    }
   };
 
   return (
@@ -89,7 +91,7 @@ export function Join() {
               color: 'black',
               marginTop: '36px'
             }}>
-            You will get points
+            You will get points {/* TODO: how much? */}
           </div>
           <Button
             style={{ background: '#007AFF' }}
@@ -103,4 +105,4 @@ export function Join() {
       </Container>
     </>
   );
-}
+};
