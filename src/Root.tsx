@@ -1,6 +1,7 @@
 import '@twa-dev/sdk';
 
 import { useEffect } from 'react';
+import { ModalProvider } from 'react-modal-state';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 import { bindViewportCSSVars, MiniApp, useMiniApp, useViewport, Viewport } from '@tma.js/sdk-react';
 import { CHAIN } from '@tonconnect/ui-react';
@@ -8,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 
 import App from './App';
 import { GlobalStyles } from './components/GlobalStyle';
+import { Modals } from './components/modals/Modals';
 import { darkTheme, lightTheme } from './components/Theme';
 import { useTonConnect } from './hooks/useTonConnect';
 
@@ -32,7 +34,10 @@ export function Root() {
     <AppRoot id="approot" appearance={miniApp?.isDark ? 'dark' : 'light'} platform="ios">
       <ThemeProvider theme={miniApp?.isDark ? darkTheme : lightTheme}>
         <GlobalStyles />
-        <App />
+        <ModalProvider>
+          <App />
+          <Modals />
+        </ModalProvider>
       </ThemeProvider>
     </AppRoot>
   );

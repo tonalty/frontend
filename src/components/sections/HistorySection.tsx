@@ -46,6 +46,12 @@ export const HistorySection: FC<Props> = ({ chatId }: Props) => {
         const title = getTitle(item);
         const mappedIcon = getIcon(item.data.type);
 
+        if (!item.data.points) {
+          // TODO: wait backend
+          console.log({ item });
+          return null;
+        }
+
         return (
           <Cell
             key={item.data.chatId + index}

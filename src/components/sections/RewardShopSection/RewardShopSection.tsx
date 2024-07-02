@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useModal } from 'react-modal-state';
 import { Box } from '@mui/material';
 import { Button, Link } from '@telegram-apps/telegram-ui';
 
@@ -18,6 +19,11 @@ interface Props {
 
 export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
   const { data: rewards } = useRewardsByChatId(chatId, 0, 3);
+  const { open: openCreateOrUpdateRewardModal } = useModal(ModalCreateOrUpdateReward);
+
+  if (!rewards?.length && mode === Mode.User) {
+    return null;
+  }
 
   return (
     <SectionWithTitleContainer
@@ -37,14 +43,13 @@ export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
         {rewards ? <RewardsGrid mode={mode} rewards={rewards} /> : null}
 
         {mode === Mode.Admin ? (
-          <ModalCreateOrUpdateReward
-            chatId={chatId}
-            trigger={
-              <Button size="l" stretched before={<PlusCircleIcon />}>
-                Add new
-              </Button>
-            }
-          />
+          <Button
+            size="l"
+            stretched
+            before={<PlusCircleIcon />}
+            onClick={() => openCreateOrUpdateRewardModal({ chatId })}>
+            Add new
+          </Button>
         ) : null}
       </div>
     </SectionWithTitleContainer>

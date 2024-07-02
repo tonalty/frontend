@@ -1,140 +1,207 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { useModalInstance } from 'react-modal-state';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@telegram-apps/telegram-ui';
+import * as yup from 'yup';
 
-import { useCreateReward, useUpdateReward } from '@/api/mutations';
+import { useCreateReward, useDeleteReward, useUpdateReward } from '@/api/mutations';
+import { useAdminRewardById } from '@/api/queries';
+import { ControllerNumber } from '@/components/common/ControllerNumber';
+import { ErrorSnackbar } from '@/components/common/ErrorSnackbar';
+import { TrashIcon } from '@/icons/TrashIcon';
 import { CreatedTempImage } from '@/interfaces/CreatedTempImage';
-import { Reward } from '@/interfaces/Reward';
-import { setNumberInputValue } from '@/utils/setNumberInputValue';
 import { ModalWrapper } from '../../ModalWrapper';
 import { Input, Textarea } from '../../telegram-ui';
 import { UploadImage } from './UploadImage';
 
-interface Props {
-  chatId?: string | number;
-  reward?: Reward;
-  trigger: ReactNode;
-}
+const schema = yup
+  .object({
+    title: yup.string().required(),
+    value: yup.number().integer().positive().min(0).required(),
+    description: yup.string().required(),
+    rewardMessage: yup.string().required()
+  })
+  .required();
 
-// TODO: need refactor of this form, cause we have a lot of rewards and want to have ability to
-// update any of them, so we must hav only one instance of this Modal to avoid performance issues
-export const ModalCreateOrUpdateReward: FC<Props> = ({ chatId, reward, trigger }) => {
-  const [isOpen, setIsOpen] = useState<boolean>();
-
-  const handleOpenChange = (open: boolean) => {
-    setIsOpen(open);
-  };
+export const ModalCreateOrUpdateReward: FC = () => {
+  const {
+    data: { chatId, rewardId },
+    isOpen,
+    close
+  } = useModalInstance<{
+    chatId?: string | number;
+    rewardId?: string;
+  }>();
 
   const [uploadedTempImage, setUploadedTempImage] = useState<CreatedTempImage>();
-  const [title, setTitle] = useState<string | undefined>(reward?.title);
-  const [value, setValue] = useState<string | undefined>(reward?.value.toString());
-  const [description, setDescription] = useState<string | undefined>(reward?.description);
-  const [rewardMessage, setRewardMessage] = useState<string | undefined>(reward?.rewardMessage);
+  const { control, reset, handleSubmit } = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  const { data: reward, isInitialLoading } = useAdminRewardById(rewardId, chatId);
   const { mutateAsync: createReward } = useCreateReward();
   const { mutateAsync: updateReward } = useUpdateReward();
+  const { mutateAsync: deleteReward } = useDeleteReward();
+  const [error, setError] = useState<Error | null>(null);
 
   const handleImageUploaded = (res: CreatedTempImage) => {
     setUploadedTempImage(res);
   };
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
-  };
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      if (!rewardId) {
+        if ((!chatId && !rewardId) || !uploadedTempImage) {
+          // TODO: validation
+          return;
+        }
 
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value: newValue, notShow, floatValue } = setNumberInputValue(e.target.value);
-    if (!isNaN(floatValue) && !notShow) setValue(newValue);
-  };
+        await createReward({
+          chatId: Number(chatId),
+          imageId: uploadedTempImage.id,
+          ...data
+        });
+      } else {
+        if (!chatId && !rewardId) {
+          // TODO: validation
+          return;
+        }
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
-  };
-
-  const handleRewardMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRewardMessage(e.target.value);
-  };
-
-  const handleCreateOrUpdateRewardClick = async () => {
-    if (!chatId || !uploadedTempImage || !title || !value || !description || !rewardMessage) {
-      // TODO: validation
-      return;
+        const image: { imageId?: string; imageUrl?: string } = {};
+        if (uploadedTempImage) {
+          image.imageId = uploadedTempImage.id;
+        } else {
+          image.imageUrl = reward?.imageUrl;
+        }
+        await updateReward({
+          id: rewardId,
+          chatId: Number(chatId),
+          ...image,
+          ...data
+        });
+      }
+      close();
+    } catch (err) {
+      setError(err as Error);
     }
+  });
 
-    if (!reward) {
-      await createReward({
-        chatId: Number(chatId),
-        imageId: uploadedTempImage.id,
-        title,
-        value: Number(value),
-        description,
-        rewardMessage
+  const handleDeleteReward = async () => {
+    try {
+      if (!chatId || !rewardId) {
+        // TODO: validation
+        return;
+      }
+
+      await deleteReward({
+        rewardId: rewardId,
+        chatId: Number(chatId)
       });
-    } else {
-      await updateReward({
-        id: reward.id,
-        chatId: Number(chatId),
-        imageId: uploadedTempImage.id,
-        title,
-        value: Number(value),
-        description,
-        rewardMessage
-      });
+    } catch (err) {
+      setError(err as Error);
     }
-    setIsOpen(false);
   };
+
+  if (isInitialLoading) {
+    return null;
+  }
 
   return (
-    <ModalWrapper
-      headerTitle="New reward"
-      open={isOpen}
-      onOpenChange={handleOpenChange}
-      trigger={trigger}>
-      <div
-        style={{
-          padding: '0 20px 30px'
+    <>
+      {error && <ErrorSnackbar error={error} onClose={() => setError(null)} />}
+
+      <ModalWrapper
+        headerTitle={reward ? reward.title : 'New reward'}
+        open={isOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            reset();
+            close();
+          }
         }}>
-        <div
+        <form
+          onSubmit={onSubmit}
           style={{
-            display: 'grid',
-            gridGap: 3
+            padding: '0 20px 30px'
           }}>
-          <UploadImage imageUrl={reward?.imageUrl} onImageUploaded={handleImageUploaded} />
-          <Input
-            header="Title"
-            placeholder="Come up with a reward name"
-            value={title}
-            onChange={handleTitleChange}
-          />
-          <Input header="Value" placeholder="0.00" value={value} onChange={handleValueChange} />
-          {/* TODO: slider sync with value */}
-          {/* <Slider
+          <div
+            style={{
+              display: 'grid',
+              gridGap: 3
+            }}>
+            <UploadImage imageUrl={reward?.imageUrl} onImageUploaded={handleImageUploaded} />
+            <Controller
+              name="title"
+              defaultValue={reward?.title}
+              control={control}
+              render={({ field }) => (
+                <Input header="Title" placeholder="Come up with a reward name" {...field} />
+              )}
+            />
+            <ControllerNumber
+              name="value"
+              defaultValue={reward?.value}
+              control={control}
+              header="Value"
+              placeholder="0.00"
+            />
+            {/* TODO: slider sync with value */}
+            {/* <Slider
             style={{
               marginTop: 13
             }}
           /> */}
-          <Textarea
-            header="Description"
-            placeholder="Come up with a reward description"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
-          <Input
-            header="Reward message"
-            placeholder="Hidden message, available for the owner only"
-            value={rewardMessage}
-            onChange={handleRewardMessage}
-          />
-        </div>
+            <Controller
+              name="description"
+              defaultValue={reward?.description}
+              control={control}
+              render={({ field }) => (
+                <Textarea
+                  header="Description"
+                  placeholder="Come up with a reward description"
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              name="rewardMessage"
+              defaultValue={reward?.rewardMessage}
+              control={control}
+              render={({ field }) => (
+                <Input
+                  header="Reward message"
+                  placeholder="Hidden message, available for the owner only"
+                  {...field}
+                />
+              )}
+            />
+          </div>
 
-        <Button
-          size="l"
-          stretched
-          style={{
-            marginTop: 24
-          }}
-          onClick={handleCreateOrUpdateRewardClick}>
-          Create
-        </Button>
-      </div>
-    </ModalWrapper>
+          <Button
+            type="submit"
+            size="l"
+            stretched
+            style={{
+              marginTop: 24
+            }}>
+            {reward ? 'Update' : 'Create'}
+          </Button>
+
+          {reward ? (
+            <Button
+              mode="gray"
+              size="l"
+              stretched
+              style={{
+                marginTop: 24
+              }}
+              before={<TrashIcon />}
+              onClick={handleDeleteReward}
+            />
+          ) : null}
+        </form>
+      </ModalWrapper>
+    </>
   );
 };

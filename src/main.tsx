@@ -14,7 +14,16 @@ const manifestUrl =
   'https://raw.githubusercontent.com/ton-community/tutorials/main/03-client/test/public/tonconnect-manifest.json';
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { refetchOnWindowFocus: false } }
+  defaultOptions: {
+    mutations: {
+      onSuccess: () => {
+        // According to Telegram policy, better to not have any cache
+        queryClient.invalidateQueries({
+          refetchType: 'all' // invalidate all queries on mutation success
+        });
+      }
+    }
+  }
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

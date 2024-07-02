@@ -133,7 +133,7 @@ export function useUserHistory(chatId?: number | string) {
 
 export function useTriggersByChatId(chatId?: number | string) {
   return useQuery({
-    queryKey: ['TriggersByChatId', chatId],
+    queryKey: ['triggersByChatId', chatId],
     queryFn: async ({ signal }) =>
       (
         await apiClient.GET('/backend/triggers/community/{chatId}', {
@@ -175,5 +175,39 @@ export function useBotInfo() {
 
       return result.data as unknown as BotInfo;
     }
+  });
+}
+
+export function useUserRewardById(rewardId: string, chatId?: number | string) {
+  return useQuery({
+    queryKey: ['userRewardById', rewardId, chatId],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/backend/reward/user/{rewardId}/chat/{chatId}', {
+          signal,
+          params: {
+            header: { tmaInitData: '' },
+            path: { rewardId, chatId: Number(chatId) }
+          }
+        })
+      ).data as unknown as Reward,
+    enabled: !!rewardId && !!chatId
+  });
+}
+
+export function useAdminRewardById(rewardId?: string, chatId?: number | string) {
+  return useQuery({
+    queryKey: ['adminRewardById', rewardId, chatId],
+    queryFn: async ({ signal }) =>
+      (
+        await apiClient.GET('/backend/reward/admin/{rewardId}/chat/{chatId}', {
+          signal,
+          params: {
+            header: { tmaInitData: '' },
+            path: { rewardId: rewardId!, chatId: Number(chatId) }
+          }
+        })
+      ).data as unknown as Reward,
+    enabled: !!rewardId && !!chatId
   });
 }

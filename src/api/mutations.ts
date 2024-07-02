@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { CreatedTempImage } from '@/interfaces/CreatedTempImage';
 import { apiClient } from './apiClient';
@@ -54,7 +54,6 @@ export function useUpdateReward() {
   });
 }
 
-
 export function useUpdateTriggers() {
   return useMutation({
     mutationKey: [],
@@ -65,6 +64,46 @@ export function useUpdateTriggers() {
         await apiClient.PATCH('/backend/triggers/community', {
           params: { header: { tmaInitData: '' } },
           body
+        })
+      ).data
+  });
+}
+
+export function useBuyReward() {
+  return useMutation({
+    mutationKey: [],
+    mutationFn: async (
+      path: paths['/backend/reward/{rewardId}/chat/{chatId}/buy']['post']['parameters']['path']
+    ) =>
+      (
+        await apiClient.POST('/backend/reward/{rewardId}/chat/{chatId}/buy', {
+          params: {
+            header: { tmaInitData: '' },
+            path: {
+              rewardId: path.rewardId,
+              chatId: path.chatId
+            }
+          }
+        })
+      ).data
+  });
+}
+
+export function useDeleteReward() {
+  return useMutation({
+    mutationKey: [],
+    mutationFn: async (
+      path: paths['/backend/reward/{rewardId}/chat/{chatId}']['delete']['parameters']['path']
+    ) =>
+      (
+        await apiClient.DELETE('/backend/reward/{rewardId}/chat/{chatId}', {
+          params: {
+            header: { tmaInitData: '' },
+            path: {
+              rewardId: path.rewardId,
+              chatId: path.chatId
+            }
+          }
         })
       ).data
   });

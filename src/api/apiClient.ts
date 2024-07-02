@@ -23,6 +23,15 @@ const myMiddleware: Middleware = {
     }
 
     return request;
+  },
+  async onResponse({ response }) {
+    // Catch and throw if error
+    if (!response.ok) {
+      const json = await response.json();
+      console.log({ json });
+      throw new Error(json.message);
+    }
+    return response;
   }
 };
 
