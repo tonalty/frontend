@@ -18,7 +18,7 @@ import { UploadImage } from './UploadImage';
 const schema = yup
   .object({
     title: yup.string().required(),
-    value: yup.number().integer().positive().min(0).required(),
+    value: yup.number().positive().min(0).required(),
     description: yup.string().required(),
     rewardMessage: yup.string().required()
   })
