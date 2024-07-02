@@ -2,9 +2,9 @@ name: Continuous Delivery
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
 jobs:
   Continuous-Delivery:
@@ -44,4 +44,4 @@ jobs:
         env:
           SSH_PATH: ${{ vars.DEPLOYMENT_FRONTEND_PATH }}
         run: |
-          rsync -azh ./dist/ staging:$SSH_PATH/dist/
+          rsync -azh --delete ./dist/ staging:$SSH_PATH/dist/
