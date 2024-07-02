@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Avatar, Caption, Skeleton, Title as TitleTg } from '@telegram-apps/telegram-ui';
 
 import { Title } from '@/components/common/Title';
@@ -12,6 +13,8 @@ type Stats = (keyof Pick<Community, 'members' | 'comments' | 'reactions'>)[];
 const STATS_KEYS: Stats = ['members', 'comments', 'reactions'];
 
 export const ManagedCommunityInfo: FC<Props> = ({ community }) => {
+  const location = useLocation();
+
   return (
     <div
       style={{
@@ -22,7 +25,10 @@ export const ManagedCommunityInfo: FC<Props> = ({ community }) => {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
         <Skeleton visible={!community} style={{ borderRadius: '50%', overflow: 'hidden' }}>
           {/* TODO: real avatar! */}
-          <Avatar size={48} src="https://picsum.photos/200/300" />
+          <Avatar
+            size={96}
+            src={location.state?.avatarSrc || 'https://picsum.photos/seed/${chatId}/200/300'}
+          />
         </Skeleton>
 
         <Skeleton visible={!community}>

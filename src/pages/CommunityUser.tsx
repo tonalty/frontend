@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Avatar, Skeleton, Text } from '@telegram-apps/telegram-ui';
 import { useTonWallet } from '@tonconnect/ui-react';
@@ -15,6 +15,8 @@ import { EarnPointsSection } from '../components/sections/EarnPointsSection';
 
 export const CommunityUser: FC = () => {
   const { id: chatId } = useParams();
+  const location = useLocation();
+
   const { data: userCommunity, isInitialLoading, failureCount } = useUserCommunity(chatId);
   const { data: triggers } = useTriggersByChatId(chatId);
 
@@ -29,7 +31,11 @@ export const CommunityUser: FC = () => {
     <div style={{ display: 'grid', gap: 16 }}>
       <Section style={{ borderRadius: '0 0 12px 12px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Avatar size={48} src="https://picsum.photos/200/300" />
+          <Avatar
+            style={{ marginBottom: '20px' }}
+            size={96}
+            src={location.state?.avatarSrc || `https://picsum.photos/seed/${chatId}/200/300`}
+          />
 
           <Skeleton visible={!userCommunity}>
             <Title>{userCommunity?.communityName}</Title>

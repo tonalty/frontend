@@ -20,19 +20,22 @@ interface Props {
 
 export const CommunitiesManaging: FC<Props> = ({ community }) => {
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', paddingBottom: '80px' }}>
       {community.length ? (
         community.map((community, index) => {
+          const avatarSrc = `https://picsum.photos/seed/${community.chatId}/200/300`;
+
           return (
             <Link
               className="disableHover"
               to={`/manage/${community.chatId}`}
+              state={{ avatarSrc: avatarSrc }}
               key={index}
               style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
               <Cell
                 style={CellStyles}
                 subtitle={`Earned points: ${community.points}`}
-                before={<Avatar src="https://avatars.githubusercontent.com/u/84640980?v=4" />}>
+                before={<Avatar src={avatarSrc} />}>
                 {community?.communityName}
               </Cell>
             </Link>

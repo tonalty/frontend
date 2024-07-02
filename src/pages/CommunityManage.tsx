@@ -14,7 +14,6 @@ export const CommunityManage = () => {
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <ManagedCommunityInfo community={community} />
-
       <SetupTasksSection chatId={chatId} triggers={community?.triggers} />
       <RewardShopSection chatId={chatId} mode={Mode.Admin} />
       <HistorySection chatId={chatId} />
