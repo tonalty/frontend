@@ -14,6 +14,9 @@ const manifestUrl =
 
 const queryClient = new QueryClient({
   defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    },
     mutations: {
       onSuccess: () => {
         // According to Telegram policy, better to not have any cache

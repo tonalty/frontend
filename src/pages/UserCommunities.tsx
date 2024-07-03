@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 
 import { useAdminCommunities, useUserCommunities } from '@/api/queries';
+import { ScrollArea } from '@/components/common/ScrollArea';
 import { CommunitiesManaging } from '@/components/CommunitiesManaging';
 import { CommunitiesSubscribed } from '@/components/CommunitiesSubscribed';
 import { Menu } from '@/components/Menu';
@@ -21,26 +22,24 @@ export function UserCommunities() {
   }
 
   return (
-    <>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh'
+      }}>
       <Menu
         currentView={currentView}
         subscribed={userCommunities}
         managed={adminCommunities}
         onClickView={onClickView}
       />
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          alignSelf: 'center'
-        }}>
-        {currentView === View.SUBSCRIBED ? (
-          <CommunitiesSubscribed community={userCommunities} />
-        ) : null}
 
-        {currentView === View.MANAGED ? <CommunitiesManaging community={adminCommunities} /> : null}
-      </Box>
-    </>
+      {currentView === View.SUBSCRIBED ? (
+        <CommunitiesSubscribed communities={userCommunities} />
+      ) : null}
+
+      {currentView === View.MANAGED ? <CommunitiesManaging communities={adminCommunities} /> : null}
+    </div>
   );
 }
