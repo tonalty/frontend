@@ -1,4 +1,5 @@
 export enum TriggerType {
   messageReaction = 'messageReaction',
-  referralJoin = 'referralJoin'
+  referralJoin = 'referralJoin',
+  rewardBuy = 'rewardBuy'
 }
