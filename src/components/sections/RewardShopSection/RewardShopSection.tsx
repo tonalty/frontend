@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useModal } from 'react-modal-state';
 import { Box } from '@mui/material';
 import { Button, Link } from '@telegram-apps/telegram-ui';
@@ -21,6 +21,13 @@ export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
   const { data: rewards } = useRewardsByChatId(chatId, 0, 4);
   const { open: openCreateOrUpdateRewardModal } = useModal(ModalCreateOrUpdateReward);
 
+  const rewardsShow = useMemo(() => {
+    if (!rewards) {
+      return null;
+    }
+    return rewards.slice(0, 3);
+  }, [rewards]);
+
   if (!rewards?.length && mode === Mode.User) {
     return null;
   }
@@ -42,7 +49,7 @@ export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
         </Section.Header>
       }>
       <div style={{ gap: 20 }}>
-        {rewards ? <RewardsGrid mode={mode} rewards={rewards} /> : null}
+        {rewardsShow ? <RewardsGrid mode={mode} rewards={rewardsShow} /> : null}
 
         {mode === Mode.Admin ? (
           <Button
