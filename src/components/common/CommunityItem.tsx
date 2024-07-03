@@ -19,6 +19,7 @@ const Left = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  padding-right: 10px;
 `;
 
 interface Props {
