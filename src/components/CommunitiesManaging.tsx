@@ -17,7 +17,7 @@ export const CommunitiesManaging: FC<Props> = ({ communities }) => {
   return (
     <>
       <ScrollArea>
-        <div style={{ display: 'grid', gap: 8, padding: '16px 0' }}>
+        <div style={{ display: 'grid', gap: 8, padding: '16px' }}>
           {communities.length ? (
             communities.map((community, index) => {
               const avatarSrc = `https://picsum.photos/seed/${community.chatId}/200/300`;
@@ -42,7 +42,7 @@ export const CommunitiesManaging: FC<Props> = ({ communities }) => {
         </div>
       </ScrollArea>
 
-      <div style={{ margin: '16px 0' }}>
+      <div style={{ margin: '16px' }}>
         <ModalNewCommunity
           trigger={
             <Button size="l" stretched before={<PlusCircleIcon />}>

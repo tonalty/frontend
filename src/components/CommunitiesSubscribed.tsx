@@ -14,7 +14,7 @@ interface Props {
 export const CommunitiesSubscribed: FC<Props> = ({ communities }) => {
   return (
     <ScrollArea>
-      <div style={{ display: 'grid', gap: 8, padding: '16px 0' }}>
+      <div style={{ display: 'grid', gap: 8, padding: '16px' }}>
         {communities.length ? (
           communities.map((community, index) => {
             const avatarSrc = `https://picsum.photos/seed/${community.chatId}/200/300`;
