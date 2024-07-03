@@ -1,50 +1,46 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Cell, Text } from '@telegram-apps/telegram-ui';
+import { Text } from '@telegram-apps/telegram-ui';
 
 import { CommunityUser } from '@/interfaces/CommunityUser';
+import { CommunityItem } from './common/CommunityItem';
+import { ScrollArea } from './common/ScrollArea';
 import { NoData } from './NoData';
 
-const CellStyles = {
-  height: '68px',
-  marginTop: '32px',
-  background: 'inherit',
-  borderRadius: '30px'
-};
-
 interface Props {
-  community: CommunityUser[];
+  communities: CommunityUser[];
 }
 
-export const CommunitiesSubscribed: FC<Props> = ({ community }) => {
+export const CommunitiesSubscribed: FC<Props> = ({ communities }) => {
   return (
-    <div style={{ width: '100%', paddingBottom: '80px' }}>
-      {community.length ? (
-        community.map((community, index) => {
-          const avatarSrc = `https://picsum.photos/seed/${community.chatId}/200/300`;
+    <ScrollArea>
+      <div style={{ display: 'grid', gap: 8, padding: '16px 0' }}>
+        {communities.length ? (
+          communities.map((community, index) => {
+            const avatarSrc = `https://picsum.photos/seed/${community.chatId}/200/300`;
 
-          return (
-            <Link
-              className="disableHover"
-              to={`/community/${community.chatId}`}
-              key={index}
-              state={{ avatarSrc }}
-              style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
-              <Cell
-                style={CellStyles}
-                subtitle={`Earned points: ${community.points}`}
-                before={<Avatar src={avatarSrc} />}>
-                {community?.communityName}
-              </Cell>
-            </Link>
-          );
-        })
-      ) : (
-        <NoData>
-          <Text weight="1">No channels yet</Text>
-          <Text weight="3">Start connecting bot to your channels</Text>
-        </NoData>
-      )}
-    </div>
+            return (
+              <Link
+                key={index}
+                className="disableHover"
+                to={`/community/${community.chatId}`}
+                state={{ avatarSrc }}
+                style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
+                <CommunityItem
+                  avatarSrc={avatarSrc}
+                  name={community?.communityName}
+                  points={community.points}
+                />
+              </Link>
+            );
+          })
+        ) : (
+          <NoData>
+            <Text weight="1">No channels yet</Text>
+            <Text weight="3">Start connecting bot to your channels</Text>
+          </NoData>
+        )}
+      </div>
+    </ScrollArea>
   );
 };

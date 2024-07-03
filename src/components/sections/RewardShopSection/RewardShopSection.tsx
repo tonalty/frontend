@@ -31,11 +31,13 @@ export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
         <Section.Header>
           <Box display="flex" justifyContent="space-between">
             REWARD SHOP{' '}
-            <ModalAllRewards
-              chatId={chatId}
-              mode={mode}
-              trigger={<Link style={{ cursor: 'pointer' }}>SEE ALL</Link>}
-            />
+            {rewards && rewards.length > 3 ? (
+              <ModalAllRewards
+                chatId={chatId}
+                mode={mode}
+                trigger={<Link style={{ cursor: 'pointer' }}>SEE ALL</Link>}
+              />
+            ) : null}
           </Box>
         </Section.Header>
       }>
