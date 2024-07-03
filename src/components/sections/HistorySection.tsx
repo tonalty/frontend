@@ -55,6 +55,7 @@ export const HistorySection: FC<Props> = ({ chatId }: Props) => {
 
         if (item.data.type === TriggerType.rewardBuy) {
           return (
+            // TODO make link
             <Cell
               key={index}
               style={{
@@ -68,7 +69,7 @@ export const HistorySection: FC<Props> = ({ chatId }: Props) => {
                 </IconButton>
               }
               subtitle={formatDate(item.createdAt)}
-              after={<HistoryTablePoint points={item.data.rewardDecreasedPoints} />}>
+              after={<HistoryTablePoint points={item.data.rewardValue} />}>
               <span style={{ whiteSpace: 'pre-wrap' }}>{title}</span>
             </Cell>
           );

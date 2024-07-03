@@ -6,7 +6,6 @@ type DataReward = {
   rewardMessage: string;
   rewardTitle: string;
   rewardValue: number;
-  rewardDecreasedPoints: number;
   type: TriggerType.rewardBuy;
 };
 
