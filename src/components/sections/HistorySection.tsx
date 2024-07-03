@@ -31,7 +31,9 @@ export const HistorySection: FC<Props> = ({ chatId }: Props) => {
   };
 
   const getTitle = (history: HistoryItem) => {
-    if (history.data.type === TriggerType.messageReaction) {
+    if (history.data.type === TriggerType.rewardBuy) {
+      return history.data.rewardTitle;
+    } else if (history.data.type === TriggerType.messageReaction) {
       return 'Reaction';
     } else if (history.data.type === TriggerType.referralJoin && history.data.isOwner) {
       return `User @${history.data.username} joined via link`;
@@ -44,7 +46,33 @@ export const HistorySection: FC<Props> = ({ chatId }: Props) => {
     <SectionWithTitleContainer title="Transaction history">
       {history?.map((item, index) => {
         const title = getTitle(item);
-        const mappedIcon = getIcon(item.data.type);
+
+        const mappedIcon = getIcon(
+          item.data.type,
+          false,
+          item.data.type === TriggerType.rewardBuy ? item.data.rewardImageUrl : undefined
+        );
+
+        if (item.data.type === TriggerType.rewardBuy) {
+          return (
+            <Cell
+              key={index}
+              style={{
+                width: '100%',
+                boxSizing: 'border-box',
+                background: 'inherit'
+              }}
+              before={
+                <IconButton mode="plain" size="s">
+                  {mappedIcon}
+                </IconButton>
+              }
+              subtitle={formatDate(item.createdAt)}
+              after={<HistoryTablePoint points={item.data.rewardDecreasedPoints} />}>
+              <span style={{ whiteSpace: 'pre-wrap' }}>{title}</span>
+            </Cell>
+          );
+        }
 
         if (!item.data.points) {
           // TODO: wait backend
