@@ -3,8 +3,11 @@ import { useModal } from 'react-modal-state';
 import { Image, Subheadline, Text } from '@telegram-apps/telegram-ui';
 
 import { useDeleteReward } from '@/api/mutations';
-import { ModalCreateOrUpdateReward } from '@/components/modals/ModalCreateOrUpdateReward';
-import { ModalReward } from '@/components/modals/ModalReward';
+import {
+  ModalCreateOrUpdateReward,
+  ModalCreateOrUpdateRewardProps
+} from '@/components/modals/ModalCreateOrUpdateReward';
+import { ModalReward, ModalRewardProps } from '@/components/modals/ModalReward';
 import { Mode } from '@/enums/Mode';
 import { DeleteCircleIcon } from '@/icons/DeleteCircleIcon';
 import { Reward } from '@/interfaces/Reward';
@@ -57,12 +60,12 @@ export const RewardItem: FC<Props> = ({ reward, mode }) => {
   const handleRewardClick = () => {
     switch (mode) {
       case Mode.User:
-        return openRewardModal({
+        return openRewardModal<ModalRewardProps>({
           rewardId: reward.id,
           chatId: reward.chatId
         });
       case Mode.Admin:
-        return openCreateOrUpdateRewardModal({
+        return openCreateOrUpdateRewardModal<ModalCreateOrUpdateRewardProps>({
           rewardId: reward.id,
           chatId: reward.chatId
         });

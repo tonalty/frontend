@@ -24,15 +24,17 @@ const schema = yup
   })
   .required();
 
+export interface ModalCreateOrUpdateRewardProps {
+  chatId?: string | number;
+  rewardId?: string;
+}
+
 export const ModalCreateOrUpdateReward: FC = () => {
   const {
     data: { chatId, rewardId },
     isOpen,
     close
-  } = useModalInstance<{
-    chatId?: string | number;
-    rewardId?: string;
-  }>();
+  } = useModalInstance<ModalCreateOrUpdateRewardProps>();
 
   const [uploadedTempImage, setUploadedTempImage] = useState<CreatedTempImage>();
   const { control, reset, handleSubmit } = useForm({

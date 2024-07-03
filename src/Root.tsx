@@ -25,7 +25,10 @@ export function Root() {
   const { network } = useTonConnect();
 
   useEffect(() => {
-    viewport && bindViewportCSSVars(viewport);
+    if (viewport) {
+      bindViewportCSSVars(viewport);
+      viewport.expand();
+    }
   }, [viewport]);
 
   console.log('isDarkMode', miniApp?.isDark);

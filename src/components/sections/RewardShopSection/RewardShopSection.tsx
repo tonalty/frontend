@@ -8,7 +8,10 @@ import { RewardsGrid } from '@/components/common/RewardsGrid';
 import { Mode } from '@/enums/Mode';
 import { PlusCircleIcon } from '@/icons/PlusCircleIcon';
 import { ModalAllRewards } from '../../modals/ModalAllRewards';
-import { ModalCreateOrUpdateReward } from '../../modals/ModalCreateOrUpdateReward';
+import {
+  ModalCreateOrUpdateReward,
+  ModalCreateOrUpdateRewardProps
+} from '../../modals/ModalCreateOrUpdateReward';
 import { SectionWithTitleContainer } from '../../SectionWithCaptionContainer';
 import { Section } from '../../telegram-ui/Blocks';
 
@@ -56,7 +59,9 @@ export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
             size="l"
             stretched
             before={<PlusCircleIcon />}
-            onClick={() => openCreateOrUpdateRewardModal({ chatId })}>
+            onClick={() =>
+              openCreateOrUpdateRewardModal<ModalCreateOrUpdateRewardProps>({ chatId })
+            }>
             Add new
           </Button>
         ) : null}
