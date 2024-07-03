@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const RewardShopSection: FC<Props> = ({ chatId, mode }) => {
-  const { data: rewards } = useRewardsByChatId(chatId, 0, 3);
+  const { data: rewards } = useRewardsByChatId(chatId, 0, 4);
   const { open: openCreateOrUpdateRewardModal } = useModal(ModalCreateOrUpdateReward);
 
   if (!rewards?.length && mode === Mode.User) {
