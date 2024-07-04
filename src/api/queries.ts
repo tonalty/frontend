@@ -177,6 +177,21 @@ export function useBotInfo() {
   });
 }
 
+export function useBotStatus(chatId: number | undefined) {
+  return useQuery({
+    queryKey: ['botInfo', chatId],
+    queryFn: async ({ signal }) => {
+      const result = await apiClient.GET('/backend/telegram/botInfo/{chatId}', {
+        signal,
+        params: { path: { chatId: Number(chatId) } }
+      });
+
+      return result.data as unknown as { isAdmin: boolean };
+    },
+    enabled: !!chatId
+  });
+}
+
 export function useUserRewardById(rewardId: string, chatId?: number | string) {
   return useQuery({
     queryKey: ['userRewardById', rewardId, chatId],

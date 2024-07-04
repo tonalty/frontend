@@ -84,7 +84,11 @@ export const CommunityUser: FC = () => {
       </Section>
 
       {userCommunity && (triggers?.reaction?.isEnabled || triggers?.referral?.isEnabled) ? (
-        <EarnPointsSection triggers={triggers} communityUser={userCommunity} />
+        <EarnPointsSection
+          chatId={Number(chatId)}
+          triggers={triggers}
+          communityUser={userCommunity}
+        />
       ) : null}
 
       <div
