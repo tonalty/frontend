@@ -1,8 +1,7 @@
 import './App.css';
 
-import { useEffect, useLayoutEffect } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { Spinner } from '@telegram-apps/telegram-ui';
+import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { LaunchParams, useLaunchParams } from '@tma.js/sdk-react';
 
 import { useStartParam } from './api/queries';
@@ -39,18 +38,6 @@ function App() {
   }, [lp?.startParam, payload]);
 
   if (lp?.startParam && isLoading) {
-    // return (
-    //   <div
-    //     style={{
-    //       position: 'absolute',
-    //       top: '50%',
-    //       left: '50%',
-    //       transform: 'translate(-50%, -50%)'
-    //     }}>
-    //     <Spinner size={'l'} />
-    //   </div>
-    // );
-    // Looks better without spinner
     return null;
   }
 
