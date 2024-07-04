@@ -8,7 +8,18 @@ export const getIcon = (type: string, isInvertedColor: boolean = false, src?: st
   } else if (type === TriggerType.referralJoin) {
     return <ReferralIcon isInvertedColor={isInvertedColor} />;
   } else if (type === TriggerType.rewardBuy) {
-    return <img style={{ borderRadius: 100 }} src={src} width={48} height={48}></img>;
+    return (
+      <div
+        style={{
+          borderRadius: 100,
+          backgroundImage: `url(${src})`,
+          width: 48,
+          height: 48,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}></div>
+    );
   }
 };
 
