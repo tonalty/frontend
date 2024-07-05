@@ -23,7 +23,7 @@ export function ReferralLink(props: Props) {
   const fetchReferral = async () => {
     try {
       const link = await axios.post<unknown, { data: string }>(
-        `${import.meta.env.VITE_BACKEND_URL}/backend/referrals`,
+        `${import.meta.env.VITE_BACKEND_URL}backend/referrals`,
         {
           chatId: Number(chatId),
           title: props.communityUser?.communityName
