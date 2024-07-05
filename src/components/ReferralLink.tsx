@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Divider, IconButton, InputBase, Paper } from '@mui/material';
-import { Caption } from '@telegram-apps/telegram-ui';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -51,15 +50,6 @@ export function ReferralLink(props: Props) {
       console.error(`Can't copy to clipboard ${error}`);
     }
   };
-
-  if (!referral) {
-    return (
-      <Caption style={{ color: 'red' }}>
-        Please, make sure that bot has admin rights inside group! Without it link could not be
-        generated.
-      </Caption>
-    );
-  }
 
   return (
     <Container>

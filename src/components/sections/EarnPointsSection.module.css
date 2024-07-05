@@ -1,0 +1,25 @@
+.wrapper {
+  position: relative;
+}
+
+.msg {
+  display: flex;
+  font-size: 16px;
+  line-height: 22px;
+  align-items: center;
+  background: #ffeaea;
+  text-align: left;
+  padding-left: 16px;
+  height: 68px;
+  border-radius: 16px;
+}
+
+.msgDark {
+  color: black;
+}
+
+.svgWrapper {
+  position: absolute;
+  top: 20px;
+  left: 110px;
+}

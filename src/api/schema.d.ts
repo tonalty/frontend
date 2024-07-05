@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/backend/telegram/botInfo/{chatId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TelegramController_getBotStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/backend/community/admin-user": {
         parameters: {
             query?: never;
@@ -431,6 +447,25 @@ export interface operations {
             query?: never;
             header?: never;
             path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TelegramController_getBotStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                chatId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
