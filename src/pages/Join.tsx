@@ -48,12 +48,22 @@ export const Join: FC<{ linkOwner: LinkOwner }> = ({ linkOwner }) => {
     }
 
     if (utils) {
-      utils.openTelegramLink(linkOwner.telegramInviteLink);
+      try {
+        console.log('utils', linkOwner.telegramInviteLink);
+        utils.openTelegramLink(linkOwner.telegramInviteLink);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-      window.open(linkOwner.telegramInviteLink, '_blank');
+      try {
+        console.log('windows', linkOwner.telegramInviteLink);
+        window.open(linkOwner.telegramInviteLink, '_blank');
+      } catch (error) {
+        console.log(error);
+      }
     }
     // try to close it manual if something goes wrong
-    miniApp?.close();
+    // miniApp?.close();
   };
 
   // const linkOwner = {
