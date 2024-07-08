@@ -704,7 +704,15 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": {
+                    chatId?: number;
+                    ownerId?: number;
+                    title?: string;
+                };
+            };
+        };
         responses: {
             201: {
                 headers: {

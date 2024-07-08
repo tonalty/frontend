@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Typography } from '@mui/material';
 import { Button, Title } from '@telegram-apps/telegram-ui';
 import { MiniApp, useMiniApp, useUtils, Utils } from '@tma.js/sdk-react';
-import axios from 'axios';
 import styled from 'styled-components';
 
+import { useReferralJoin } from '@/api/mutations';
 import { useCurrentUser } from '@/api/queries';
 import { AvatarJoinIcon } from '@/icons/AvatarJoinIcon';
 import { GroupIcon } from '@/icons/GroupIcon';
@@ -33,23 +33,16 @@ export const Join: FC<{ linkOwner: LinkOwner }> = ({ linkOwner }) => {
     /* ignore */
   }
 
-  console.log('linkOwner', linkOwner);
-
   const { data: currentUser, isLoading } = useCurrentUser();
+  const { mutateAsync: joinReferral } = useReferralJoin();
 
   const handleJoin = async () => {
     try {
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/backend/referrals/join`,
-        {
-          chatId: Number(linkOwner.chatId),
-          ownerId: linkOwner.ownerId,
-          title: linkOwner.title
-        },
-        {
-          headers: { tmaInitData: window.Telegram.WebApp.initData }
-        }
-      );
+      await joinReferral({
+        chatId: Number(linkOwner.chatId),
+        ownerId: linkOwner.ownerId,
+        title: linkOwner.title
+      });
     } catch (error) {
       console.error(error);
       throw new Error(`${error}`);
