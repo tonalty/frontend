@@ -4,6 +4,7 @@ import { Button, Title } from '@telegram-apps/telegram-ui';
 import { MiniApp, useMiniApp, useUtils, Utils } from '@tma.js/sdk-react';
 import styled from 'styled-components';
 
+import { useReferralJoin } from '@/api/mutations';
 import { useCurrentUser } from '@/api/queries';
 import { AvatarJoinIcon } from '@/icons/AvatarJoinIcon';
 import { GroupIcon } from '@/icons/GroupIcon';
@@ -33,8 +34,20 @@ export const Join: FC<{ linkOwner: LinkOwner }> = ({ linkOwner }) => {
   }
 
   const { data: currentUser, isLoading } = useCurrentUser();
+  const { mutateAsync: joinReferral } = useReferralJoin();
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
+    try {
+      await joinReferral({
+        chatId: Number(linkOwner.chatId),
+        ownerId: linkOwner.ownerId,
+        title: linkOwner.title
+      });
+    } catch (error) {
+      console.error(error);
+      throw new Error(`${error}`);
+    }
+
     if (utils) {
       utils.openTelegramLink(linkOwner.telegramInviteLink);
     } else {

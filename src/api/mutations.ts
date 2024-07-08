@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { CreatedTempImage } from '@/interfaces/CreatedTempImage';
 import { apiClient } from './apiClient';
@@ -106,5 +106,20 @@ export function useDeleteReward() {
           }
         })
       ).data
+  });
+}
+
+export function useReferralJoin() {
+  return useMutation({
+    mutationKey: [],
+    mutationFn: async (
+      body: paths['/backend/referrals/join']['post']['requestBody']['content']['application/json']
+    ) =>
+      (
+        await apiClient.POST('/backend/referrals/join', {
+          params: { header: { tmaInitData: '' } },
+          body
+        })
+      ).data as unknown as void
   });
 }
