@@ -31,7 +31,8 @@ function App() {
 
   useEffect(() => {
     if (lp?.startParam && payload) {
-      if ('chatId' in payload) {
+      if ('chatId' in payload && !('telegramInviteLink' in payload)) {
+        console.log('navigating to community...');
         navigate(`/community/${payload.chatId}`);
       }
     }
