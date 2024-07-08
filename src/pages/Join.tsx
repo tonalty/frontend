@@ -45,7 +45,6 @@ export const Join: FC<{ linkOwner: LinkOwner }> = ({ linkOwner }) => {
       });
     } catch (error) {
       console.error(error);
-      throw new Error(`${error}`);
     }
 
     if (utils) {
