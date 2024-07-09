@@ -35,7 +35,13 @@ export function Root() {
   console.log(`Network: `, network ? (network === CHAIN.MAINNET ? 'mainnet' : 'testnet') : 'N/A');
 
   return (
-    <AppRoot id="approot" appearance={miniApp?.isDark ? 'dark' : 'light'} platform="ios">
+    <AppRoot
+      id="approot"
+      appearance={miniApp?.isDark ? 'dark' : 'light'}
+      platform="ios"
+      style={{
+        height: '100%'
+      }}>
       <ThemeProvider theme={miniApp?.isDark ? darkTheme : lightTheme}>
         <GlobalStyles />
         <AdaptiveRouter>

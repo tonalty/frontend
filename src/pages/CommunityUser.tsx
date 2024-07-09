@@ -13,6 +13,7 @@ import { RewardShopSection } from '@/components/sections/RewardShopSection';
 import { Section } from '@/components/telegram-ui/Blocks';
 import { Mode } from '@/enums/Mode';
 import { EarnPointsSection } from '../components/sections/EarnPointsSection';
+import { NotFound } from './NotFound';
 
 export const CommunityUser: FC = () => {
   const { id: chatId } = useParams();
@@ -26,7 +27,7 @@ export const CommunityUser: FC = () => {
 
   // TODO: better no user community design
   if ((!userCommunity && !isInitialLoading) || failureCount) {
-    return <span> No user commmunity</span>;
+    return <NotFound reason="No user community" />;
   }
 
   let textColor;

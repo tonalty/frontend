@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Typography } from '@mui/material';
 import { Button, Title } from '@telegram-apps/telegram-ui';
 import { MiniApp, useMiniApp, useUtils, Utils } from '@tma.js/sdk-react';
 import styled from 'styled-components';
@@ -9,6 +8,7 @@ import { useCurrentUser } from '@/api/queries';
 import { AvatarJoinIcon } from '@/icons/AvatarJoinIcon';
 import { GroupIcon } from '@/icons/GroupIcon';
 import { LinkOwner } from '@/interfaces/LinkOwner';
+import { NotFound } from './NotFound';
 
 export const Container = styled.div`
   padding: 12px;
@@ -79,7 +79,7 @@ export const Join: FC<{ linkOwner: LinkOwner }> = ({ linkOwner }) => {
   }
 
   if (!currentUser || !linkOwner) {
-    return <Typography>No data about current user or link owner</Typography>;
+    return <NotFound reason="No data about current user or link owner" />;
   }
 
   const getUserName = () => {
