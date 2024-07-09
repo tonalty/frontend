@@ -32,3 +32,8 @@ export const formatPoints = (points: number) => {
 
   return `${sign}${points.toFixed(2)}`;
 };
+
+export const logError = (error: Error, info: { componentStack: string }) => {
+  console.log('error', error);
+  console.log('componentStack', info.componentStack);
+};

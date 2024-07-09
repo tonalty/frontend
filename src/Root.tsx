@@ -1,6 +1,7 @@
 import '@twa-dev/sdk';
 
 import { useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { ModalProvider } from 'react-modal-state';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 import { bindViewportCSSVars, MiniApp, useMiniApp, useViewport, Viewport } from '@tma.js/sdk-react';
@@ -13,6 +14,8 @@ import { GlobalStyles } from './components/GlobalStyle';
 import { Modals } from './components/modals/Modals';
 import { darkTheme, lightTheme } from './components/Theme';
 import { useTonConnect } from './hooks/useTonConnect';
+import { NotFound } from './pages/NotFound';
+import { logError } from './utils/common';
 
 export function Root() {
   let viewport: Viewport | undefined, miniApp: MiniApp | undefined;
@@ -45,10 +48,12 @@ export function Root() {
       <ThemeProvider theme={miniApp?.isDark ? darkTheme : lightTheme}>
         <GlobalStyles />
         <AdaptiveRouter>
-          <ModalProvider>
-            <App />
-            <Modals />
-          </ModalProvider>
+          <ErrorBoundary onError={logError} fallback={<NotFound />}>
+            <ModalProvider>
+              <App />
+              <Modals />
+            </ModalProvider>
+          </ErrorBoundary>
         </AdaptiveRouter>
       </ThemeProvider>
     </AppRoot>
