@@ -23,10 +23,6 @@ function App() {
     /* ignore */
   }
 
-  // const sendTgWebAppStartParam = async () => {
-  //     await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals/tgWebAppStartParam`, location.hash);
-  // }
-
   const { data: payload, isLoading, isError, error } = useStartParam(lp?.startParam);
   const navigate = useNavigate();
 

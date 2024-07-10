@@ -5,15 +5,21 @@ import { Button, Text } from '@telegram-apps/telegram-ui';
 import { PlusCircleIcon } from '@/icons/PlusCircleIcon';
 import { CommunityUser } from '@/interfaces/CommunityUser';
 import { CommunityItem } from './common/CommunityItem';
+import { Loader } from './common/Loader';
 import { ScrollArea } from './common/ScrollArea';
 import { ModalNewCommunity } from './modals/ModalNewCommunity/ModalNewCommunity';
 import { NoData } from './NoData';
 
 interface Props {
   communities: CommunityUser[];
+  isLoading: boolean;
 }
 
-export const CommunitiesManaging: FC<Props> = ({ communities }) => {
+export const CommunitiesManaging: FC<Props> = ({ communities, isLoading }) => {
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <ScrollArea>
