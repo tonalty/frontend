@@ -11,6 +11,7 @@ import { Confirmation } from './pages/Confirmation';
 import { ConnectBot } from './pages/ConnectBot';
 import { ConnectCommunity } from './pages/ConnectCommunity';
 import { Join } from './pages/Join';
+import { NotFound } from './pages/NotFound';
 import { Triggers } from './pages/Triggers';
 import { UserCommunities } from './pages/UserCommunities';
 
@@ -21,10 +22,6 @@ function App() {
   } catch {
     /* ignore */
   }
-
-  // const sendTgWebAppStartParam = async () => {
-  //     await axios.post<unknown, { data: string }>(`${import.meta.env.VITE_BACKEND_URL}/referrals/tgWebAppStartParam`, location.hash);
-  // }
 
   const { data: payload, isLoading, isError, error } = useStartParam(lp?.startParam);
   const navigate = useNavigate();
@@ -44,7 +41,7 @@ function App() {
 
   if (isError) {
     console.log('error', error);
-    return <span>Error: {JSON.stringify(error)}</span>;
+    return <NotFound reason={JSON.stringify(error)} />;
   }
 
   if (payload && 'ownerId' in payload) {

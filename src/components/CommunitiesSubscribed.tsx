@@ -4,14 +4,20 @@ import { Text } from '@telegram-apps/telegram-ui';
 
 import { CommunityUser } from '@/interfaces/CommunityUser';
 import { CommunityItem } from './common/CommunityItem';
+import { Loader } from './common/Loader';
 import { ScrollArea } from './common/ScrollArea';
 import { NoData } from './NoData';
 
 interface Props {
   communities: CommunityUser[];
+  isLoading: boolean;
 }
 
-export const CommunitiesSubscribed: FC<Props> = ({ communities }) => {
+export const CommunitiesSubscribed: FC<Props> = ({ communities, isLoading }) => {
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <ScrollArea>
       <div style={{ display: 'grid', gap: 8, padding: '16px' }}>

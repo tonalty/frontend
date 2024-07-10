@@ -2,15 +2,21 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 
 import { useAdminCommunities, useUserCommunities } from '@/api/queries';
-import { ScrollArea } from '@/components/common/ScrollArea';
-import { CommunitiesManaging } from '@/components/CommunitiesManaging';
-import { CommunitiesSubscribed } from '@/components/CommunitiesSubscribed';
+import { CommunitiesWrapper } from '@/components/CommunitiesWrapper';
 import { Menu } from '@/components/Menu';
 import { View } from '@/enums/View';
 
 export function UserCommunities() {
-  const { data: userCommunities, error: userCommunitiesError } = useUserCommunities();
-  const { data: adminCommunities, error: adminCommunitiesError } = useAdminCommunities();
+  const {
+    data: userCommunities,
+    error: userCommunitiesError,
+    isFetching: isUserCommunityLoading
+  } = useUserCommunities();
+  const {
+    data: adminCommunities,
+    error: adminCommunitiesError,
+    isFetching: isAdminCommunityLoading
+  } = useAdminCommunities();
 
   const [currentView, setCurrentView] = useState(View.SUBSCRIBED);
   const onClickView = (view: View) => {
@@ -35,11 +41,13 @@ export function UserCommunities() {
         onClickView={onClickView}
       />
 
-      {currentView === View.SUBSCRIBED ? (
-        <CommunitiesSubscribed communities={userCommunities} />
-      ) : null}
-
-      {currentView === View.MANAGED ? <CommunitiesManaging communities={adminCommunities} /> : null}
+      <CommunitiesWrapper
+        isUserCommunityLoading={isUserCommunityLoading}
+        isAdminCommunityLoading={isAdminCommunityLoading}
+        currentView={currentView}
+        adminCommunities={adminCommunities}
+        userCommunities={userCommunities}
+      />
     </div>
   );
 }
