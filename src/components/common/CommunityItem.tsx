@@ -2,6 +2,8 @@ import { FC } from 'react';
 import { Avatar } from '@telegram-apps/telegram-ui';
 import styled from 'styled-components';
 
+import { NoAvatarIcon } from '@/icons/NoAvatarIcon';
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -32,7 +34,7 @@ export const CommunityItem: FC<Props> = ({ avatarSrc, name, points }) => {
   return (
     <Wrapper>
       <Left>
-        <Avatar src={avatarSrc} />
+        <Avatar src={avatarSrc} fallbackIcon={<NoAvatarIcon />} />
         {name}
       </Left>
       {points}

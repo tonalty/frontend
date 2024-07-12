@@ -4,4 +4,5 @@ export interface CommunityUser {
   communityName: string;
   points: number;
   isAdmin: boolean;
+  photoLink?: string;
 }

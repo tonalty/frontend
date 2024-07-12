@@ -23,7 +23,7 @@ export const CommunitiesSubscribed: FC<Props> = ({ communities, isLoading }) => 
       <div style={{ display: 'grid', gap: 8, padding: '16px' }}>
         {communities.length ? (
           communities.map((community, index) => {
-            const avatarSrc = `https://picsum.photos/seed/${community.chatId}/200/300`;
+            const avatarSrc = community.photoLink || '';
 
             return (
               <Link

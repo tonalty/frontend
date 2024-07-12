@@ -12,6 +12,7 @@ import { HistorySection } from '@/components/sections/HistorySection';
 import { RewardShopSection } from '@/components/sections/RewardShopSection';
 import { Section } from '@/components/telegram-ui/Blocks';
 import { Mode } from '@/enums/Mode';
+import { NoAvatarIcon } from '@/icons/NoAvatarIcon';
 import { EarnPointsSection } from '../components/sections/EarnPointsSection';
 import { NotFound } from './NotFound';
 
@@ -38,6 +39,8 @@ export const CommunityUser: FC = () => {
     textColor = wallet ? 'black' : '#B3B3B3';
   }
 
+  const avatarSrc = (location.state && location.state.avatarSrc) || '';
+
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <Section style={{ borderRadius: '0 0 12px 12px' }}>
@@ -45,7 +48,8 @@ export const CommunityUser: FC = () => {
           <Avatar
             style={{ marginBottom: '20px' }}
             size={96}
-            src={location.state?.avatarSrc || `https://picsum.photos/seed/${chatId}/200/300`}
+            src={avatarSrc}
+            fallbackIcon={<NoAvatarIcon />}
           />
 
           <Skeleton visible={!userCommunity}>
