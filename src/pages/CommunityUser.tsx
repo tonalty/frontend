@@ -18,8 +18,6 @@ import { NotFound } from './NotFound';
 
 export const CommunityUser: FC = () => {
   const { id: chatId } = useParams();
-  const location = useLocation();
-
   const { data: userCommunity, isInitialLoading, failureCount } = useUserCommunity(chatId);
   const { data: triggers } = useTriggersByChatId(chatId);
 
@@ -39,8 +37,6 @@ export const CommunityUser: FC = () => {
     textColor = wallet ? 'black' : '#B3B3B3';
   }
 
-  const avatarSrc = (location.state && location.state.avatarSrc) || '';
-
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <Section style={{ borderRadius: '0 0 12px 12px' }}>
@@ -48,7 +44,7 @@ export const CommunityUser: FC = () => {
           <Avatar
             style={{ marginBottom: '20px' }}
             size={96}
-            src={avatarSrc}
+            src={userCommunity?.photoLink || ''}
             fallbackIcon={<NoAvatarIcon />}
           />
 
