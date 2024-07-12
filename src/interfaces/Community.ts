@@ -9,4 +9,5 @@ export interface Community {
   members?: number;
   comments?: number;
   reactions?: number;
+  photoLink?: string;
 }
