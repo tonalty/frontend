@@ -26,14 +26,14 @@ export const CommunitiesManaging: FC<Props> = ({ communities, isLoading }) => {
         <div style={{ display: 'grid', gap: 8, padding: '16px' }}>
           {communities.length ? (
             communities.map((community, index) => {
-              const avatarSrc = `https://picsum.photos/seed/${community.chatId}/200/300`;
+              const avatarSrc = community.photoLink || '';
 
               return (
                 <Link
                   key={index}
                   className="disableHover"
                   to={`/manage/${community.chatId}`}
-                  state={{ avatarSrc: avatarSrc }}
+                  state={{ avatarSrc }}
                   style={{ color: 'inherit', textDecoration: 'none', background: 'inherit' }}>
                   <CommunityItem avatarSrc={avatarSrc} name={community.communityName} />
                 </Link>
