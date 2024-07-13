@@ -62,6 +62,7 @@ export const ModalCreateOrUpdateReward: FC = () => {
         await createReward({
           chatId: Number(chatId),
           imageId: uploadedTempImage.id,
+          canBeUsedTimes: 1,
           ...data
         });
       } else {
