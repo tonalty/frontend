@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Avatar, Skeleton, Text } from '@telegram-apps/telegram-ui';
 import { useMiniApp } from '@tma.js/sdk-react';
@@ -32,9 +32,9 @@ export const CommunityUser: FC = () => {
   let textColor;
 
   if (miniApp.isDark) {
-    textColor = wallet ? 'white' : '#B3B3B3';
+    textColor = wallet || !userCommunity?.settings?.isTonConnectWallet ? 'white' : '#B3B3B3';
   } else {
-    textColor = wallet ? 'black' : '#B3B3B3';
+    textColor = wallet || !userCommunity?.settings?.isTonConnectWallet ? 'black' : '#B3B3B3';
   }
 
   return (
@@ -47,11 +47,9 @@ export const CommunityUser: FC = () => {
             src={userCommunity?.photoLink || ''}
             fallbackIcon={<NoAvatarIcon />}
           />
-
           <Skeleton visible={!userCommunity}>
             <Title>{userCommunity?.communityName}</Title>
           </Skeleton>
-
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Text style={{ marginTop: '32px' }}>Earned</Text>
 
@@ -68,18 +66,17 @@ export const CommunityUser: FC = () => {
               </Text>
             </Skeleton>
           </div>
-
-          <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
-            <Typography
-              variant="body2"
-              textAlign="center"
-              sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600 }}>
-              To claim your tokens and use Rewards Shop - connect your TON wallet
-            </Typography>
-          </ConnectWalletWithPlaceholder>
-
+          {userCommunity?.settings?.isTonConnectWallet && (
+            <ConnectWalletWithPlaceholder isAuthenticated={Boolean(wallet)}>
+              <Typography
+                variant="body2"
+                textAlign="center"
+                sx={{ fontSize: '16px', width: '250px', marginBottom: '15px', fontWeight: 600 }}>
+                To claim your tokens and use Rewards Shop - connect your TON wallet
+              </Typography>
+            </ConnectWalletWithPlaceholder>
+          )}
           {/* <ConnectWalletButton wallet={wallet} /> */}
-
           {/* {wallet ? <AuthenticatedUserLogoWithCurrency wallet={wallet} currencyValue={0} /> : null} */}
         </div>
       </Section>
@@ -96,8 +93,8 @@ export const CommunityUser: FC = () => {
         style={{
           display: 'grid',
           gap: 16,
-          opacity: wallet ? 1 : 0.3,
-          pointerEvents: wallet ? 'unset' : 'none'
+          opacity: wallet || !userCommunity?.settings?.isTonConnectWallet ? 1 : 0.3,
+          pointerEvents: wallet || !userCommunity?.settings?.isTonConnectWallet ? 'unset' : 'none'
         }}>
         <RewardShopSection chatId={chatId} mode={Mode.User} />
         <HistorySection chatId={chatId} />

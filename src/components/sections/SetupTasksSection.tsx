@@ -120,7 +120,8 @@ export const SetupTasksSection: FC<Props> = ({ chatId, triggers }) => {
       title={
         <Section.Header>
           <Box display="flex" justifyContent="space-between">
-            Set up tasks <QuestionTooltip />
+            Set up tasks
+            <QuestionTooltip text="Set up triggers for rewarding actions within a Telegram channel, enable comments and reactions, then monitor your events and reward users accordingly." />
           </Box>
         </Section.Header>
       }>

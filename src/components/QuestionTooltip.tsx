@@ -3,7 +3,11 @@ import { Tooltip } from '@telegram-apps/telegram-ui';
 
 import { QuestionIcon } from '@/icons/QuestionIcon';
 
-export const QuestionTooltip = () => {
+interface Props {
+  text: string;
+}
+
+export const QuestionTooltip = ({ text }: Props) => {
   const toolTipRef = useRef<HTMLDivElement>(null);
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
@@ -39,8 +43,7 @@ export const QuestionTooltip = () => {
           placement="bottom-end"
           targetRef={toolTipRef}
           style={{ maxWidth: 320 }}>
-          Set up triggers for rewarding actions within a Telegram channel, enable comments and
-          reactions, then monitor your events and reward users accordingly.
+          {text}
         </Tooltip>
       )}
     </>

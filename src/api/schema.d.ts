@@ -116,6 +116,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/backend/community/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["CommunityController_updateTriggers"];
+        trace?: never;
+    };
     "/backend/tokens/metadata/{chatId}": {
         parameters: {
             query?: never;
@@ -392,6 +408,13 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        Settings: {
+            isTonConnectWallet: boolean;
+        };
+        UpdateSettingsDto: {
+            chatId: number;
+            settings: components["schemas"]["Settings"];
+        };
         ReferralTrigger: {
             inviterPoints: number;
             inviteePoints: number;
@@ -417,6 +440,7 @@ export interface components {
             value: number;
             description: string;
             rewardMessage: string;
+            canBeUsedTimes: number;
         };
         UpdateRewardDto: {
             id: string;
@@ -565,6 +589,29 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CommunityController_updateTriggers: {
+        parameters: {
+            query?: never;
+            header: {
+                tmaInitData: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSettingsDto"];
+            };
+        };
         responses: {
             200: {
                 headers: {
