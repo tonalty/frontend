@@ -69,6 +69,21 @@ export function useUpdateTriggers() {
   });
 }
 
+export function useUpdateSettings() {
+  return useMutation({
+    mutationKey: ['updateSettings'],
+    mutationFn: async (
+      body: paths['/backend/community/settings']['patch']['requestBody']['content']['application/json']
+    ) =>
+      (
+        await apiClient.PATCH('/backend/community/settings', {
+          params: { header: { tmaInitData: '' } },
+          body
+        })
+      ).data as unknown as boolean
+  });
+}
+
 export function useBuyReward() {
   return useMutation({
     mutationKey: [],

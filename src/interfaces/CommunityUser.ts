@@ -5,4 +5,7 @@ export interface CommunityUser {
   points: number;
   isAdmin: boolean;
   photoLink?: string;
+  settings?: {
+    isTonConnectWallet: boolean;
+  };
 }

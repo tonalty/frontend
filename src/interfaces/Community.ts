@@ -1,3 +1,4 @@
+import { Settings } from './Settings';
 import { Triggers } from './Triggers';
 
 export interface Community {
@@ -10,4 +11,5 @@ export interface Community {
   comments?: number;
   reactions?: number;
   photoLink?: string;
+  settings?: Settings;
 }

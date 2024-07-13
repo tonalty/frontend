@@ -5,6 +5,7 @@ import { ManagedCommunityInfo } from '@/components/ManagedCommunityInfo';
 import { HistorySection } from '@/components/sections/HistorySection';
 import { RewardShopSection } from '@/components/sections/RewardShopSection';
 import { SetupTasksSection } from '@/components/sections/SetupTasksSection';
+import { SettingsSection } from '@/components/SettingsSection';
 import { Mode } from '@/enums/Mode';
 
 export const CommunityManage = () => {
@@ -15,6 +16,9 @@ export const CommunityManage = () => {
     <div style={{ display: 'grid', gap: 16 }}>
       <ManagedCommunityInfo community={community} />
       <SetupTasksSection chatId={chatId} triggers={community?.triggers} />
+      {community?.settings && (
+        <SettingsSection chatId={Number(chatId)} settings={community?.settings} />
+      )}
       <RewardShopSection chatId={chatId} mode={Mode.Admin} />
       <HistorySection chatId={chatId} />
     </div>
