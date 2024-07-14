@@ -31,7 +31,7 @@ export const EarnPointsSection: FC<Props> = ({ communityUser, triggers, chatId }
           <ErrorIcon></ErrorIcon>
         </div>
         <div className={classNames(styles.msg, miniApp.isDark ? styles.msgDark : '')}>
-          To get bonus rewards, the bot should has an administrator access to the group.
+          To get bonus rewards, the bot should have an administrator access to the group.
         </div>
       </SectionWithTitleContainer>
     );
